@@ -1,1382 +1,322 @@
-<!DOCTYPE html>
-<html lang="sw" data-theme="auto">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Contact</title>
-<meta name="theme-color" content="#f8fafd">
-<meta name="description" content="Contact — hifadhi anwani zako salama, offline.">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+
+<div id="contactApp"></div>
+
 <style>
-:root{--bg:#fff;--bg2:#f1f3f4;--sf:#f8fafd;--tx:#1f1f1f;--tx2:#5f6368;--bd:#e1e3e6;--pr:#0b57d0;--prbg:#d3e3fd;--prtx:#041e49;--dg:#b3261e;--ok:#188038;--card:#f6f8fc;--sh:0 1px 2px #0003,0 2px 6px 2px #00000014;color-scheme:light}
-:root[data-theme=dark]{--bg:#1f1f1f;--bg2:#2d2e30;--sf:#131314;--tx:#e3e3e3;--tx2:#a8abaf;--bd:#3c4043;--pr:#a8c7fa;--prbg:#0842a0;--prtx:#d3e3fd;--dg:#f2b8b5;--ok:#81c995;--card:#282a2c;--sh:0 1px 2px #000a,0 2px 6px 2px #0006;color-scheme:dark}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1f1f1f;--bg2:#2d2e30;--sf:#131314;--tx:#e3e3e3;--tx2:#a8abaf;--bd:#3c4043;--pr:#a8c7fa;--prbg:#0842a0;--prtx:#d3e3fd;--dg:#f2b8b5;--ok:#81c995;--card:#282a2c;--sh:0 1px 2px #000a,0 2px 6px 2px #0006;color-scheme:dark}}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;margin:0}
-body{font:15px/1.45 "Google Sans",Roboto,system-ui,sans-serif;background:var(--sf);color:var(--tx);overscroll-behavior:none}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;border:0;background:none;padding:0}
-button:disabled{opacity:.5;cursor:default}
-:focus-visible{outline:2px solid var(--pr);outline-offset:2px}
-.hide{display:none!important}
-.muted{color:var(--tx2)}
-small{font-size:12.5px}
-.ic{fill:currentColor;flex:none}
-.btn{padding:10px 22px;border-radius:22px;font-weight:500;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
-.btn.p{background:var(--pr);color:var(--bg)}
-.btn.t{color:var(--pr)}.btn.t:hover{background:var(--prbg)}
-.btn.o{border:1px solid var(--bd);color:var(--pr);text-decoration:none}
-.btn.dg{background:var(--dg);color:var(--bg)}
-.btn.d{color:var(--dg)}
-.btn.w{width:100%}
-.ib{width:44px;height:44px;border-radius:50%;color:var(--tx2);display:inline-grid;place-items:center;flex:none;text-decoration:none}
-.ib:hover{background:var(--bg2)}
-.ib.sm{width:40px;height:40px}
-input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);min-height:44px}
-input[type=checkbox]{width:auto;min-height:0}
-textarea{resize:vertical;min-height:80px}
-label{display:block;color:var(--tx2);font-size:12.5px;margin:14px 0 4px}
-h3{margin:0 0 6px;font-weight:500;font-size:20px}
-.err{color:var(--dg);min-height:20px;margin:8px 0;font-size:13.5px}
-.ok{color:var(--pr)}
-/* overlays */
-.ov{position:fixed;inset:0;background:var(--sf);display:grid;place-items:center;padding:16px;z-index:50;overflow:auto}
-.card{background:var(--bg);border:1px solid var(--bd);border-radius:28px;padding:32px 28px;width:100%;max-width:400px;text-align:center;box-shadow:var(--sh);animation:up .25s}
-.card h1{font-size:24px;font-weight:400;margin:10px 0 6px}
-.card p{color:var(--tx2);margin:0 0 16px}
-.card input{margin-bottom:10px}
-.card .btn{width:100%;margin-top:6px}
-.logo{width:60px;height:60px;border-radius:18px;background:var(--pr);color:var(--bg);display:inline-grid;place-items:center}
-.lnk{color:var(--pr);margin-top:10px;display:inline-block;padding:8px;min-height:40px}
-.or{color:var(--tx2);margin:12px 0 4px;font-size:12px}
-.langs{display:flex;gap:6px;justify-content:center;margin-bottom:8px}
-.langs button{padding:6px 12px;border-radius:14px;border:1px solid var(--bd);font-size:13px}
-.langs button.on{background:var(--prbg);color:var(--prtx)}
-/* shell */
-#app{height:100%;display:grid;grid-template-columns:1fr;grid-template-rows:auto 1fr auto;background:var(--sf)}
-header{display:flex;align-items:center;gap:8px;padding:8px 12px;padding-top:max(8px,env(safe-area-inset-top))}
-.brand{display:flex;align-items:center;gap:10px;font-size:22px;color:var(--tx2);min-width:0}
-.brand i{font-style:normal;width:34px;height:34px;border-radius:10px;background:var(--pr);color:var(--bg);display:grid;place-items:center;flex:none}
-.brand span{display:none}
-.search{flex:1;max-width:720px;display:flex;align-items:center;background:var(--bg2);border-radius:26px;padding:0 6px 0 14px;color:var(--tx2);gap:8px;transition:box-shadow .2s}
-.search:focus-within{box-shadow:var(--sh);background:var(--bg)}
-.search input{border:0;background:none;height:48px;padding:0;min-height:0;outline:0}
-.sp{flex:1}
-header .sp{display:none}
-main{background:var(--bg);border-radius:22px;overflow:auto;margin:0 8px;position:relative;scroll-behavior:smooth}
-#view{padding-bottom:110px;animation:fade .2s}
-#nav{display:flex;justify-content:space-around;padding:6px 6px calc(8px + env(safe-area-inset-bottom));background:var(--sf)}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;color:var(--tx2);min-height:56px;padding-top:4px;border-radius:16px}
-.nb .pill{width:62px;height:32px;border-radius:16px;display:grid;place-items:center;transition:background .2s}
-.nb.on{color:var(--tx);font-weight:600}.nb.on .pill{background:var(--prbg);color:var(--prtx)}
-.fab{position:fixed;right:18px;bottom:calc(88px + env(safe-area-inset-bottom));width:60px;height:60px;border-radius:18px;background:var(--prbg);color:var(--prtx);display:grid;place-items:center;box-shadow:var(--sh);z-index:6;transition:transform .15s}
-.fab:active{transform:scale(.94)}
-@media(min-width:900px){
- #app{grid-template-columns:100px 1fr;grid-template-rows:auto 1fr}
- header{grid-column:2}.brand span{display:inline}
- main{grid-column:2;margin:0 12px 12px 0}
- #nav{grid-row:1/3;grid-column:1;flex-direction:column;justify-content:flex-start;gap:6px;padding-top:16px}
- .nb{flex:none;min-height:64px}
- .fab{bottom:32px;right:32px}
-}
-/* views */
-.top{padding:18px 20px 6px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
-.top h2{margin:0;font-weight:400;font-size:24px}
-.sec-t{padding:14px 20px 6px;color:var(--tx2);font-weight:600;font-size:13px;letter-spacing:.03em;text-transform:uppercase}
-.dash{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:6px 16px}
-.stat{background:var(--card);border-radius:18px;padding:14px 12px;text-align:left;min-height:68px}
-.stat b{display:block;font-size:26px;font-weight:400;line-height:1.1}.stat span{color:var(--tx2);font-size:12.5px}
-.hs{display:flex;gap:10px;overflow-x:auto;padding:4px 16px 8px;scrollbar-width:none}
-.hs::-webkit-scrollbar{display:none}
-.mini{display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;flex:none;font-size:12.5px;padding:6px 0;border-radius:14px}
-.mini:hover{background:var(--bg2)}
-.mini span{max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.banner{margin:6px 16px;padding:8px 8px 8px 16px;border-radius:16px;background:var(--prbg);color:var(--prtx);display:flex;gap:8px;align-items:center;justify-content:space-between;font-size:14px}
-.banner span{flex:1;min-width:0}
-.banner .btn{color:var(--prtx);border:1px solid currentColor;min-height:38px;padding:6px 14px;flex:none;white-space:nowrap}
-.ltr{padding:16px 20px 4px;color:var(--pr);font-weight:600;scroll-margin-top:8px}
-.row{display:flex;align-items:center;gap:12px;padding:6px 8px 6px 16px;min-height:60px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:background .12s}
-.row:hover{background:var(--bg2)}
-.row.sel{background:var(--prbg)}
-.nmc{min-width:0;flex:1}
-.nmc b{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nmc small{display:block;color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-body.compact .row{min-height:48px}body.compact .row .av{width:30px;height:30px;font-size:14px}
-.star{color:var(--tx2)}.star.on{color:#f9ab00}
-.av{width:42px;height:42px;border-radius:50%;object-fit:cover;color:#fff;display:grid;place-items:center;font-size:18px;flex:none}
-.av.big{width:104px;height:104px;font-size:46px}
-.cb{width:22px;height:22px;border-radius:6px;border:2px solid var(--tx2);display:grid;place-items:center;flex:none;color:var(--bg)}
-.cb.on{background:var(--pr);border-color:var(--pr)}
-.idx{position:fixed;right:2px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;z-index:4;font-size:10.5px;color:var(--tx2);max-height:60vh;overflow:hidden}
-.idx button{padding:1px 6px;line-height:1.25}
-.empty{padding:56px 24px;text-align:center;color:var(--tx2)}
-.empty .big{width:88px;height:88px;border-radius:50%;background:var(--card);display:inline-grid;place-items:center;margin-bottom:12px}
-.empty .btn{margin:6px 4px}
-.selbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:2px;padding:6px 8px;background:var(--prbg);color:var(--prtx);flex-wrap:wrap}
-.selbar b{flex:1;padding-left:6px;min-width:70px}
-.selbar .ib{color:var(--prtx)}
-.chipbar{display:flex;align-items:center;gap:8px;padding:6px 16px;flex-wrap:wrap}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:16px;background:var(--bg2);font-size:13.5px;cursor:pointer;border:1px solid transparent}
-.chip.on{background:var(--prbg);color:var(--prtx)}
-.chip button{display:inline-grid;color:inherit}
-.chips{display:flex;flex-wrap:wrap;gap:8px;padding:2px 0}
-.gcard{display:flex;align-items:center;gap:14px;padding:10px 8px 10px 16px;min-height:64px;cursor:pointer}
-.gcard:hover{background:var(--bg2)}
-.gic{width:44px;height:44px;border-radius:14px;background:var(--prbg);color:var(--prtx);display:grid;place-items:center;flex:none}
-.dupc{margin:8px 16px;padding:12px 14px;border-radius:18px;background:var(--card)}
-.dupc .nmc{padding:3px 0}
-/* settings */
-.scard{margin:10px 16px;border-radius:22px;background:var(--card);padding:6px 0;overflow:hidden}
-.scard>h4{margin:0;padding:14px 18px 6px;font-size:13px;color:var(--pr);text-transform:uppercase;letter-spacing:.04em}
-.scard p,.scard .pad{padding:2px 18px 8px;margin:0}
-.srow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 18px;min-height:52px}
-.srow>label,.srow>div{margin:0;color:var(--tx);font-size:15px;flex:1}
-.srow small{display:block;color:var(--tx2)}
-.srow select,.srow input[type=text]{width:auto;max-width:55%;min-width:120px}
-.li{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:8px 18px;min-height:56px}
-.li:hover{background:var(--bg2)}
-.li .lic{width:38px;height:38px;border-radius:12px;background:var(--bg2);color:var(--pr);display:grid;place-items:center;flex:none}
-.li .lt{flex:1;min-width:0}.li .lt b{display:block;font-weight:500}.li .lt small{color:var(--tx2);display:block}
-.li.dgr .lic{color:var(--dg)}.li.dgr b{color:var(--dg)}
-.sw{position:relative;flex:none;width:52px;height:32px;margin:0}
-.sw input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
-.sw i{position:absolute;inset:0;border-radius:16px;background:var(--bg2);border:2px solid var(--tx2);transition:.2s}
-.sw i::after{content:"";position:absolute;top:6px;left:6px;width:16px;height:16px;border-radius:50%;background:var(--tx2);transition:.2s}
-.sw input:checked+i{background:var(--pr);border-color:var(--pr)}
-.sw input:checked+i::after{background:var(--bg);left:24px;top:4px;width:20px;height:20px}
-/* dialogs */
-dialog{border:0;border-radius:28px;padding:0;background:var(--bg);color:var(--tx);width:min(580px,100vw);max-width:100vw;margin:auto;max-height:92vh;box-shadow:0 8px 40px #0006;overflow:auto}
-dialog[open]{animation:up .22s}
-dialog::backdrop{background:#0007;animation:fade .2s}
-.dh{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 0;gap:4px;position:sticky;top:0;background:var(--bg);z-index:2}
-.dt{font-size:18px;font-weight:500;padding-left:8px}
-.db{padding:8px 22px 20px}
-.df{display:flex;justify-content:flex-end;gap:8px;padding:10px 20px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--bd);position:sticky;bottom:0;background:var(--bg);flex-wrap:wrap}
-#cDlg{width:min(420px,92vw);border-radius:28px}
-#cDlg .db{padding:22px 24px 8px}
-#cDlg .df{border:0;position:static}
-#sheet{width:min(520px,100vw);margin:auto auto 0;border-radius:28px 28px 0 0;padding-bottom:env(safe-area-inset-bottom)}
-#sheet[open]{animation:sheet .22s}
-.sh-t{padding:16px 22px 6px;font-weight:600;color:var(--tx2)}
-.shi{display:flex;align-items:center;gap:18px;width:100%;padding:0 22px;min-height:52px;text-align:left}
-.shi:hover{background:var(--bg2)}.shi.dgr{color:var(--dg)}
-.hero{text-align:center;padding:4px 0 12px}
-.hero h3{font-size:26px;font-weight:400;margin:12px 0 2px}.hero p{margin:0;color:var(--tx2)}
-.acts{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
-.acts a{flex-direction:column;gap:4px;border-radius:18px;padding:10px 14px;min-width:76px;font-size:13px;height:auto}
-.it{display:flex;gap:16px;padding:12px 0;align-items:flex-start;border-top:1px solid var(--bd)}
-.it>.ic{margin-top:2px;color:var(--tx2)}
-.it>div{flex:1;min-width:0;word-break:break-word}
-.it small{display:block;color:var(--tx2)}
-.it a{color:var(--pr);text-decoration:none}
-.it .ib{width:40px;height:40px}
-.rw{display:grid;grid-template-columns:104px 1fr 44px;gap:8px;margin-bottom:8px;align-items:center}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.ph{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
-.ml{max-height:46vh;overflow:auto;margin:8px -8px}
-.ck{display:flex;align-items:center;gap:12px;padding:8px;min-height:48px;margin:0;color:var(--tx);font-size:15px;border-radius:12px;cursor:pointer}
-.ck:hover{background:var(--bg2)}.ck input{width:20px;height:20px;flex:none}
-.pv{background:var(--card);border-radius:16px;padding:12px 14px;margin:10px 0;font-size:14px}
-#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#323232;color:#fff;padding:12px 20px;border-radius:14px;z-index:99;opacity:0;pointer-events:none;transition:.25s;max-width:92vw;display:flex;align-items:center;gap:8px;box-shadow:var(--sh)}
-#toast.on{opacity:1;transform:translate(-50%,0)}
-#toast.act{pointer-events:auto}
-#toast.er{background:#8c1d18}#toast.sc{background:#0d652d}
-#toast button{color:#8ab4f8;margin-left:12px;font-weight:600;padding:6px}
-.spin{width:26px;height:26px;border:3px solid var(--bd);border-top-color:var(--pr);border-radius:50%;animation:rot .8s linear infinite;margin:0 auto 10px}
-@keyframes rot{to{transform:rotate(360deg)}}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-@media(max-width:620px){
- dialog:not(#cDlg):not(#sheet){max-width:none;margin:0;max-height:100dvh;height:100dvh;border-radius:0;width:100vw}
- .g2{grid-template-columns:1fr}.g3{grid-template-columns:1fr}
- .rw{grid-template-columns:96px 1fr 44px}
+#contactApp{font-family:Arial,sans-serif;color:#202124;background:#f6f8fc;min-height:100vh;padding:15px;box-sizing:border-box}
+#contactApp *{box-sizing:border-box}
+#contactApp .top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+#contactApp h2{font-size:25px;margin:5px 0}
+#contactApp button{border:0;border-radius:22px;padding:11px 16px;cursor:pointer;font-weight:600;background:#1769aa;color:white}
+#contactApp button.secondary{background:#e8eef7;color:#234}
+#contactApp input,#contactApp textarea{width:100%;padding:13px;border:1px solid #dadce0;border-radius:10px;margin:6px 0 12px;font-size:15px;background:white;color:#202124}
+#contactApp .search{border-radius:25px;background:white}
+#contactApp .tools{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+#contactApp .contact{background:white;border-radius:15px;padding:13px;margin:9px 0;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px #0000000c}
+#contactApp .avatar{width:49px;height:49px;border-radius:50%;object-fit:cover;background:#dce8f8;display:grid;place-items:center;font-size:19px;font-weight:bold;color:#245}
+#contactApp .details{flex:1;min-width:0}
+#contactApp .details b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#contactApp .details small{color:#687078;display:block;margin-top:5px}
+#contactApp .actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+#contactApp .actions button{padding:8px 10px;font-size:12px}
+#contactApp .modal{position:fixed;inset:0;background:#0009;z-index:99999;display:none;align-items:center;justify-content:center;padding:12px}
+#contactApp .modalbox{background:white;border-radius:18px;padding:20px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
+#contactApp .modalbox h3{margin-top:0}
+#contactApp .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#contactApp .full{grid-column:1/-1}
+#contactApp .hidden{display:none!important}
+#contactApp .empty{text-align:center;color:#777;padding:35px}
+#contactApp .status{font-size:13px;color:#667;margin:8px 0}
+#contactApp .star{background:#fff2cc!important;color:#805b00!important}
+@media(max-width:480px){
+#contactApp .contact{align-items:flex-start;flex-wrap:wrap}
+#contactApp .actions{width:100%;justify-content:flex-start;padding-left:60px}
+#contactApp .grid{grid-template-columns:1fr}
+#contactApp .full{grid-column:auto}
 }
 </style>
-</head>
-<body>
 
-<div id="boot" class="ov" style="z-index:60"><div style="text-align:center"><div class="spin"></div><span class="muted" id="bootMsg">…</span></div></div>
-
-<!-- KARIBU -->
-<div id="wel" class="ov hide">
- <form class="card" id="welForm">
-  <div class="langs"><button type="button" data-act="setlang" data-v="sw">Kiswahili</button><button type="button" data-act="setlang" data-v="en">English</button></div>
-  <div class="logo" data-svg="person"></div>
-  <h1 data-i="welcome_t"></h1>
-  <p data-i="welcome_p"></p>
-  <input id="wP1" type="password" data-ph="pw_ph" autocomplete="new-password">
-  <input id="wP2" type="password" data-ph="pw2_ph" autocomplete="new-password">
-  <div class="err" id="wErr"></div>
-  <button class="btn p" type="submit" data-i="w_set"></button>
-  <button class="lnk" id="wSkip" type="button" data-i="w_skip"></button>
- </form>
-</div>
-
-<!-- LOCK -->
-<div id="lock" class="ov hide">
- <form class="card" id="lockForm">
-  <div class="logo" data-svg="lock"></div>
-  <h1 data-i="locked_t"></h1>
-  <p data-i="locked_p"></p>
-  <input id="lPass" type="password" data-ph="pw_one" autocomplete="off">
-  <div class="err" id="lErr"></div>
-  <button class="btn p" type="submit" data-i="unlock"></button>
-  <button class="btn t hide" id="lBio" type="button" data-act="bioun" style="border:1px solid var(--bd)" data-i="bio_use"></button>
-  <button class="lnk" id="lForgot" type="button" data-i="forgot"></button>
-  <div id="lReset" class="hide">
-   <p id="lRtxt" style="margin-top:12px"></p>
-   <input id="lRpass" type="password" data-ph="acc_pw" autocomplete="current-password">
-   <button class="btn t" id="lRgo" type="button" style="border:1px solid var(--bd)"></button>
-   <button class="btn d" id="lRwipe" type="button" data-i="wipe_local"></button>
-  </div>
- </form>
-</div>
-
-<!-- APP -->
-<div id="app" class="hide">
- <header>
-  <div class="brand"><i data-svg="person"></i><span data-i="app"></span></div>
-  <div class="search" id="search"><span data-svg="search"></span><input id="q" type="search" data-ph="search_ph" data-al="search_ph" autocomplete="off"></div>
-  <span class="sp"></span>
-  <button class="ib hide" id="lockBtn" data-act="locknow" data-al="lock_now" data-svg="lock"></button>
- </header>
- <main id="main"><div id="view"></div></main>
- <nav id="nav" aria-label="Menu">
-  <button class="nb on" data-act="nav" data-v="contacts"><span class="pill" data-svg="person"></span><span data-i="nav_contacts"></span></button>
-  <button class="nb" data-act="nav" data-v="favs"><span class="pill" data-svg="star_border"></span><span data-i="nav_favs"></span></button>
-  <button class="nb" data-act="nav" data-v="groups"><span class="pill" data-svg="group"></span><span data-i="nav_groups"></span></button>
-  <button class="nb" data-act="nav" data-v="settings"><span class="pill" data-svg="settings"></span><span data-i="nav_settings"></span></button>
- </nav>
- <button class="fab" id="fab" data-act="fab" data-al="add_contact" data-svg="add" data-sz="28"></button>
-</div>
-<div class="idx hide" id="idx"></div>
-
-<input type="file" id="impIn" multiple accept=".vcf,.csv,text/vcard,text/x-vcard,text/csv" class="hide">
-<input type="file" id="bkIn" accept=".json,application/json" class="hide">
-<input type="file" id="photoIn" accept="image/*" class="hide">
-<input type="file" id="camIn" accept="image/*" capture="user" class="hide">
-
-<!-- PROFILE -->
-<dialog id="dDlg"><div id="dBox"></div></dialog>
-
-<!-- FORM -->
-<dialog id="fDlg">
- <form id="fForm" method="dialog" novalidate>
-  <div class="dh"><b class="dt" id="fTitle"></b><button class="ib" type="button" data-close data-al="close" data-svg="close"></button></div>
-  <div class="db">
-   <div class="ph"><div id="fAv"></div>
-    <button class="btn t" type="button" data-act="phgal"><span data-svg="image" data-sz="20"></span><span data-i="gallery"></span></button>
-    <button class="btn t" type="button" data-act="phcam"><span data-svg="camera" data-sz="20"></span><span data-i="camera"></span></button>
-    <button class="btn d" type="button" data-act="phdel" id="phDel" data-i="remove"></button></div>
-   <div class="g3"><div><label for="fFirst" data-i="l_first"></label><input id="fFirst" autocomplete="off"></div><div><label for="fMid" data-i="l_middle"></label><input id="fMid" autocomplete="off"></div><div><label for="fLast" data-i="l_last"></label><input id="fLast" autocomplete="off"></div></div>
-   <label data-i="phones"></label><div id="fPh"></div><button class="btn t" type="button" data-act="addph"><span data-svg="add" data-sz="20"></span><span data-i="add_phone"></span></button>
-   <label data-i="emails"></label><div id="fEm"></div><button class="btn t" type="button" data-act="addem"><span data-svg="add" data-sz="20"></span><span data-i="add_email"></span></button>
-   <div class="g2"><div><label for="fCo" data-i="l_company"></label><input id="fCo"></div><div><label for="fTi" data-i="l_title"></label><input id="fTi"></div></div>
-   <label for="fAddr" data-i="l_address"></label><input id="fAddr">
-   <div class="g2"><div><label for="fBday" data-i="l_bday"></label><input id="fBday" type="date"></div><div><label for="fWeb" data-i="l_web"></label><input id="fWeb" inputmode="url" placeholder="www.example.com"></div></div>
-   <label data-i="labels"></label><div id="fLb" class="chips"></div>
-   <div class="ph" style="margin-top:8px"><input id="fNewLb" data-ph="new_group" style="flex:1"><button class="btn t" type="button" data-act="fnewlb" data-i="add"></button></div>
-   <label for="fNotes" data-i="l_notes"></label><textarea id="fNotes"></textarea>
-   <div class="err" id="fErr" role="alert"></div>
-  </div>
-  <div class="df"><button class="btn d hide" type="button" data-act="fdel" id="fDel" data-i="delete"></button><span class="sp"></span><button class="btn t" type="button" data-close data-i="cancel"></button><button class="btn p" type="submit" data-i="save"></button></div>
- </form>
-</dialog>
-
-<!-- GENERIC MODAL -->
-<dialog id="mDlg"><div id="mBox"></div></dialog>
-<!-- CONFIRM / PROMPT -->
-<dialog id="cDlg"></dialog>
-<!-- BOTTOM SHEET -->
-<dialog id="sheet"><div id="shBox"></div></dialog>
-
-<!-- CLOUD LOGIN -->
-<dialog id="aDlg">
- <div class="dh"><b class="dt" id="aTitle"></b><button class="ib" data-close data-al="close" data-svg="close"></button></div>
- <form class="db" id="authForm" style="text-align:center">
-  <p class="muted" style="text-align:left" data-i="cloud_why"></p>
-  <input id="aEmail" type="email" data-ph="email" autocomplete="email" required>
-  <input id="aPass" type="password" data-ph="acc_pw" autocomplete="current-password" required minlength="6" style="margin-top:10px">
-  <div class="err" id="aErr"></div>
-  <button class="btn p w" id="aGo" type="submit"></button>
-  <div class="muted" style="margin:10px 0;font-size:12px" data-i="or"></div>
-  <button class="btn t w" id="aGoogle" type="button" style="border:1px solid var(--bd)" data-i="google"></button><br>
-  <button class="lnk" id="aSwitch" type="button"></button><br>
-  <button class="lnk" id="aReset" type="button" data-i="acc_forgot"></button>
- </form>
-</dialog>
-
-<div id="toast" role="status" aria-live="polite"></div>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
+(function(){
 'use strict';
-const VERSION='2.0.0';
 
-/* ====================== Firebase (hiari — usawazishaji wa wingu) ====================== */
-const firebaseConfig = {
-  apiKey: "AIzaSyDh05C50ezVo6Msus1sh7sfxXoV0ORbVMk",
-  authDomain: "smschat-af3e5.firebaseapp.com",
-  projectId: "smschat-af3e5",
-  storageBucket: "smschat-af3e5.firebasestorage.app",
-  messagingSenderId: "259144985126",
-  appId: "1:259144985126:web:b4be607c6a4e5836e614e7",
-  measurementId: "G-7RRE3Q7E81"
+const root=document.getElementById('contactApp');
+if(!root)return;
+
+/*
+ Tumia Firebase ambayo tayari imeanzishwa
+ kwenye website yako. Usitengeneze Firebase App mpya.
+*/
+if(!window.firebase){
+ root.innerHTML='<div class="empty">Firebase haijapakiwa. Hakikisha Firebase SDK ipo kwenye website yako.</div>';
+ return;
+}
+
+const auth=window.firebase.auth();
+const db=window.firebase.firestore();
+const storage=window.firebase.storage();
+
+let currentUser=null;
+let contacts=[];
+let unsubscribe=null;
+let editing=null;
+let selectedPhoto=null;
+
+root.innerHTML=`
+<div class="top">
+ <div><h2>👥 Contacts</h2><div class="status" id="count">Contacts zako</div></div>
+ <button id="add">＋ Add contact</button>
+</div>
+
+<input class="search" id="search" placeholder="🔍 Search contacts">
+
+<div class="tools">
+ <button class="secondary" id="all">All contacts</button>
+ <button class="secondary" id="fav">⭐ Favorites</button>
+ <button class="secondary" id="import">Import VCF</button>
+ <button class="secondary" id="export">Export VCF</button>
+</div>
+
+<div id="list"></div>
+
+<div class="modal" id="modal">
+ <div class="modalbox">
+  <h3 id="formTitle">Create contact</h3>
+  <form id="contactForm">
+   <label>Contact photo</label>
+   <input type="file" id="photo" accept="image/*">
+   <div class="grid">
+    <div class="full"><label>Full name *</label><input id="name" required placeholder="Full name"></div>
+    <div class="full"><label>Phone number *</label><input id="phone" required type="tel" placeholder="+255..."></div>
+    <div class="full"><label>Other phone number</label><input id="phone2" type="tel" placeholder="Optional"></div>
+    <div><label>Email</label><input id="email" type="email"></div>
+    <div><label>Company</label><input id="company"></div>
+    <div><label>Job title</label><input id="job"></div>
+    <div><label>Birthday</label><input id="birthday" type="date"></div>
+    <div class="full"><label>Address</label><input id="address"></div>
+    <div class="full"><label>Notes</label><textarea id="notes" rows="3"></textarea></div>
+   </div>
+   <div class="tools">
+    <button type="submit" id="save">Save contact</button>
+    <button type="button" class="secondary" id="cancel">Cancel</button>
+   </div>
+   <div class="status" id="formStatus"></div>
+  </form>
+ </div>
+</div>
+`;
+
+const $=id=>root.querySelector('#'+id);
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cleanPhone=p=>String(p||'').replace(/[^\d+]/g,'');
+const path=()=>db.collection('users').doc(currentUser.uid).collection('contacts');
+
+function message(t){$('formStatus').textContent=t;}
+
+function openForm(c=null){
+ editing=c?c.id:null;
+ selectedPhoto=null;
+ $('contactForm').reset();
+ $('formTitle').textContent=c?'Edit contact':'Create contact';
+ $('name').value=c?.name||'';
+ $('phone').value=c?.phone||'';
+ $('phone2').value=c?.phone2||'';
+ $('email').value=c?.email||'';
+ $('company').value=c?.company||'';
+ $('job').value=c?.job||'';
+ $('birthday').value=c?.birthday||'';
+ $('address').value=c?.address||'';
+ $('notes').value=c?.notes||'';
+ $('photo').value='';
+ $('save').disabled=false;
+ message('');
+ $('modal').style.display='flex';
+}
+
+function closeForm(){$('modal').style.display='none';}
+
+function render(favoritesOnly=false){
+ const q=$('search').value.toLowerCase().trim();
+ const data=contacts.filter(c=>
+ (!favoritesOnly||c.favorite)&&
+ [c.name,c.phone,c.phone2,c.email,c.company].join(' ').toLowerCase().includes(q)
+ );
+ $('count').textContent=contacts.length+' contacts';
+ $('list').innerHTML=data.length?data.map(c=>`
+ <div class="contact">
+  ${c.photo
+   ?`<img class="avatar" src="${esc(c.photo)}" alt="">`
+   :`<div class="avatar">${esc((c.name||'?').charAt(0).toUpperCase())}</div>`}
+  <div class="details">
+   <b>${esc(c.name)} ${c.favorite?'⭐':''}</b>
+   <small>${esc(c.phone)}</small>
+   <small>${esc(c.email||c.company||'')}</small>
+  </div>
+  <div class="actions">
+   <button onclick="window.contactCall('${c.id}')">Call</button>
+   <button class="secondary" onclick="window.contactWhatsApp('${c.id}')">WA</button>
+   <button class="secondary" onclick="window.contactEdit('${c.id}')">Edit</button>
+   <button class="secondary star" onclick="window.contactStar('${c.id}')">★</button>
+   <button class="secondary" onclick="window.contactDelete('${c.id}')">×</button>
+  </div>
+ </div>`).join(''):'<div class="empty">Hakuna contacts zilizopatikana.</div>';
+}
+
+function find(id){return contacts.find(c=>c.id===id);}
+
+window.contactCall=id=>{
+ const c=find(id);if(c?.phone)location.href='tel:'+cleanPhone(c.phone);
 };
-let auth=null, fs=null;
-try{ if(window.firebase){ firebase.initializeApp(firebaseConfig); auth=firebase.auth(); } }catch(e){ console.warn('Firebase haipatikani',e); auth=null; }
-try{ if(auth){ fs=firebase.firestore(); fs.settings({ignoreUndefinedProperties:true}); fs.enablePersistence({synchronizeTabs:true}).catch(()=>{}); } }catch(e){ console.warn('Firestore haipatikani',e); fs=null; }
-
-/* ====================== Tafsiri (Kiswahili | English) ====================== */
-const D={
-app:['Contact','Contact'],
-close:['Funga','Close'],cancel:['Ghairi','Cancel'],ok:['Sawa','OK'],save:['Hifadhi','Save'],delete:['Futa','Delete'],edit:['Hariri','Edit'],add:['Ongeza','Add'],remove:['Ondoa','Remove'],
-yes_del:['Futa','Delete'],restore:['Rejesha','Restore'],select_all:['Chagua zote','Select all'],more:['Zaidi','More'],or:['au','or'],email:['Barua pepe','Email'],
-welcome_t:['Karibu kwenye Contact','Welcome to Contact'],
-welcome_p:['Weka PIN au password yako mwenyewe ili kulinda anwani zako. Itaombwa kila unapofungua. Unaweza kuruka na kuiweka baadaye kwenye Mipangilio.','Set your own PIN or password to protect your contacts. It is asked every time you open the app. You can skip and set it later in Settings.'],
-w_set:['Weka na uendelee','Set and continue'],w_skip:['Ruka kwa sasa','Skip for now'],
-pw_ph:['PIN / Password (angalau herufi 4)','PIN / Password (at least 4 characters)'],pw2_ph:['Rudia PIN / Password','Repeat PIN / Password'],pw_one:['PIN / Password','PIN / Password'],
-pw_short:['Iwe angalau herufi 4.','Must be at least 4 characters.'],pw_mismatch:['Hazilingani.','They do not match.'],pw_set_ok:['Password imewekwa','Password set'],pw_removed:['Password imeondolewa','Password removed'],pw_wrong:['Si sahihi.','Incorrect.'],pw_cur_wrong:['Password ya sasa si sahihi.','Current password is incorrect.'],
-locked_t:['Contact imefungwa','Contact is locked'],locked_p:['Weka PIN / password kuendelea','Enter your PIN / password to continue'],unlock:['Fungua','Unlock'],forgot:['Umesahau password?','Forgot password?'],
-forgot_cloud:['Thibitisha kuwa ni wewe kwa akaunti yako ya wingu ili kuondoa password ya Contact (inahitaji mtandao).','Confirm it is you with your cloud account to remove the Contact password (needs internet).'],
-forgot_nocloud:['Hujaunganisha akaunti ya wingu, kwa hivyo password haiwezi kurejeshwa. Njia pekee ni kufuta data ya kifaa hiki na kuanza upya (unaweza kurejesha kutoka backup baadaye).','No cloud account is linked, so the password cannot be recovered. The only way is to erase this device data and start over (you can restore from a backup afterwards).'],
-acc_pw:['Password ya akaunti ya wingu','Cloud account password'],verify_pw:['Thibitisha na password ya akaunti','Verify with account password'],verify_g:['Thibitisha na Google','Verify with Google'],
-wipe_local:['Futa data ya kifaa hiki na uanze upya','Erase this device data and start over'],wipe_local_c:['Hii itafuta anwani ZOTE kwenye kifaa hiki na kuondoa password. Haiwezi kurudishwa (isipokuwa kwa backup). Endelea?','This erases ALL contacts on this device and removes the password. It cannot be undone (except from a backup). Continue?'],
-bio_use:['Tumia alama ya kidole / uso','Use fingerprint / face'],bio_fail:['Uthibitisho umeshindwa.','Verification failed.'],bio_on:['Alama ya kidole imewashwa','Biometric unlock enabled'],bio_off:['Alama ya kidole imezimwa','Biometric unlock disabled'],
-dbfail:['Hifadhi ya kivinjari (IndexedDB) haipatikani. Jaribu kivinjari kingine au toka kwenye hali ya faragha (private).','Browser storage (IndexedDB) is unavailable. Try another browser or leave private mode.'],
-nav_contacts:['Anwani','Contacts'],nav_favs:['Vipendwa','Favorites'],nav_groups:['Makundi','Groups'],nav_settings:['Mipangilio','Settings'],
-search_ph:['Tafuta jina, namba au email','Search name, number or email'],lock_now:['Funga sasa','Lock now'],
-stat_contacts:['Anwani','Contacts'],stat_favs:['Vipendwa','Favorites'],stat_groups:['Makundi','Groups'],
-recent_added:['Zilizoongezwa karibuni','Recently added'],recent_viewed:['Zilizotazamwa karibuni','Recently viewed'],
-n_contacts:['{n} mwasiliani','{n} contact(s)'],
-no_contacts:['Hakuna anwani bado','No contacts yet'],no_contacts_p:['Ongeza mwasiliani wa kwanza au ingiza kutoka faili la VCF/CSV.','Add your first contact or import from a VCF/CSV file.'],
-add_contact:['Unda mwasiliani','Create contact'],import:['Ingiza anwani','Import contacts'],
-no_favs:['Hakuna vipendwa bado. Bonyeza nyota kwenye mwasiliani.','No favorites yet. Tap the star on a contact.'],no_results:['Hakuna aliyepatikana.','No results found.'],
-banner_pw:['Anwani zako hazijalindwa na password.','Your contacts are not protected by a password.'],set_pw:['Weka password','Set password'],
-banner_bk:['Hujafanya backup kwa muda mrefu.','You have not made a backup in a while.'],do_backup:['Fanya backup','Back up now'],
-noname:['(Bila jina)','(No name)'],
-/* chaguo za contact */
-call:['Piga','Call'],sms:['SMS','SMS'],whatsapp:['WhatsApp','WhatsApp'],mail:['Email','Email'],copy_num:['Nakili namba','Copy number'],copied:['Imenakiliwa','Copied'],share:['Shiriki','Share'],
-export_one:['Hamisha (VCF)','Export (VCF)'],to_group:['Weka kwenye kundi','Add to group'],fav_add:['Weka kwenye vipendwa','Add to favorites'],fav_rem:['Ondoa kwenye vipendwa','Remove from favorites'],
-shared_copied:['Taarifa zimenakiliwa (kushiriki hakuungwi mkono hapa)','Details copied (sharing not supported here)'],
-/* fomu */
-new_contact:['Mwasiliani mpya','New contact'],edit_contact:['Hariri mwasiliani','Edit contact'],
-l_first:['Jina la kwanza','First name'],l_middle:['Jina la kati','Middle name'],l_last:['Jina la mwisho','Last name'],l_company:['Kampuni','Company'],l_title:['Cheo / Kazi','Job title'],l_address:['Anwani / Makazi','Address'],l_bday:['Siku ya kuzaliwa','Birthday'],l_web:['Tovuti','Website'],l_notes:['Maelezo','Notes'],
-phones:['Namba za simu','Phone numbers'],emails:['Barua pepe','Email addresses'],add_phone:['Ongeza namba','Add phone'],add_email:['Ongeza email','Add email'],labels:['Makundi / Labels','Groups / Labels'],new_group:['Kundi jipya…','New group…'],
-gallery:['Galari','Gallery'],camera:['Kamera','Camera'],ph_phone:['Namba ya simu','Phone number'],ph_email:['Barua pepe','Email address'],
-t_mobile:['Mobile','Mobile'],t_home:['Home','Home'],t_work:['Work','Work'],t_other:['Other','Other'],
-f_need:['Weka angalau jina, namba au email.','Enter at least a name, number or email.'],f_email:['Barua pepe si sahihi: {v}','Invalid email: {v}'],f_phone:['Namba si sahihi: {v}','Invalid phone number: {v}'],f_photo:['Picha haikufunguka.','The photo could not be opened.'],
-dup_phone:['Namba hii tayari ipo kwa "{n}". Hifadhi hata hivyo?','This number already belongs to "{n}". Save anyway?'],dup_title:['Namba inajirudia','Duplicate number'],
-saved:['Imehifadhiwa','Saved'],
-/* futa */
-del_title:['Futa mwasiliani?','Delete contact?'],del_msg:['"{n}" atahamishiwa kwenye Recycle Bin kwa siku 30. Unaweza kumrejesha.','"{n}" will be moved to the Recycle Bin for 30 days. You can restore it.'],
-del_many:['Futa {n} wawasiliani?','Delete {n} contacts?'],moved_trash:['Imehamishiwa Recycle Bin','Moved to Recycle Bin'],undo:['Rudisha','Undo'],
-/* groups */
-groups_t:['Makundi','Groups'],new_grp:['Kundi jipya','New group'],grp_name:['Jina la kundi','Group name'],rename:['Badilisha jina','Rename'],del_grp:['Futa kundi','Delete group'],
-del_grp_t:['Futa kundi "{n}"?','Delete group "{n}"?'],del_grp_m:['Kundi litafutwa lakini wawasiliani wake hawatafutwa.','The group is removed but its contacts are NOT deleted.'],
-grp_exists:['Kundi hilo lipo tayari.','That group already exists.'],grp_empty:['Hakuna makundi bado. Tengeneza la kwanza.','No groups yet. Create your first one.'],
-grp_done:['Makundi yamesasishwa','Groups updated'],add_members:['Ongeza wanachama','Add members'],grp_none:['Hakuna wa kuongeza.','Nobody left to add.'],
-grp_pick:['Chagua makundi','Choose groups'],apply:['Tumia','Apply'],
-/* chagua */
-selected:['{n} wamechaguliwa','{n} selected'],
-/* import/export */
-imp_title:['Ingiza anwani','Import contacts'],imp_none:['Hakuna anwani zilizopatikana kwenye faili hilo.','No contacts were found in that file.'],imp_big:['Faili ni kubwa mno (zaidi ya MB 20).','File is too large (over 20 MB).'],imp_bad:['Faili "{f}" haisomeki: {e}','File "{f}" could not be read: {e}'],imp_type:['Aina ya faili haikubaliki: {f}','Unsupported file type: {f}'],
-imp_sum:['Zinapatikana: {a} · Mpya: {b} · Zinazojirudia: {c}','Found: {a} · New: {b} · Duplicates: {c}'],imp_skip:['Ruka zinazojirudia (inapendekezwa)','Skip duplicates (recommended)'],imp_go:['Ingiza','Import'],
-imp_ok:['Zimeingizwa {n}','{n} imported'],imp_ok2:['Zimeingizwa {n}, zilizojirudia {d} zimerukwa','{n} imported, {d} duplicates skipped'],
-imp_src:['Faili (VCF / CSV)','File (VCF / CSV)'],imp_pick:['Chagua kutoka kwenye simu (Android)','Pick from phone contacts (Android)'],imp_pick_s:['Utaulizwa ruhusa; ni zile utakazochagua tu zitasomwa','You will be asked for permission; only the contacts you choose are read'],
-exp_all:['Hamisha zote (VCF)','Export all (VCF)'],exp_csv:['Hamisha zote (CSV)','Export all (CSV)'],exp_sel:['Hamisha waliochaguliwa','Export selected'],exp_ok:['Imehamishwa: {f} ({n})','Exported: {f} ({n})'],exp_none:['Hakuna anwani za kuhamisha.','No contacts to export.'],
-/* backup */
-backup:['Backup','Backup'],backup_s:['Hifadhi nakala ya data yote kwenye kifaa','Save a copy of all your data to this device'],backup_last:['Backup ya mwisho: {d}','Last backup: {d}'],backup_never:['Hujawahi kufanya backup','You have never made a backup'],
-bk_pass:['Nywila ya kusimba (si lazima, acha tupu usisimbe)','Encryption passphrase (optional, leave empty for none)'],bk_msg:['Backup yenye nywila haisomeki bila nywila hiyo — iweke mahali salama.','A passphrase-protected backup cannot be opened without it — keep it safe.'],
-bk_ok:['Backup imehifadhiwa: {f}','Backup saved: {f}'],
-restore_t:['Rejesha kutoka backup','Restore from backup'],restore_s:['Rejesha data kutoka faili la backup','Restore data from a backup file'],
-bk_need_pass:['Backup hii imesimbwa. Weka nywila.','This backup is encrypted. Enter the passphrase.'],bk_bad_pass:['Nywila si sahihi au faili limeharibika.','Wrong passphrase or damaged file.'],bk_invalid:['Hili si faili sahihi la backup la Contact.','This is not a valid Contact backup file.'],
-bk_info:['Backup ya {d}: wawasiliani {n}','Backup from {d}: {n} contacts'],bk_merge:['Unganisha (inapendekezwa) — ongeza zinazokosekana, zilizopo hazifutwi','Merge (recommended) — adds missing ones, nothing existing is deleted'],bk_replace:['Badilisha zote — futa zilizopo kisha weka za backup','Replace all — erase existing, then use the backup'],
-bk_replace_c:['Hii itafuta contacts zote zilizopo sasa na kuweka za backup pekee. Hakikisha una backup ya sasa. Endelea?','This erases all current contacts and uses only the backup. Make sure you have a current backup. Continue?'],
-bk_done:['Imerejeshwa: mpya {a}, zilizosasishwa {b}','Restored: {a} new, {b} updated'],bk_done2:['Imerejeshwa: {n} wawasiliani','Restored: {n} contacts'],
-/* trash */
-trash_t:['Recycle Bin','Recycle Bin'],trash_s:['Zilizofutwa (hukaa siku 30)','Deleted (kept 30 days)'],trash_info:['Contacts zilizofutwa hukaa hapa siku 30 kisha hufutwa kabisa. Contacts zilizofutwa nje ya app hii (mfano kwenye simu yenyewe) haziwezi kurejeshwa na app hii bila backup.','Deleted contacts stay here for 30 days and are then removed permanently. Contacts deleted outside this app (e.g. in the phone itself) cannot be recovered by this app without a backup.'],
-trash_empty:['Recycle Bin ni tupu.','The Recycle Bin is empty.'],days_left:['siku {n} zimebaki','{n} day(s) left'],restored:['Imerejeshwa: {n}','Restored: {n}'],
-del_forever:['Futa kabisa','Delete forever'],del_forever_t:['Futa kabisa {n}?','Delete {n} forever?'],del_forever_m:['Haiwezi kurudishwa.','This cannot be undone.'],empty_trash:['Safisha Recycle Bin','Empty Recycle Bin'],deleted_n:['Zimefutwa: {n}','Deleted: {n}'],
-/* duplicates */
-dups_t:['Duplicates','Duplicates'],dups_s:['Tafuta na unganisha anwani zinazojirudia','Find and merge repeated contacts'],dups_n:['Makundi {n} yanayoweza kuwa duplicates','{n} possible duplicate group(s)'],dups_none:['Hakuna duplicates zilizopatikana.','No duplicates found.'],
-dups_info:['Hakiki kabla ya kuunganisha. Taarifa zote zinahifadhiwa; zinazopingana huwekwa kwenye Maelezo, na zilizounganishwa huhamishiwa Recycle Bin.','Review before merging. All information is kept; conflicting values go into Notes, and merged contacts are moved to the Recycle Bin.'],
-dup_review:['Hakiki na unganisha','Review & merge'],dup_ignore:['Si duplicates','Not duplicates'],merge_t:['Unganisha wawasiliani','Merge contacts'],merge_main:['Kuu','Primary'],merge_pre:['Matokeo yatakavyokuwa:','Result preview:'],merge_go:['Unganisha','Merge'],
-merge_need:['Chagua angalau wawasiliani 2.','Select at least 2 contacts.'],merged_note:['Taarifa nyingine zilizounganishwa:','Other merged details:'],merged_ok:['Wameunganishwa','Merged'],
-/* settings */
-s_look:['Muonekano na lugha','Appearance & language'],s_sec:['Usalama','Security'],s_data:['Data, import na backup','Data, import & backup'],s_cloud:['Akaunti ya wingu (hiari)','Cloud account (optional)'],s_priv:['Faragha','Privacy'],s_about:['Kuhusu app','About'],
-theme:['Mandhari','Theme'],th_auto:['Kiotomatiki','Automatic'],th_light:['Mwanga (Light)','Light'],th_dark:['Giza (Dark)','Dark'],
-lang:['Lugha','Language'],name_order:['Mpangilio wa majina','Name order'],o_first:['Jina la kwanza kwanza','First name first'],o_last:['Jina la mwisho kwanza','Last name first'],
-density:['Msongamano wa orodha','List density'],d_comfy:['Wasaa','Comfortable'],d_compact:['Fupi','Compact'],
-subline:['Onyesha chini ya jina','Show under the name'],sl_phone:['Namba','Number'],sl_email:['Email','Email'],sl_company:['Kampuni','Company'],sl_none:['Hakuna','Nothing'],
-show_photos:['Onyesha picha','Show photos'],cc:['Msimbo wa nchi (kwa WhatsApp)','Country code (for WhatsApp)'],
-pw_title:['PIN / Password ya Contact','Contact PIN / password'],pw_status_on:['Imewekwa','Enabled'],pw_status_off:['Haijawekwa','Not set'],pw_change:['Badilisha password','Change password'],pw_remove:['Ondoa password','Remove password'],
-pw_cur:['Password ya sasa','Current password'],pw_new:['Password mpya','New password'],pw_rep:['Rudia password mpya','Repeat new password'],pw_remove_c:['Ondoa password ya Contact? Mtu yeyote atafungua anwani zako.','Remove the Contact password? Anyone will be able to open your contacts.'],
-autolock:['Funga ukiondoka kwenye app','Lock when leaving the app'],idlelock:['Funga ukiacha kutumia','Lock when idle'],tm_now:['Papo hapo','Immediately'],tm_off:['Zima','Off'],tm_60:['Dakika 1','1 minute'],tm_300:['Dakika 5','5 minutes'],tm_900:['Dakika 15','15 minutes'],
-bio_t:['Alama ya kidole / uso','Fingerprint / face unlock'],bio_s:['Tumia biometric ya simu kufungua (kinga ya app tu)','Use phone biometrics to unlock (app-level only)'],bio_nosup:['Haipatikani kwenye kifaa/kivinjari hiki','Not available on this device/browser'],bio_needpw:['Weka password kwanza','Set a password first'],
-sec_note:['Kumbuka: password inazuia kuona anwani ndani ya app hii. Anwani zimehifadhiwa kwenye hifadhi ya kivinjari bila usimbaji (encryption); mtu mwenye ufikiaji wa kifaa chako na zana za kivinjari anaweza kuzisoma. Backup unaweza kuisimba kwa nywila. Tumia pia kufunga simu.','Note: the password only blocks viewing contacts inside this app. Contacts are stored in browser storage without encryption, so someone with access to your device and browser tools could read them. Backups can be encrypted with a passphrase. Also use your phone lock screen.'],
-lock_btn:['Funga sasa','Lock now'],
-imp_btn_s:['VCF, CSV au kutoka kwenye simu','VCF, CSV or from the phone'],
-open_trash:['Recycle Bin','Recycle Bin'],wipe_c:['Futa anwani zote','Delete all contacts'],wipe_c_s:['Inafuta anwani zote na Recycle Bin','Deletes every contact and the Recycle Bin'],wipe_c_t:['Futa anwani ZOTE?','Delete ALL contacts?'],wipe_c_m:['Haiwezi kurudishwa (isipokuwa kwa backup). Ikiwa umeunganisha wingu, zitafutwa huko pia.','This cannot be undone (except from a backup). If cloud is linked, they are deleted there too.'],
-wipe_a:['Futa data yote ya app','Erase all app data'],wipe_a_s:['Anwani, password, mipangilio — kila kitu','Contacts, password, settings — everything'],wipe_a_t:['Futa data YOTE ya app?','Erase ALL app data?'],wipe_a_m:['Hii inafuta anwani, password na mipangilio kwenye kifaa hiki.','This erases contacts, password and settings on this device.'],
-typeto:['Andika "{w}" kuthibitisha','Type "{w}" to confirm'],w_word:['FUTA','DELETE'],all_wiped:['Anwani zote zimefutwa','All contacts deleted'],
-cloud_why:['Ingia ukitaka anwani zako zihifadhiwe mtandaoni na kusawazishwa kati ya vifaa. Si lazima kutumia Contact.','Sign in if you want your contacts stored online and synced across devices. It is not required to use Contact.'],
-cloud_out:['Hujaingia — anwani ziko kwenye kifaa hiki tu.','Not signed in — contacts stay on this device only.'],cloud_na:['Huduma ya wingu haipatikani sasa (hakuna mtandao au imezuiwa).','Cloud service is unavailable right now (offline or blocked).'],
-cloud_in:['Umeingia kama {e}','Signed in as {e}'],cloud_login:['Ingia / Jisajili','Sign in / Sign up'],cloud_logout:['Toka kwenye akaunti','Sign out'],cloud_logout_c:['Kutoka kwenye akaunti? Anwani zitabaki kwenye kifaa hiki lakini hazitasawazishwa tena.','Sign out? Contacts stay on this device but will no longer sync.'],
-cloud_note:['Wingu husawazisha wawasiliani (pamoja na labels zao). Makundi matupu hayasawazishwi. Unahitaji Firestore Rules kwenye Firebase Console.','Cloud syncs contacts (including their labels). Empty groups are not synced. You need Firestore Rules set in the Firebase Console.'],
-cloud_merge:['Kifaa hiki kina anwani za akaunti nyingine. Ziunganishwe na akaunti hii?','This device has contacts linked to another account. Merge them into this account?'],cloud_signed:['Umeingia. Anwani zinasawazishwa…','Signed in. Syncing contacts…'],
-sy_ok:['☁ Imesawazishwa','☁ Synced'],sy_wait:['☁ Inasubiri mtandao','☁ Waiting for network'],sy_err:['⚠ Haisawazishi','⚠ Not syncing'],sy_off:['Kifaa hiki tu','This device only'],sy_on:['☁ Inasawazisha…','☁ Syncing…'],
-rules_err:['Haisawazishi: weka Firestore Rules kwenye Firebase Console','Not syncing: set Firestore Rules in the Firebase Console'],
-track:['Hifadhi historia ya "zilizotazamwa karibuni"','Keep "recently viewed" history'],clear_viewed:['Futa historia ya zilizotazamwa','Clear recently viewed history'],viewed_cleared:['Historia imefutwa','History cleared'],
-priv_note:['Anwani zako ziko kwenye kifaa hiki (IndexedDB). Hakuna kinachotumwa popote isipokuwa ukiingia kwenye akaunti ya wingu. Picha na maelezo hayashirikiwi na mtu yeyote.','Your contacts live on this device (IndexedDB). Nothing is sent anywhere unless you sign in to the cloud account. Photos and details are not shared with anyone.'],
-version:['Toleo','Version'],install:['Sakinisha kama app','Install as an app'],install_s:['Ongeza Contact kwenye skrini ya nyumbani','Add Contact to your home screen'],install_how:['Kwenye Chrome: menyu ⋮ → "Install app" / "Add to Home screen".','In Chrome: menu ⋮ → "Install app" / "Add to Home screen".'],
-about_note:['Contact inafanya kazi offline baada ya kufunguliwa mara ya kwanza ukiwa na mtandao. Website haiwezi kusoma au kubadilisha contacts za mfumo wa Android moja kwa moja; tumia VCF/CSV au kichagua-contacts cha Chrome.','Contact works offline after the first online visit. A website cannot read or change Android system contacts directly; use VCF/CSV or Chrome\'s contact picker.'],
-/* cloud auth */
-login_t:['Ingia kwenye akaunti','Sign in'],signup_t:['Fungua akaunti','Create account'],login_go:['Ingia','Sign in'],signup_go:['Jisajili','Sign up'],google:['Endelea na Google','Continue with Google'],
-no_acc:['Huna akaunti? Jisajili','No account? Sign up'],has_acc:['Tayari una akaunti? Ingia','Already have an account? Sign in'],acc_forgot:['Umesahau password ya akaunti?','Forgot account password?'],
-reset_sent:['Link ya kubadili password imetumwa.','Password reset link sent.'],need_email:['Andika barua pepe kwanza.','Enter your email first.'],no_net:['Hakuna mtandao. Jaribu tena.','No internet. Try again.'],
-e_cred:['Barua pepe au password si sahihi.','Wrong email or password.'],e_exists:['Barua pepe hii tayari imesajiliwa.','This email is already registered.'],e_weak:['Password iwe angalau herufi 6.','Password must be at least 6 characters.'],e_net:['Hakuna mtandao.','No internet.'],e_dom:['Domain hii haijaruhusiwa kwenye Firebase (Authorized domains).','This domain is not allowed in Firebase (Authorized domains).'],e_many:['Majaribio mengi. Jaribu baadaye.','Too many attempts. Try later.'],e_mail:['Barua pepe si sahihi.','Invalid email.'],e_dis:['Akaunti hii imezimwa.','This account is disabled.'],e_op:['Njia hii ya kuingia haijawashwa kwenye Firebase.','This sign-in method is not enabled in Firebase.'],e_recent:['Ingia tena kisha ujaribu.','Sign in again and retry.'],e_gen:['Hitilafu imetokea. Jaribu tena.','Something went wrong. Please try again.'],
-err_generic:['Hitilafu imetokea. Jaribu tena.','Something went wrong. Please try again.'],
-defgroups:['Familia,Marafiki,Kazi,Dharura,Wateja','Family,Friends,Work,Emergency,Customers'],
-/* maelezo ya contact (merge) */
-birthday:['Siku ya kuzaliwa','Birthday'],
-f_first:['Jina la kwanza','First name'],f_middle:['Jina la kati','Middle name'],f_last:['Jina la mwisho','Last name'],f_company:['Kampuni','Company'],f_title:['Cheo / Kazi','Job title'],f_address:['Anwani','Address'],f_web:['Tovuti','Website'],f_bday:['Siku ya kuzaliwa','Birthday'],
-select:['Chagua','Select'],del_msg_many:['Wawasiliani {n} wataenda Recycle Bin kwa siku 30. Unaweza kuwarejesha.','{n} contacts will go to the Recycle Bin for 30 days. You can restore them.'],
-/* nyingine */
-page_back:['Rudi','Back'],search_none:['Hakuna','None'],
+window.contactWhatsApp=id=>{
+ const c=find(id);if(c?.phone)window.open('https://wa.me/'+cleanPhone(c.phone).replace('+',''),'_blank');
 };
-let P={};
-const t=(k,v)=>{let s=(D[k]||[k,k])[P.lang==='en'?1:0];if(v)for(const x in v)s=s.split('{'+x+'}').join(v[x]);return s};
+window.contactEdit=id=>{const c=find(id);if(c)openForm(c);};
 
-/* ====================== Aikoni (Material paths) ====================== */
-const IC={
-person:'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z',
-star:'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z',
-star_border:'M22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z',
-group:'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z',
-settings:'M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z',
-add:'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z',
-search:'M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z',
-more:'M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z',
-call:'M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z',
-sms:'M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z',
-chat:'M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z',
-mail:'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z',
-edit:'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z',
-delete:'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z',
-close:'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z',
-share:'M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z',
-copy:'M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z',
-lock:'M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z',
-restore:'M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z',
-label:'M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z',
-check:'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z',
-merge:'M17 20.41L18.41 19 15 15.59 13.59 17 17 20.41zM7.5 8H11v5.59L5.59 19 7 20.41l6-6V8h3.5L12 3.5 7.5 8z',
-pin:'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
-web:'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z',
-cake:'M12 6c1.11 0 2-.9 2-2 0-.38-.1-.73-.29-1.03L12 0l-1.71 2.97c-.19.3-.29.65-.29 1.03 0 1.1.9 2 2 2zm4.6 9.99l-1.07-1.07-1.08 1.07c-1.3 1.3-3.58 1.31-4.89 0l-1.07-1.07-1.09 1.07C6.75 16.64 5.88 17 4.96 17c-.73 0-1.4-.23-1.96-.61V21c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-4.61c-.56.38-1.23.61-1.96.61-.92 0-1.79-.36-2.44-1.01zM18 9h-5V7h-2v2H6c-1.66 0-3 1.34-3 3v1.54c0 1.08.88 1.96 1.96 1.96.52 0 1.02-.2 1.38-.57l2.14-2.13 2.13 2.13c.74.74 2.03.74 2.77 0l2.14-2.13 2.13 2.13c.37.37.86.57 1.38.57 1.08 0 1.96-.88 1.96-1.96V12C21 10.34 19.66 9 18 9z',
-note:'M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z',
-biz:'M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z',
-camera:'M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z',
-image:'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z',
-download:'M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z',
-upload:'M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z',
-cloud:'M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z',
-palette:'M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z',
-shield:'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z',
-info:'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z',
-fingerprint:'M17.81 4.47c-.08 0-.16-.02-.23-.06C15.66 3.42 14 3 12.01 3c-1.98 0-3.86.47-5.57 1.41-.24.13-.54.04-.68-.2-.13-.24-.04-.55.2-.68C7.82 2.52 9.86 2 12.01 2c2.13 0 3.99.47 6.03 1.52.25.13.34.43.21.67-.09.18-.26.28-.44.28zM3.5 9.72c-.1 0-.2-.03-.29-.09-.23-.16-.28-.47-.12-.7.99-1.4 2.25-2.5 3.75-3.27C9.98 4.04 14 4.03 17.15 5.65c1.5.77 2.76 1.86 3.75 3.25.16.22.11.54-.12.7-.23.16-.54.11-.7-.12-.9-1.26-2.04-2.25-3.39-2.94-2.87-1.47-6.54-1.47-9.4.01-1.36.7-2.5 1.7-3.4 2.96-.08.14-.23.21-.39.21zm6.25 12.07c-.13 0-.26-.05-.35-.15-.87-.87-1.34-1.43-2.01-2.64-.69-1.23-1.05-2.73-1.05-4.34 0-2.97 2.54-5.39 5.66-5.39s5.66 2.42 5.66 5.39c0 .28-.22.5-.5.5s-.5-.22-.5-.5c0-2.42-2.09-4.39-4.66-4.39-2.57 0-4.66 1.97-4.66 4.39 0 1.44.32 2.77.93 3.85.64 1.15 1.08 1.64 1.85 2.42.19.2.19.51 0 .71-.11.1-.24.15-.37.15zm7.17-1.85c-1.19 0-2.24-.3-3.1-.89-1.49-1.01-2.38-2.65-2.38-4.39 0-.28.22-.5.5-.5s.5.22.5.5c0 1.41.72 2.74 1.94 3.56.71.48 1.54.71 2.54.71.24 0 .64-.03 1.04-.1.27-.05.53.13.58.41.05.27-.13.53-.41.58-.57.11-1.07.12-1.21.12zM14.91 22c-.04 0-.09-.01-.13-.02-1.59-.44-2.63-1.03-3.72-2.1-1.4-1.39-2.17-3.24-2.17-5.22 0-1.62 1.38-2.94 3.08-2.94 1.7 0 3.08 1.32 3.08 2.94 0 1.07.93 1.94 2.08 1.94s2.08-.87 2.08-1.94c0-3.77-3.25-6.83-7.25-6.83-2.84 0-5.44 1.58-6.61 4.03-.39.81-.59 1.76-.59 2.8 0 .78.07 2.01.67 3.61.1.26-.03.55-.29.64-.26.1-.55-.04-.64-.29-.49-1.31-.73-2.61-.73-3.96 0-1.2.23-2.29.68-3.24 1.33-2.79 4.28-4.6 7.51-4.6 4.55 0 8.25 3.51 8.25 7.83 0 1.62-1.38 2.94-3.08 2.94s-3.08-1.32-3.08-2.94c0-1.07-.93-1.94-2.08-1.94s-2.08.87-2.08 1.94c0 1.71.66 3.31 1.87 4.51.95.94 1.86 1.46 3.27 1.85.27.07.42.35.35.61-.05.23-.26.38-.47.38z'
+window.contactStar=async id=>{
+ const c=find(id);if(!c)return;
+ await path().doc(id).update({favorite:!c.favorite});
 };
-const ic=(n,s=24)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true"><path d="${IC[n]||''}"/></svg>`;
 
-/*PURE-START*/
-/* ====================== Kazi safi (data, parsers, merge) ====================== */
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
-const digits=s=>String(s??'').replace(/\D/g,'');
-const S=x=>String(x??'').trim();
-const TM={Simu:'mobile',Kazi:'work',Nyumbani:'home',Nyingine:'other',Binafsi:'home',mobile:'mobile',home:'home',work:'work',other:'other'};
-const nt=x=>TM[x]||'other';
-const nl=a=>Array.isArray(a)?a.map(p=>({t:nt(p&&p.t),v:S(p&&p.v)})).filter(p=>p.v):[];
-const okPhoto=p=>typeof p==='string'&&p.length<700000&&/^data:image\/(png|jpe?g|gif|webp);base64,[A-Za-z0-9+\/=]+$/i.test(p);
-const norm=(r,id)=>({id:S(r.id)||id||uid(),first:S(r.first),middle:S(r.middle),last:S(r.last),company:S(r.company),title:S(r.title),phones:nl(r.phones),emails:nl(r.emails),address:S(r.address),bday:S(r.bday),web:S(r.web),notes:String(r.notes??'').trim(),photo:okPhoto(r.photo)?r.photo:'',labels:Array.isArray(r.labels)?[...new Set(r.labels.map(S).filter(Boolean))]:[],fav:!!r.fav,trashed:+r.trashed||0,created:+r.created||0,updated:+r.updated||0});
-const full=c=>[c.first,c.middle,c.last].filter(Boolean).join(' ');
-const fnName=c=>full(c)||c.company||(c.phones[0]&&c.phones[0].v)||(c.emails[0]&&c.emails[0].v)||'';
-const pk=v=>{const d=digits(v);return d.length<5?'':(d.length>9?d.slice(-9):d)};
-const keysOf=c=>{const k=[];c.phones.forEach(p=>{const x=pk(p.v);if(x)k.push('p:'+x)});c.emails.forEach(e=>{const x=e.v.toLowerCase();if(x)k.push('e:'+x)});const n=full(c).toLowerCase().replace(/\s+/g,' ');if(n.length>=3)k.push('n:'+n);return k};
-function dupClusters(list){
- const par=new Map(list.map(c=>[c.id,c.id]));
- const find=x=>{while(par.get(x)!==x){par.set(x,par.get(par.get(x)));x=par.get(x)}return x};
- const seen=new Map();
- for(const c of list)for(const k of keysOf(c)){if(seen.has(k)){const a=find(seen.get(k)),b=find(c.id);if(a!==b)par.set(a,b)}else seen.set(k,c.id)}
- const g=new Map();for(const c of list){const r=find(c.id);if(!g.has(r))g.set(r,[]);g.get(r).push(c)}
- return [...g.values()].filter(a=>a.length>1)}
-/* kielezo cha duplicates kwa import */
-const idxNew=()=>({p:new Set(),e:new Set(),n:new Map()});
-function idxAdd(ix,c){c.phones.forEach(p=>{const x=pk(p.v);if(x)ix.p.add(x)});c.emails.forEach(e=>ix.e.add(e.v.toLowerCase()));const n=full(c).toLowerCase();if(n)ix.n.set(n,(ix.n.get(n)||false)||(!c.phones.length&&!c.emails.length))}
-function idxHas(ix,c){
- if(c.phones.some(p=>{const x=pk(p.v);return x&&ix.p.has(x)}))return true;
- if(c.emails.some(e=>ix.e.has(e.v.toLowerCase())))return true;
- const n=full(c).toLowerCase();
- if(n&&ix.n.has(n)&&(!c.phones.length&&!c.emails.length||ix.n.get(n)))return true;
- return false}
-/* VCF */
-const ve=s=>String(s||'').replace(/([,;\\])/g,'\\$1').replace(/\r?\n/g,'\\n');
-const fold=l=>{let o='';while(l.length>74){o+=l.slice(0,74)+'\r\n ';l=l.slice(74)}return o+l};
-const vtp=t=>({mobile:'CELL',work:'WORK',home:'HOME'}[t]||'VOICE'),vte=t=>({work:'WORK',home:'HOME'}[t]||'INTERNET');
-function toVCF(list){
- return list.map(c=>{
-  const l=['BEGIN:VCARD','VERSION:3.0',`N:${ve(c.last)};${ve(c.first)};${ve(c.middle)};;`,`FN:${ve(fnName(c))}`];
-  if(c.company)l.push('ORG:'+ve(c.company));if(c.title)l.push('TITLE:'+ve(c.title));
-  c.phones.forEach(p=>l.push(`TEL;TYPE=${vtp(p.t)}:${p.v.replace(/[\r\n]/g,' ')}`));
-  c.emails.forEach(p=>l.push(`EMAIL;TYPE=${vte(p.t)}:${p.v.replace(/[\r\n]/g,' ')}`));
-  if(c.address)l.push('ADR;TYPE=HOME:;;'+ve(c.address)+';;;;');
-  if(/^\d{4}-\d{2}-\d{2}$/.test(c.bday))l.push('BDAY:'+c.bday);
-  if(c.web)l.push('URL:'+c.web.replace(/[\r\n]/g,' '));
-  if(c.notes)l.push('NOTE:'+ve(c.notes));
-  if(c.labels.length)l.push('CATEGORIES:'+c.labels.map(ve).join(','));
-  const pm=(c.photo||'').match(/^data:image\/(\w+);base64,(.+)$/);
-  if(pm)l.push('PHOTO;ENCODING=b;TYPE='+pm[1].toUpperCase().replace('JPG','JPEG')+':'+pm[2]);
-  if(c.fav)l.push('X-FAVORITE:1');
-  l.push('END:VCARD');return l.map(fold).join('\r\n')}).join('\r\n')+'\r\n'}
-const unesc=s=>s.replace(/\\n/gi,'\n').replace(/\\([,;\\])/g,'$1');
-function qp(s){try{const b=[];s.replace(/=([0-9A-F]{2})|([^=])/gi,(m,h,ch)=>{if(h)b.push(parseInt(h,16));else for(const x of new TextEncoder().encode(ch))b.push(x)});return new TextDecoder().decode(new Uint8Array(b))}catch{return s}}
-const vptype=p=>/WORK/.test(p)?'work':/HOME/.test(p)?'home':/CELL|MOBILE|VOICE/.test(p)?'mobile':'other';
-const vetype=p=>/WORK/.test(p)?'work':/HOME|PERSONAL/.test(p)?'home':'other';
-function splitUnescaped(s,ch){const o=[];let b='';for(let i=0;i<s.length;i++){if(s[i]==='\\'){b+=s[i]+(s[i+1]||'');i++}else if(s[i]===ch){o.push(b);b=''}else b+=s[i]}o.push(b);return o}
-function parseVCF(txt){
- txt=txt.replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n').replace(/\n[ \t]/g,'');
- const out=[];
- for(const blk of txt.split(/BEGIN:VCARD/i).slice(1)){
-  const c={id:uid(),first:'',middle:'',last:'',company:'',title:'',phones:[],emails:[],address:'',bday:'',web:'',notes:'',photo:'',labels:[],fav:false,trashed:0,created:Date.now(),updated:Date.now()};let fn='';
-  const L0=blk.split(/END:VCARD/i)[0].split('\n');
-  for(let k=0;k<L0.length;k++){let ln=L0[k];
-   while(/QUOTED-PRINTABLE/i.test(ln.split(':')[0])&&ln.endsWith('=')&&k+1<L0.length)ln=ln.slice(0,-1)+L0[++k];
-   const i=ln.indexOf(':');if(i<1)continue;
-   const P_=ln.slice(0,i).toUpperCase(),n=P_.split(';')[0].split('.').pop();let v=ln.slice(i+1);
-   if(/QUOTED-PRINTABLE/.test(P_))v=qp(v);
-   switch(n){
-    case 'N':{const p=splitUnescaped(v,';').map(unesc);c.last=S(p[0]);c.first=S(p[1]);c.middle=S(p[2]);break}
-    case 'FN':fn=S(unesc(v));break;
-    case 'ORG':c.company=S(unesc(splitUnescaped(v,';')[0]));break;
-    case 'TITLE':c.title=S(unesc(v));break;
-    case 'TEL':if(v.trim())c.phones.push({t:vptype(P_),v:v.replace(/^tel:/i,'').trim()});break;
-    case 'EMAIL':if(v.trim())c.emails.push({t:vetype(P_),v:v.trim()});break;
-    case 'ADR':c.address=splitUnescaped(v,';').map(unesc).map(S).filter(Boolean).join(', ');break;
-    case 'BDAY':{const m=v.replace(/-/g,'').match(/^(\d{4})(\d{2})(\d{2})/);if(m)c.bday=`${m[1]}-${m[2]}-${m[3]}`;break}
-    case 'URL':c.web=v.trim();break;
-    case 'NOTE':c.notes=S(unesc(v));break;
-    case 'CATEGORIES':c.labels=splitUnescaped(v,',').map(unesc).map(S).filter(Boolean);break;
-    case 'X-FAVORITE':case 'X-STARRED':c.fav=/1|true|yes/i.test(v);break;
-    case 'PHOTO':{if(/^data:image\//i.test(v))c.photo=v.trim();else if(/ENCODING=B|BASE64|VALUE=BINARY/.test(P_)||/^[A-Za-z0-9+\/=]{100,}$/.test(v)){const ty=(P_.match(/(?:TYPE=|;)(JPEG|JPG|PNG|GIF)/)||[])[1]||'JPEG';c.photo=`data:image/${ty.toLowerCase().replace('jpg','jpeg')};base64,${v.trim()}`}break}
+window.contactDelete=async id=>{
+ const c=find(id);if(!c)return;
+ if(!confirm('Una uhakika unataka kufuta '+c.name+'?'))return;
+ try{
+  await path().doc(id).delete();
+  if(c.photoPath)await storage.ref(c.photoPath).delete().catch(()=>{});
+ }catch(e){alert('Imeshindikana kufuta: '+e.message);}
+};
+
+$('add').onclick=()=>openForm();
+$('cancel').onclick=closeForm;
+$('search').oninput=()=>render(window.contactFavorites||false);
+$('all').onclick=()=>{window.contactFavorites=false;render(false);};
+$('fav').onclick=()=>{window.contactFavorites=true;render(true);};
+
+$('photo').onchange=e=>{
+ selectedPhoto=e.target.files[0]||null;
+};
+
+$('contactForm').onsubmit=async e=>{
+ e.preventDefault();
+ if(!currentUser)return;
+ const btn=$('save');
+ btn.disabled=true;
+ message('Inahifadhi...');
+
+ try{
+  const data={
+   name:$('name').value.trim(),
+   phone:$('phone').value.trim(),
+   phone2:$('phone2').value.trim(),
+   email:$('email').value.trim(),
+   company:$('company').value.trim(),
+   job:$('job').value.trim(),
+   birthday:$('birthday').value,
+   address:$('address').value.trim(),
+   notes:$('notes').value.trim(),
+   updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  if(!data.name||!data.phone)throw new Error('Jaza jina na namba ya simu.');
+
+  let id=editing||db.collection('_contactIds').doc().id;
+  let photoPath=null;
+  let old=find(id);
+
+  if(selectedPhoto){
+   if(!selectedPhoto.type.startsWith('image/'))throw new Error('Chagua picha sahihi.');
+   if(selectedPhoto.size>5*1024*1024)throw new Error('Picha isizidi 5 MB.');
+   photoPath='users/'+currentUser.uid+'/contacts/'+id+'/'+Date.now();
+   const ref=storage.ref(photoPath);
+   await ref.put(selectedPhoto);
+   data.photo=await ref.getDownloadURL();
+   data.photoPath=photoPath;
+  }else if(old){
+   data.photo=old.photo||'';
+   data.photoPath=old.photoPath||'';
+  }
+
+  if(!editing){
+   data.favorite=false;
+   data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+  }
+
+  await path().doc(id).set(data,{merge:true});
+
+  if(selectedPhoto&&old?.photoPath&&old.photoPath!==photoPath)
+   await storage.ref(old.photoPath).delete().catch(()=>{});
+
+  closeForm();
+ }catch(err){message('Hitilafu: '+err.message);}
+ finally{btn.disabled=false;}
+};
+
+/* VCF import */
+$('import').onclick=()=>{
+ const f=document.createElement('input');
+ f.type='file';f.accept='.vcf,text/vcard';
+ f.onchange=async()=>{
+  const file=f.files[0];if(!file)return;
+  try{
+   const txt=(await file.text()).replace(/\r?\n[ \t]/g,'');
+   const cards=txt.split(/BEGIN:VCARD/i).slice(1);
+   let total=0;
+   for(const card of cards){
+    const name=(card.match(/^FN:(.*)$/im)||[])[1]||'';
+    const phone=(card.match(/^TEL[^:]*:(.*)$/im)||[])[1]||'';
+    const email=(card.match(/^EMAIL[^:]*:(.*)$/im)||[])[1]||'';
+    if(name.trim()&&phone.trim()){
+     await path().add({
+      name:name.trim(),phone:phone.trim(),phone2:'',
+      email:email.trim(),favorite:false,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+     });
+     total++;
+    }
    }
-  }
-  if(!okPhoto(c.photo))c.photo='';
-  if(!c.first&&!c.last&&fn){const p=fn.split(/\s+/);c.first=p.shift()||'';c.last=p.join(' ')}
-  if(c.first||c.last||c.company||c.phones.length||c.emails.length)out.push(norm(c,c.id))}
- return out}
-/* CSV */
-function parseCSV(text){
- text=text.replace(/^\uFEFF/,'');const rows=[];let r=[],f='',q=false;
- const first=text.split(/\r?\n/,1)[0]||'';
- const del=[',',';','\t'].map(d=>[d,first.split(d).length]).sort((a,b)=>b[1]-a[1])[0][0];
- for(let i=0;i<text.length;i++){const ch=text[i];
-  if(q){if(ch==='"'){if(text[i+1]==='"'){f+='"';i++}else q=false}else f+=ch}
-  else if(ch==='"')q=true;
-  else if(ch===del){r.push(f);f=''}
-  else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&text[i+1]==='\n')i++;r.push(f);f='';if(r.some(x=>x!==''))rows.push(r);r=[]}
-  else f+=ch}
- if(f!==''||r.length){r.push(f);if(r.some(x=>x!==''))rows.push(r)}
- return rows}
-const ctype=s=>/work|business|kazi|office/i.test(s)?'work':/home|nyumbani/i.test(s)?'home':/mobile|cell|simu/i.test(s)?'mobile':'other';
-function csvToContacts(rows){
- if(rows.length<2)return [];
- const H=rows[0].map(x=>S(x).toLowerCase());
- const idx=re=>H.map((h,i)=>re.test(h)?i:-1).filter(i=>i>=0);
- const one=re=>idx(re)[0];
- const iF=one(/^(given name|first name|firstname|first)$/),iM=one(/^(middle name|additional name|middle name|middle)$/),iL=one(/^(family name|last name|lastname|surname|last)$/),iN=one(/^(name|full name|display name|contact name|jina)$/);
- const pc=idx(/(phone|mobile|tel|namba|simu)/).filter(i=>!/(label|type)/.test(H[i]));
- const ec=idx(/(e-?mail|barua)/).filter(i=>!/(label|type)/.test(H[i]));
- const iCo=one(/(organi[sz]ation.*name|^company|^organi[sz]ation$|^kampuni)/),iTi=one(/(organi[sz]ation.*title|^job title|^title$|^cheo)/),iNo=one(/^(notes?|maelezo)$/),iBd=one(/(birthday|bday|birth)/),iLb=one(/^(labels?|group membership|categories|groups?)$/),iAd=one(/(address.*formatted|^address|anwani)/),iWb=one(/(website.*value|^website|^url|tovuti)/);
- const labelOf=(i,row)=>{const li=H.indexOf(H[i].replace(/value$/,'label'));const ti=H.indexOf(H[i].replace(/value$/,'type'));return ctype((li>=0&&li!==i?row[li]:'')||(ti>=0&&ti!==i?row[ti]:'')||H[i])};
- const out=[];
- for(const row of rows.slice(1)){
-  const g=i=>i==null?'':S(row[i]);
-  const c={id:uid(),first:g(iF),middle:g(iM),last:g(iL),company:g(iCo),title:g(iTi),phones:[],emails:[],address:g(iAd).replace(/\s*:::\s*/g,'; '),bday:'',web:g(iWb).split(/\s*:::\s*/)[0],notes:g(iNo),photo:'',labels:[],fav:false,trashed:0,created:Date.now(),updated:Date.now()};
-  if(!c.first&&!c.last&&iN!=null&&g(iN)){const p=g(iN).split(/\s+/);c.first=p.shift()||'';c.last=p.join(' ')}
-  for(const i of pc)for(const v of g(i).split(/\s*:::\s*/).filter(Boolean))c.phones.push({t:labelOf(i,row),v});
-  for(const i of ec)for(const v of g(i).split(/\s*:::\s*/).filter(Boolean))c.emails.push({t:/work/i.test(H[i])?'work':'home',v});
-  const bd=g(iBd).replace(/\//g,'-').match(/^(\d{4})-?(\d{2})-?(\d{2})/);if(bd)c.bday=`${bd[1]}-${bd[2]}-${bd[3]}`;
-  c.labels=g(iLb).split(/\s*(?::::|;)\s*/).map(x=>x.replace(/^\*\s*/,'').trim()).filter(x=>x&&!/^my ?contacts$/i.test(x));
-  if(c.first||c.last||c.company||c.phones.length||c.emails.length)out.push(norm(c,c.id))}
- return out}
-const csvq=(v,formula)=>{let s=String(v??'');if(formula&&/^[=@]/.test(s))s="'"+s;return /[",\r\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
-function toCSV(list){
- const mp=Math.max(1,...list.map(c=>c.phones.length)),me=Math.max(1,...list.map(c=>c.emails.length));
- const h=['First Name','Middle Name','Last Name','Organization Name','Organization Title','Birthday','Notes','Labels'];
- for(let i=1;i<=me;i++)h.push(`E-mail ${i} - Label`,`E-mail ${i} - Value`);
- for(let i=1;i<=mp;i++)h.push(`Phone ${i} - Label`,`Phone ${i} - Value`);
- h.push('Address 1 - Formatted','Website 1 - Value');
- const lines=[h.join(',')];
- for(const c of list){const r=[c.first,c.middle,c.last,c.company,c.title,c.bday,c.notes,c.labels.join(' ::: ')].map(x=>csvq(x,true));
-  for(let i=0;i<me;i++)r.push(csvq(c.emails[i]?c.emails[i].t:''),csvq(c.emails[i]?c.emails[i].v:'',true));
-  for(let i=0;i<mp;i++)r.push(csvq(c.phones[i]?c.phones[i].t:''),csvq(c.phones[i]?c.phones[i].v:''));
-  r.push(csvq(c.address,true),csvq(c.web,true));lines.push(r.join(','))}
- return '\uFEFF'+lines.join('\r\n')+'\r\n'}
-/* kuunganisha */
-function mergeC(p,others,lab){
- lab=lab||(k=>k);
- const m={...p,phones:[...p.phones],emails:[...p.emails],labels:[...p.labels]};
- const ps=new Set(m.phones.map(x=>pk(x.v)||x.v)),es=new Set(m.emails.map(x=>x.v.toLowerCase()));
- const extra=[];
- for(const o of others){
-  for(const ph of o.phones){const k=pk(ph.v)||ph.v;if(!ps.has(k)){ps.add(k);m.phones.push(ph)}}
-  for(const em of o.emails){const k=em.v.toLowerCase();if(!es.has(k)){es.add(k);m.emails.push(em)}}
-  for(const l of o.labels)if(!m.labels.includes(l))m.labels.push(l);
-  m.fav=m.fav||o.fav;
-  for(const f of ['first','middle','last','company','title','address','web','bday']){
-   if(!m[f]&&o[f])m[f]=o[f];
-   else if(o[f]&&m[f]&&o[f].toLowerCase()!==m[f].toLowerCase())extra.push(`${lab('f_'+f)}: ${o[f]}`)}
-  if(!m.photo&&o.photo)m.photo=o.photo;
-  if(o.notes&&!m.notes.includes(o.notes))m.notes=[m.notes,o.notes].filter(Boolean).join('\n')}
- if(extra.length)m.notes=[m.notes,lab('merged_note')+'\n'+[...new Set(extra)].join('\n')].filter(Boolean).join('\n\n');
- m.updated=Date.now();return m}
-/*PURE-END*/
-
-/* ====================== Hali ya app ====================== */
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const DEF={lang:'sw',theme:'auto',order:'first',dens:'comfy',sub:'phone',photos:true,cc:'255',away:0,idle:300,track:true,bio:''};
-let db,contacts=[],groupsMeta=[],viewedIds=[],ignoredDups=[],view='contacts',q='',gf=null,sel=new Set(),selMode=false,
-    cur=null,photo='',editing=null,isSignup=false,unlocked=false,hasLock=false,cloudUser=null,lastBackup=0,deferredInstall=null,syncKey='sy_off';
-
-/* ---------- IndexedDB ---------- */
-function openDB(n){return new Promise((ok,no)=>{const r=indexedDB.open(n,1);
- r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains('contacts'))d.createObjectStore('contacts',{keyPath:'id'});if(!d.objectStoreNames.contains('meta'))d.createObjectStore('meta')};
- r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}
-const rq=r=>new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)});
-const st=(n,m='readonly',d=db)=>d.transaction(n,m).objectStore(n);
-const dbAll=()=>rq(st('contacts').getAll());
-const dbPut=c=>rq(st('contacts','readwrite').put(c));
-const dbDel=id=>rq(st('contacts','readwrite').delete(id));
-const getM=k=>rq(st('meta').get(k));
-const setM=(k,v)=>rq(st('meta','readwrite').put(v,k));
-const delM=k=>rq(st('meta','readwrite').delete(k));
-function dbBulk(list){return new Promise((ok,no)=>{const tx=db.transaction('contacts','readwrite');const s=tx.objectStore('contacts');list.forEach(c=>s.put(c));tx.oncomplete=ok;tx.onerror=()=>no(tx.error)})}
-const dbClear=()=>rq(st('contacts','readwrite').clear());
-
-async function migrateOld(){
- if(await getM('migrated'))return;
- try{
-  const last=JSON.parse(localStorage.getItem('contact_last')||'null');
-  if(last&&last.uid){
-   const old=await openDB('contact_'+last.uid);
-   const oc=await rq(st('contacts','readonly',old).getAll());
-   const ol=await rq(st('meta','readonly',old).get('lock'));
-   old.close();
-   if(oc.length&&!contacts.length){await dbBulk(oc.map(c=>norm(c,c.id)))}
-   if(ol&&!await getM('lock'))await setM('lock',ol);
-   await setM('cloudUid',last.uid);
-  }
- }catch(e){console.warn('migrate',e)}
- await setM('migrated',1)}
-
-/* ---------- Hesabu na visaidizi ---------- */
-const act=()=>contacts.filter(c=>!c.trashed);
-const trashed=()=>contacts.filter(c=>c.trashed);
-const nm=c=>{
- if(P.order==='last'&&c.last)return [c.last,[c.first,c.middle].filter(Boolean).join(' ')].filter(Boolean).join(', ');
- return fnName(c)||t('noname')};
-const ini=s=>(Array.from(String(s))[0]||'?').toUpperCase();
-const cols=['#1a73e8','#d93025','#188038','#e37400','#9334e6','#007b83','#c2185b','#5f6368'];
-const colr=s=>cols[[...s].reduce((a,c)=>a+c.charCodeAt(0),0)%cols.length];
-const av=(c,cl='')=>P.photos&&c.photo?`<img class="av ${cl}" src="${E(c.photo)}" alt="">`:`<div class="av ${cl}" style="background:${colr(nm(c))}">${E(ini(nm(c)))}</div>`;
-const COL=new Intl.Collator(undefined,{sensitivity:'base',numeric:true});
-const safeUrl=u=>/^https?:\/\//i.test(u)?u:(/^[\w-]+(\.[\w-]+)+(\/|$|\?)/.test(u)?'https://'+u:'');
-const waNum=v=>{const raw=String(v).trim(),d=digits(v);if(raw.startsWith('+'))return d;if(d.startsWith('00'))return d.slice(2);if(d.startsWith('0'))return (P.cc||'')+d.slice(1);return d};
-const fmtDate=ts=>new Date(ts).toLocaleString(P.lang==='en'?'en-GB':'sw-TZ',{dateStyle:'medium',timeStyle:'short'});
-const day=()=>new Date().toISOString().slice(0,10);
-const groupNames=()=>[...new Set([...groupsMeta,...contacts.flatMap(c=>c.labels)])].sort((a,b)=>COL.compare(a,b));
-const fail=x=>{console.error(x);toast(t('err_generic'),'er')};
-function toast(m,kind,actn){const e=$('#toast');e.className='';e.textContent=m;
- if(kind==='er')e.classList.add('er');if(kind==='sc')e.classList.add('sc');
- if(actn){e.classList.add('act');const b=document.createElement('button');b.textContent=actn.label;b.onclick=()=>{e.classList.remove('on');actn.fn()};e.append(b)}
- void e.offsetWidth;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),actn?6500:3200)}
-const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-async function hash(p,s,v){const en=new TextEncoder();
- if(v===2){const k=await crypto.subtle.importKey('raw',en.encode(p),'PBKDF2',false,['deriveBits']);return hex(await crypto.subtle.deriveBits({name:'PBKDF2',salt:en.encode(s),iterations:150000,hash:'SHA-256'},k,256))}
- return hex(await crypto.subtle.digest('SHA-256',en.encode(s+p)))}
-async function makeLock(p){const salt=uid()+uid();return{v:2,salt,hash:await hash(p,salt,2)}}
-async function checkLock(p){const l=await getM('lock');return !!l&&await hash(p,l.salt,l.v)===l.hash}
-const b64=u8=>{let s='';for(let i=0;i<u8.length;i+=0x8000)s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));return btoa(s)};
-const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-function dl(name,mime,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:mime}));a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
-const readText=f=>f.text();
-const savePrefs=()=>setM('prefs',P);
-const saveGroups=()=>setM('groups',groupsMeta);
-
-/* ---------- i18n na mandhari ---------- */
-function applyStatic(){
- $$('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));
- $$('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));
- $$('[data-al]').forEach(e=>e.setAttribute('aria-label',t(e.dataset.al)));
- $$('[data-svg]').forEach(e=>{e.innerHTML=ic(e.dataset.svg,+(e.dataset.sz||24))});
- $$('.langs button').forEach(b=>b.classList.toggle('on',b.dataset.v===P.lang));
- $('#aSwitch').textContent=t(isSignup?'has_acc':'no_acc');$('#aTitle').textContent=t(isSignup?'signup_t':'login_t');$('#aGo').textContent=t(isSignup?'signup_go':'login_go')}
-function applyPrefs(){
- const h=document.documentElement;h.dataset.theme=P.theme;h.lang=P.lang==='en'?'en':'sw';
- document.body.classList.toggle('compact',P.dens==='compact');
- const dark=P.theme==='dark'||(P.theme==='auto'&&matchMedia('(prefers-color-scheme:dark)').matches);
- $('meta[name=theme-color]').content=dark?'#131314':'#f8fafd';
- applyStatic();$('#fTitle').textContent=t(editing?'edit_contact':'new_contact');
- if(unlocked)render()}
-
-/* ====================== Mtiririko wa kufungua ====================== */
-function showOnly(w){$('#boot').classList.add('hide');$('#app').classList.toggle('hide',w!=='app');$('#lock').classList.toggle('hide',w!=='lock');$('#wel').classList.toggle('hide',w!=='wel');if(w!=='app')$('#idx').classList.add('hide')}
-function openApp(){unlocked=true;showOnly('app');bumpIdle();render()}
-function closeAllDialogs(){$$('dialog[open]').forEach(d=>d.close())}
-function showLock(){
- unlocked=false;closeAllDialogs();$('#toast').classList.remove('on');selMode=false;sel.clear();
- $('#view').innerHTML='';$('#lReset').classList.add('hide');$('#lRpass').value='';$('#lPass').value='';$('#lErr').textContent='';
- $('#lBio').classList.toggle('hide',!P.bio);
- showOnly('lock');setTimeout(()=>{if(!P.bio)$('#lPass').focus();else if(!document.hidden)bioUnlockUI()},120)}
-$('#welForm').onsubmit=async e=>{e.preventDefault();
- const a=$('#wP1').value,b=$('#wP2').value,er=$('#wErr');er.textContent='';
- if(a.length<4){er.textContent=t('pw_short');return}
- if(a!==b){er.textContent=t('pw_mismatch');return}
- await setM('lock',await makeLock(a));await setM('welcomed',1);hasLock=true;$('#wP1').value=$('#wP2').value='';openApp();toast(t('pw_set_ok'),'sc')};
-$('#wSkip').onclick=async()=>{await setM('welcomed',1);hasLock=false;openApp()};
-let fails=0;
-$('#lockForm').onsubmit=async e=>{e.preventDefault();const pi=$('#lPass');
- if(await checkLock(pi.value)){fails=0;pi.value='';openApp()}
- else{fails++;$('#lErr').textContent=t('pw_wrong');pi.disabled=true;await new Promise(r=>setTimeout(r,Math.min(fails,6)*500));pi.disabled=false;pi.value='';pi.focus()}};
-$('#lForgot').onclick=()=>{
- const cu=cloudUser,pw=!!cu&&cu.providerData.some(p=>p.providerId==='password');
- $('#lReset').classList.remove('hide');
- $('#lRtxt').textContent=t(cu?'forgot_cloud':'forgot_nocloud');
- $('#lRpass').classList.toggle('hide',!pw);$('#lRgo').classList.toggle('hide',!cu);
- $('#lRgo').textContent=t(pw?'verify_pw':'verify_g');$('#lRwipe').classList.toggle('hide',!!cu)};
-$('#lRpass').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('#lRgo').click()}};
-$('#lRgo').onclick=async()=>{
- try{const pw=cloudUser.providerData.some(p=>p.providerId==='password');
-  if(pw)await cloudUser.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(cloudUser.email,$('#lRpass').value));
-  else await cloudUser.reauthenticateWithPopup(new firebase.auth.GoogleAuthProvider());
-  await delM('lock');P.bio='';await savePrefs();hasLock=false;openApp();toast(t('pw_removed'),'sc')}
- catch(x){$('#lErr').textContent=aMsg(x)}};
-$('#lRwipe').onclick=async()=>{
- if(!confirm(t('wipe_local_c')))return;
- await dbClear();contacts=[];await delM('lock');P.bio='';await savePrefs();hasLock=false;openApp()};
-
-/* kufunga unapotoka kwenye app / ukiwa idle */
-let hid=0,pickAt=0,idleT;
-const picking=()=>{pickAt=Date.now()};
-function lockIfAway(){if(hasLock&&unlocked&&Date.now()-pickAt>60000)showLock()}
-document.addEventListener('visibilitychange',()=>{
- if(document.hidden){hid=Date.now();if(P.away===0)lockIfAway()}
- else{if(hid&&P.away>0&&Date.now()-hid>=P.away*1000)lockIfAway();hid=0;
-  if(!$('#lock').classList.contains('hide')&&P.bio)bioUnlockUI()}});
-window.addEventListener('pagehide',()=>{if(P.away===0)lockIfAway()});
-function bumpIdle(){clearTimeout(idleT);if(unlocked&&hasLock&&P.idle>0)idleT=setTimeout(()=>{if(unlocked&&hasLock)showLock()},P.idle*1000)}
-['pointerdown','keydown','scroll','touchstart'].forEach(ev=>addEventListener(ev,bumpIdle,{passive:true,capture:true}));
-
-/* ---------- Biometric (WebAuthn — kinga ya app tu) ---------- */
-async function bioSupported(){try{return !!(window.PublicKeyCredential&&PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable&&await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())}catch{return false}}
-async function bioEnable(){
- const cred=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:'Contact'},user:{id:crypto.getRandomValues(new Uint8Array(16)),name:'contact',displayName:'Contact'},pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000}});
- P.bio=b64(new Uint8Array(cred.rawId));await savePrefs()}
-async function bioUnlockUI(){
- try{const c=await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:[{type:'public-key',id:unb64(P.bio)}],userVerification:'required',timeout:60000}});
-  if(c){fails=0;openApp()}}catch(e){if(e&&e.name!=='NotAllowedError')$('#lErr').textContent=t('bio_fail')}}
-
-/* ====================== Akaunti ya wingu (hiari) ====================== */
-const aMsg=e=>{const m={'auth/invalid-credential':'e_cred','auth/wrong-password':'e_cred','auth/user-not-found':'e_cred','auth/email-already-in-use':'e_exists','auth/weak-password':'e_weak','auth/network-request-failed':'e_net','auth/unauthorized-domain':'e_dom','auth/too-many-requests':'e_many','auth/invalid-email':'e_mail','auth/user-disabled':'e_dis','auth/operation-not-allowed':'e_op','auth/requires-recent-login':'e_recent'}[e&&e.code];return t(m||'e_gen')};
-function authMode(s){isSignup=s;$('#aTitle').textContent=t(s?'signup_t':'login_t');$('#aGo').textContent=t(s?'signup_go':'login_go');$('#aSwitch').textContent=t(s?'has_acc':'no_acc');$('#aPass').autocomplete=s?'new-password':'current-password'}
-$('#aSwitch').onclick=()=>authMode(!isSignup);
-if(auth)auth.getRedirectResult().catch(x=>{$('#aErr').textContent=aMsg(x)});
-$('#authForm').onsubmit=async e=>{e.preventDefault();const er=$('#aErr');er.className='err';er.textContent='';
- if(!auth){er.textContent=t('no_net');return}
- const gb=$('#aGo');gb.disabled=true;
- try{const f=isSignup?auth.createUserWithEmailAndPassword:auth.signInWithEmailAndPassword;await f.call(auth,$('#aEmail').value.trim(),$('#aPass').value);$('#aDlg').close();$('#aPass').value='';toast(t('cloud_signed'),'sc')}
- catch(x){er.textContent=aMsg(x)}finally{gb.disabled=false}};
-$('#aGoogle').onclick=async()=>{const er=$('#aErr');er.className='err';er.textContent='';
- if(!auth){er.textContent=t('no_net');return}
- const p=new firebase.auth.GoogleAuthProvider();
- try{await auth.signInWithPopup(p);$('#aDlg').close();toast(t('cloud_signed'),'sc')}
- catch(x){
-  if(['auth/popup-blocked','auth/operation-not-supported-in-this-environment'].includes(x.code)){try{await auth.signInWithRedirect(p)}catch(y){er.textContent=aMsg(y)}}
-  else if(!['auth/popup-closed-by-user','auth/cancelled-popup-request'].includes(x.code))er.textContent=aMsg(x)}};
-$('#aReset').onclick=async()=>{const er=$('#aErr'),m=$('#aEmail').value.trim();
- if(!m){er.className='err';er.textContent=t('need_email');return}
- try{await auth.sendPasswordResetEmail(m);er.className='err ok';er.textContent=t('reset_sent')}catch(x){er.className='err';er.textContent=aMsg(x)}};
-function attachAuth(){
- if(!auth){syncKey='sy_off';return}
- auth.onAuthStateChanged(async u=>{
-  if(u){
-   const prev=await getM('cloudUid');
-   if(prev&&prev!==u.uid&&contacts.length&&!confirm(t('cloud_merge'))){await auth.signOut();return}
-   await setM('cloudUid',u.uid);cloudUser=u;startSync(u)}
-  else{cloudUser=null;stopSync();setSync('sy_off')}
-  if(unlocked&&view==='settings')render()})}
-
-/* ====================== Usawazishaji (Firestore) ====================== */
-let unsub=null,reconciled=false,stok=0;
-function setSync(k,msg){syncKey=k;const e=$('#syncTxt');if(e){e.textContent=t(k);e.title=msg||''}}
-const canCloud=()=>!!(fs&&cloudUser);
-const cdoc=id=>fs.collection('users').doc(cloudUser.uid).collection('contacts').doc(id);
-function cloudErr(e){
- if(e&&e.code==='permission-denied'){setSync('sy_err','permission-denied');toast(t('rules_err'),'er')}
- else if(e&&e.code==='unavailable')setSync('sy_wait');
- else setSync('sy_err',(e&&e.message)||'')}
-const forCloud=c=>{const r={...c};if(JSON.stringify(r).length>900000)r.photo='';return r};
-function cloudPut(c){if(canCloud())cdoc(c.id).set(forCloud(c)).catch(cloudErr)}
-function cloudDel(id){if(canCloud())cdoc(id).set({id,deleted:true,updated:Date.now()}).catch(cloudErr)}
-async function cloudBatch(list,mk){if(!canCloud()||!list.length)return;
- try{for(let i=0;i<list.length;i+=400){const b=fs.batch();list.slice(i,i+400).forEach(c=>b.set(cdoc(c.id),mk(c)));await b.commit()}}catch(e){cloudErr(e)}}
-const cloudBulk=list=>cloudBatch(list,forCloud);
-const cloudWipe=list=>cloudBatch(list,c=>({id:c.id,deleted:true,updated:Date.now()}));
-function stopSync(){stok++;if(unsub){unsub();unsub=null}reconciled=false}
-function startSync(u){
- stopSync();const tk=stok;
- if(!fs){setSync('sy_off');return}
- setSync('sy_on');
- unsub=fs.collection('users').doc(u.uid).collection('contacts').onSnapshot(async snap=>{
-  if(tk!==stok)return;
-  const loc=new Map(contacts.map(c=>[c.id,c])),put=[],del=[];
-  snap.docChanges().forEach(ch=>{
-   if(ch.type==='removed')return;
-   const r=ch.doc.data(),id=ch.doc.id,l=loc.get(id);
-   if(r.deleted){if(l)del.push(id);return}
-   if(!l||(r.updated||0)>(l.updated||0))put.push(norm(r,id))});
-  if(put.length||del.length){
-   try{if(put.length)await dbBulk(put);for(const id of del)await dbDel(id)}catch(e){console.warn(e)}
-   if(tk!==stok)return;
-   const dm=new Set(del),pm=new Map(put.map(c=>[c.id,c]));
-   contacts=contacts.filter(c=>!dm.has(c.id)).map(c=>pm.get(c.id)||c);
-   for(const c of put)if(!loc.has(c.id))contacts.push(c);
-   if(unlocked)render()}
-  if(!reconciled&&!snap.metadata.fromCache){
-   reconciled=true;
-   const m=new Map();snap.docs.forEach(d=>m.set(d.id,d.data()));
-   const up=contacts.filter(c=>{const r=m.get(c.id);return !r||(!r.deleted&&(c.updated||c.created||0)>(r.updated||0))});
-   up.forEach(c=>{if(!c.updated)c.updated=c.created||Date.now()});
-   if(up.length)cloudBulk(up)}
-  setSync(snap.metadata.fromCache||snap.metadata.hasPendingWrites?'sy_wait':'sy_ok')
- },e=>cloudErr(e))}
-window.addEventListener('online',()=>{if(canCloud()&&!unsub)startSync(cloudUser)});
-
-/* ====================== Dialogs za msingi ====================== */
-function ask(o){return new Promise(res=>{const d=$('#cDlg');
- d.innerHTML=`<div class="db"><h3>${E(o.title||'')}</h3>${o.msg?`<p class="muted" style="margin:0 0 6px">${E(o.msg)}</p>`:''}${o.input?`<label for="cIn">${E(o.input.label||'')}</label><input id="cIn" type="${o.input.type||'text'}" value="${E(o.input.value||'')}" autocomplete="off">`:''}${o.must?`<label for="cIn">${E(t('typeto',{w:o.must}))}</label><input id="cIn" autocomplete="off">`:''}<div class="err" id="cErr"></div></div><div class="df"><button class="btn t" data-r="0">${E(t('cancel'))}</button><button class="btn ${o.danger?'dg':'p'}" data-r="1">${E(o.ok||t('ok'))}</button></div>`;
- let done=false;const fin=v=>{if(done)return;done=true;if(d.open)d.close();res(v)};
- d.querySelector('[data-r="0"]').onclick=()=>fin(null);
- d.querySelector('[data-r="1"]').onclick=()=>{const inp=d.querySelector('#cIn');
-  if(o.must&&inp.value.trim().toUpperCase()!==o.must.toUpperCase()){d.querySelector('#cErr').textContent=t('typeto',{w:o.must});return}
-  fin(inp?inp.value:true)};
- d.querySelector('#cIn')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();d.querySelector('[data-r="1"]').click()}});
- d.oncancel=()=>fin(null);d.onclose=()=>fin(null);
- d.showModal();d.querySelector('#cIn')?.focus()})}
-function modal(title,body,foot){
- $('#mBox').innerHTML=`<div class="dh"><b class="dt">${E(title)}</b><button class="ib" data-close aria-label="${E(t('close'))}">${ic('close')}</button></div><div class="db">${body}</div>${foot?`<div class="df">${foot}</div>`:''}`;
- const d=$('#mDlg');if(!d.open)d.showModal()}
-function sheet(title,items){
- $('#shBox').innerHTML=`<div class="sh-t">${E(title)}</div>`+items.map(x=>`<button class="shi ${x.danger?'dgr':''}" data-act="${x.a}" data-id="${E(x.id||'')}" data-sh="1">${ic(x.i,22)}<span>${E(x.l)}</span></button>`).join('');
- $('#sheet').showModal()}
-['#dDlg','#mDlg','#sheet','#aDlg'].forEach(s=>$(s).addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.close()}));
-document.addEventListener('click',e=>{const c=e.target.closest('[data-close]');if(c){const d=c.closest('dialog');if(d)d.close()}});
-
-/* ====================== Michoro (views) ====================== */
-const sortKey=c=>nm(c);
-function matchQ(c){
- const dq=digits(q);
- const hay=(full(c)+' '+c.company+' '+c.title+' '+c.emails.map(e=>e.v).join(' ')+' '+c.labels.join(' ')+' '+c.notes+' '+c.phones.map(p=>p.v).join(' ')).toLowerCase();
- return hay.includes(q)||(dq.length>=3&&/^[\d\s+()-]+$/.test(q)&&c.phones.some(p=>digits(p.v).includes(dq)))}
-function subLine(c){const m={phone:c.phones[0]?.v,email:c.emails[0]?.v,company:c.company,none:''};const s=m[P.sub];return s||(P.sub==='none'?'':(c.phones[0]?.v||c.emails[0]?.v||c.company||''))}
-function rowH(c,o={}){
- const ck=sel.has(c.id),show=selMode||o.check;
- return `<div class="row${ck?' sel':''}" data-act="${o.act||'open'}" data-id="${E(c.id)}" tabindex="0" role="button">${show?`<span class="cb ${ck?'on':''}">${ck?ic('check',16):''}</span>`:''}${av(c)}<div class="nmc"><b>${E(nm(c))}</b><small>${E(o.sub!=null?o.sub:subLine(c))}</small></div>${show||o.noBtn?'':`<button class="ib sm star ${c.fav?'on':''}" data-act="fav" data-id="${E(c.id)}" aria-label="${E(t(c.fav?'fav_rem':'fav_add'))}">${ic(c.fav?'star':'star_border',22)}</button><button class="ib sm" data-act="menu" data-id="${E(c.id)}" aria-label="${E(t('more'))}">${ic('more',22)}</button>`}</div>`}
-function listH(list,alpha){
- let h='',L='';const letters=[];
- for(const c of list){const f0=ini(nm(c)),ch=/\p{L}/u.test(f0)?f0:'#';
-  if(alpha&&ch!==L){L=ch;letters.push(ch);h+=`<div class="ltr" id="L-${ch.codePointAt(0)}">${E(ch)}</div>`}
-  h+=rowH(c)}
- return {h,letters}}
-function emptyH(icn,title,msg,btns=''){return `<div class="empty"><div class="big">${ic(icn,44)}</div><h3>${E(title)}</h3><p>${E(msg)}</p>${btns}</div>`}
-function selBar(){return `<div class="selbar"><button class="ib" data-act="selcancel" aria-label="${E(t('cancel'))}">${ic('close')}</button><b>${E(t('selected',{n:sel.size}))}</b><button class="ib" data-act="selall" title="${E(t('select_all'))}" aria-label="${E(t('select_all'))}">${ic('check')}</button><button class="ib" data-act="selfav" aria-label="${E(t('fav_add'))}">${ic('star')}</button><button class="ib" data-act="selgrp" aria-label="${E(t('to_group'))}">${ic('label')}</button><button class="ib" data-act="selexp" aria-label="${E(t('exp_sel'))}">${ic('download')}</button><button class="ib" data-act="seldel" aria-label="${E(t('delete'))}">${ic('delete')}</button></div>`}
-function banners(){
- let h='';
- if(!hasLock)h+=`<div class="banner"><span>${E(t('banner_pw'))}</span><button class="btn" data-act="setpass">${E(t('set_pw'))}</button></div>`;
- if(contacts.length>=3&&Date.now()-lastBackup>30*864e5)h+=`<div class="banner"><span>${E(t('banner_bk'))}</span><button class="btn" data-act="backup">${E(t('do_backup'))}</button></div>`;
- return h}
-function miniRow(list){return `<div class="hs">${list.map(c=>`<button class="mini" data-act="open" data-id="${E(c.id)}">${av(c)}<span>${E(P.order==='last'?(c.last||c.first||nm(c)):(c.first||nm(c)))}</span></button>`).join('')}</div>`}
-function vContacts(){
- const all=act();let list=all;
- if(gf)list=list.filter(c=>c.labels.includes(gf));
- if(q)list=list.filter(matchQ);
- list=list.slice().sort((a,b)=>COL.compare(sortKey(a),sortKey(b)));
- let h='';
- if(selMode)h+=selBar();
- if(!q&&!gf&&!selMode){
-  h+=`<div class="top"><h2>${E(t('nav_contacts'))}</h2><small class="muted">${E(t('n_contacts',{n:all.length}))} · <span id="syncTxt">${E(t(syncKey))}</span></small></div>`+banners();
-  h+=`<div class="dash"><button class="stat" data-act="nav" data-v="contacts"><b>${all.length}</b><span>${E(t('stat_contacts'))}</span></button><button class="stat" data-act="nav" data-v="favs"><b>${all.filter(c=>c.fav).length}</b><span>${E(t('stat_favs'))}</span></button><button class="stat" data-act="nav" data-v="groups"><b>${groupNames().length}</b><span>${E(t('stat_groups'))}</span></button></div>`;
-  const ra=all.slice().sort((a,b)=>(b.created||0)-(a.created||0)).slice(0,8);
-  if(ra.length>1)h+=`<div class="sec-t">${E(t('recent_added'))}</div>`+miniRow(ra);
-  const rv=viewedIds.map(id=>all.find(c=>c.id===id)).filter(Boolean).slice(0,8);
-  if(rv.length&&P.track)h+=`<div class="sec-t">${E(t('recent_viewed'))}</div>`+miniRow(rv)}
- if(gf)h+=`<div class="top"><h2>${E(gf)}</h2><small class="muted">${E(t('n_contacts',{n:list.length}))}</small></div><div class="chipbar"><span class="chip on">${ic('label',16)} ${E(gf)} <button data-act="clrgf" aria-label="${E(t('close'))}">${ic('close',16)}</button></span><button class="btn t" data-act="addmembers">${ic('add',20)} ${E(t('add_members'))}</button></div>`;
- if(q)h+=`<div class="top"><h2>${E(t('n_contacts',{n:list.length}))}</h2></div>`;
- if(!list.length){h+=q||gf?emptyH('search',t('no_results'),''):emptyH('person',t('no_contacts'),t('no_contacts_p'),`<button class="btn p" data-act="newc">${ic('add',20)}${E(t('add_contact'))}</button><button class="btn o" data-act="imp">${ic('upload',20)}${E(t('import'))}</button>`);return h}
- if(!q&&!gf&&!selMode)h+=`<div class="sec-t">${E(t('nav_contacts'))} A–Z</div>`;
- const r=listH(list,true);view_letters=r.letters;return h+r.h}
-let view_letters=[];
-function vFavs(){
- let list=act().filter(c=>c.fav);if(q)list=list.filter(matchQ);
- list.sort((a,b)=>COL.compare(sortKey(a),sortKey(b)));
- let h=selMode?selBar():`<div class="top"><h2>${E(t('nav_favs'))}</h2><small class="muted">${E(t('n_contacts',{n:list.length}))}</small></div>`;
- if(!list.length)return h+emptyH('star_border',q?t('no_results'):t('no_favs'),'');
- const r=listH(list,true);view_letters=r.letters;return h+r.h}
-function vGroups(){
- const names=groupNames();
- let h=`<div class="top"><h2>${E(t('groups_t'))}</h2><button class="btn t" data-act="newgroup">${ic('add',20)}${E(t('new_grp'))}</button></div>`;
- if(!names.length)return h+emptyH('group',t('grp_empty'),'',`<button class="btn p" data-act="newgroup">${ic('add',20)}${E(t('new_grp'))}</button>`);
- return h+names.map(g=>{const n=act().filter(c=>c.labels.includes(g)).length;return `<div class="gcard" data-act="grpopen" data-g="${E(g)}" role="button" tabindex="0"><span class="gic">${ic('label')}</span><div class="nmc"><b>${E(g)}</b><small>${E(t('n_contacts',{n}))}</small></div><button class="ib sm" data-act="grpmenu" data-g="${E(g)}" aria-label="${E(t('more'))}">${ic('more',22)}</button></div>`}).join('')}
-function vTrash(){
- const list=trashed().sort((a,b)=>b.trashed-a.trashed);
- let h=`<div class="top"><button class="ib" data-act="nav" data-v="settings" aria-label="${E(t('page_back'))}">${ic('close')}</button><h2 style="flex:1">${E(t('trash_t'))}</h2></div><p class="muted" style="padding:0 20px 6px;margin:0;font-size:13.5px">${E(t('trash_info'))}</p>`;
- if(!list.length)return h+emptyH('delete',t('trash_empty'),'');
- h+=`<div class="selbar"><b>${E(t('selected',{n:sel.size}))}</b><button class="ib" data-act="tselall" aria-label="${E(t('select_all'))}">${ic('check')}</button><button class="ib" data-act="trestsel" aria-label="${E(t('restore'))}">${ic('restore')}</button><button class="ib" data-act="tdelsel" aria-label="${E(t('del_forever'))}">${ic('delete')}</button><button class="btn t" data-act="tempty">${E(t('empty_trash'))}</button></div>`;
- return h+list.map(c=>rowH(c,{act:'tsel',check:true,noBtn:true,sub:t('days_left',{n:Math.max(0,30-Math.floor((Date.now()-c.trashed)/864e5))})})).join('')}
-function dupList(){const ig=new Set(ignoredDups);return dupClusters(act()).filter(g=>!ig.has(g.map(c=>c.id).sort().join('|')))}
-function vDups(){
- const cl=dupList();
- let h=`<div class="top"><button class="ib" data-act="nav" data-v="settings" aria-label="${E(t('page_back'))}">${ic('close')}</button><h2 style="flex:1">${E(t('dups_t'))}</h2></div><p class="muted" style="padding:0 20px 6px;margin:0;font-size:13.5px">${E(t('dups_info'))}</p>`;
- if(!cl.length)return h+emptyH('check',t('dups_none'),'');
- return h+`<div class="sec-t">${E(t('dups_n',{n:cl.length}))}</div>`+cl.map((g,i)=>`<div class="dupc">${g.map(c=>`<div class="nmc"><b>${E(nm(c))}</b><small>${E([c.phones[0]?.v,c.emails[0]?.v].filter(Boolean).join(' · '))}</small></div>`).join('')}<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn p" data-act="dupreview" data-i="${i}">${ic('merge',20)}${E(t('dup_review'))}</button><button class="btn t" data-act="dupignore" data-i="${i}">${E(t('dup_ignore'))}</button></div></div>`).join('')}
-function li(icn,label,sub,a,cls=''){return `<button class="li ${cls}" data-act="${a}"><span class="lic">${ic(icn,22)}</span><span class="lt"><b>${E(label)}</b>${sub?`<small>${E(sub)}</small>`:''}</span></button>`}
-function vSettings(){
- const o=(k,arr)=>arr.map(([v,l])=>`<option value="${E(v)}"${String(P[k])===String(v)?' selected':''}>${E(l)}</option>`).join('');
- const sr=(k,label,arr)=>`<div class="srow"><label for="p_${k}">${E(label)}</label><select id="p_${k}" data-pref="${k}">${o(k,arr)}</select></div>`;
- const tg=(k,label)=>`<div class="srow"><div>${E(label)}</div><label class="sw"><input type="checkbox" data-pref="${k}" ${P[k]?'checked':''} aria-label="${E(label)}"><i></i></label></div>`;
- const tmOpts=z=>[[0,t(z?'tm_off':'tm_now')],[60,t('tm_60')],[300,t('tm_300')],[900,t('tm_900')]];
- const dupN=dupList().length;
- let h=`<div class="top"><h2>${E(t('nav_settings'))}</h2></div>`;
- h+=`<div class="scard"><h4>${E(t('s_look'))}</h4>`
-  +sr('theme',t('theme'),[['auto',t('th_auto')],['light',t('th_light')],['dark',t('th_dark')]])
-  +sr('lang',t('lang'),[['sw','Kiswahili'],['en','English']])
-  +sr('order',t('name_order'),[['first',t('o_first')],['last',t('o_last')]])
-  +sr('dens',t('density'),[['comfy',t('d_comfy')],['compact',t('d_compact')]])
-  +sr('sub',t('subline'),[['phone',t('sl_phone')],['email',t('sl_email')],['company',t('sl_company')],['none',t('sl_none')]])
-  +tg('photos',t('show_photos'))
-  +`<div class="srow"><label for="p_cc">${E(t('cc'))}</label><input id="p_cc" type="text" inputmode="numeric" data-pref="cc" value="${E(P.cc)}" style="max-width:100px"></div></div>`;
- h+=`<div class="scard"><h4>${E(t('s_sec'))}</h4><div class="srow"><div><b>${E(t('pw_title'))}</b><small>${E(t(hasLock?'pw_status_on':'pw_status_off'))}</small></div></div>`
-  +li('lock',t(hasLock?'pw_change':'set_pw'),'','setpass')
-  +(hasLock?li('lock',t('lock_btn'),'','locknow'):'')
-  +sr('away',t('autolock'),tmOpts(false))+sr('idle',t('idlelock'),tmOpts(true))
-  +`<div class="srow"><div><b>${E(t('bio_t'))}</b><small id="bioSub">${E(t('bio_s'))}</small></div><label class="sw"><input type="checkbox" id="bioTg" data-act="biotg" ${P.bio?'checked':''} aria-label="${E(t('bio_t'))}"><i></i></label></div>`
-  +`<p class="muted" style="font-size:12.5px">${E(t('sec_note'))}</p></div>`;
- h+=`<div class="scard"><h4>${E(t('s_data'))}</h4>`
-  +li('upload',t('import'),t('imp_btn_s'),'imp')
-  +li('download',t('exp_all'),'','expall')+li('download',t('exp_csv'),'','expcsv')
-  +li('cloud',t('backup'),t(lastBackup?'backup_last':'backup_never',{d:fmtDate(lastBackup)})+' · '+t('backup_s'),'backup')
-  +li('restore',t('restore_t'),t('restore_s'),'restore')
-  +li('delete',t('trash_t'),t('n_contacts',{n:trashed().length}),'trashgo')
-  +li('merge',t('dups_t'),dupN?t('dups_n',{n:dupN}):t('dups_s'),'dupsgo')
-  +li('delete',t('wipe_c'),t('wipe_c_s'),'wipec','dgr')+li('delete',t('wipe_a'),t('wipe_a_s'),'wipea','dgr')+`</div>`;
- h+=`<div class="scard"><h4>${E(t('s_cloud'))}</h4>`
-  +(cloudUser?`<p>${E(t('cloud_in',{e:cloudUser.email||''}))}<br><small class="muted" id="syncTxt">${E(t(syncKey))}</small></p>${li('cloud',t('cloud_logout'),'','cloudout')}`
-   :`<p class="muted">${E(t(auth?'cloud_out':'cloud_na'))}</p>${auth?li('cloud',t('cloud_login'),'','cloudlogin'):''}`)
-  +`<p class="muted" style="font-size:12.5px">${E(t('cloud_note'))}</p></div>`;
- h+=`<div class="scard"><h4>${E(t('s_priv'))}</h4>`+tg('track',t('track'))+li('delete',t('clear_viewed'),'','clearviewed')+`<p class="muted" style="font-size:12.5px">${E(t('priv_note'))}</p></div>`;
- h+=`<div class="scard"><h4>${E(t('s_about'))}</h4><div class="srow"><div>${E(t('app'))}<small>${E(t('version'))} ${VERSION}</small></div></div>`
-  +(deferredInstall?li('download',t('install'),t('install_s'),'install'):`<p class="muted" style="font-size:12.5px">${E(t('install_how'))}</p>`)
-  +`<p class="muted" style="font-size:12.5px">${E(t('about_note'))}</p></div>`;
- return h}
-
-let sr_t;
-function render(){
- if(!unlocked)return;
- const nv=view==='trash'||view==='dups'?'settings':view;
- $$('#nav .nb').forEach(b=>{const on=b.dataset.v===nv;b.classList.toggle('on',on);b.setAttribute('aria-current',on?'page':'false')});
- $('#search').classList.toggle('hide',!(view==='contacts'||view==='favs'));
- $('#lockBtn').classList.toggle('hide',!hasLock);
- $('#fab').classList.toggle('hide',!(view==='contacts'||view==='favs'||view==='groups')||selMode);
- view_letters=[];
- const V={contacts:vContacts,favs:vFavs,groups:vGroups,settings:vSettings,trash:vTrash,dups:vDups}[view]||vContacts;
- const m=$('#main'),keep=m.scrollTop;
- $('#view').innerHTML=V();
- m.scrollTop=keep;
- const ix=$('#idx');
- if((view==='contacts'||view==='favs')&&view_letters.length>10){ix.innerHTML=view_letters.map(l=>`<button data-act="jump" data-l="${l.codePointAt(0)}" aria-label="${E(l)}">${E(l)}</button>`).join('');ix.classList.remove('hide')}else ix.classList.add('hide');
- if(view==='settings')bioRefresh()}
-async function bioRefresh(){
- const tg=$('#bioTg');if(!tg)return;
- const ok=await bioSupported();
- if(!ok){tg.disabled=true;$('#bioSub').textContent=t('bio_nosup')}
- else if(!hasLock){tg.disabled=true;$('#bioSub').textContent=t('bio_needpw')}}
-function setView(v,opt={}){
- if(view!==v&&!opt.pop)history.pushState({v},'');
- view=v;sel.clear();selMode=false;if(!opt.keepGf)gf=null;
- $('#main').scrollTop=0;render()}
-window.addEventListener('popstate',e=>{if(!unlocked)return;const d=$$('dialog[open]');if(d.length){d.at(-1).close();history.pushState({v:view},'');return}
- setView((e.state&&e.state.v)||'contacts',{pop:true})});
-history.replaceState({v:'contacts'},'');
-
-/* ====================== Utunzaji wa mwasiliani ====================== */
-async function save(c){c.updated=Date.now();await dbPut(c);cloudPut(c)}
-async function saveMany(list){const now=Date.now();list.forEach(c=>c.updated=now);await dbBulk(list);cloudBulk(list)}
-async function hardDelete(ids){const s=new Set(ids);for(const id of ids){await dbDel(id);cloudDel(id)}contacts=contacts.filter(c=>!s.has(c.id));viewedIds=viewedIds.filter(i=>!s.has(i));await setM('viewed',viewedIds)}
-async function trashList(list){const now=Date.now();list.forEach(c=>c.trashed=now);await saveMany(list)}
-async function purgeOld(){const old=contacts.filter(c=>c.trashed&&Date.now()-c.trashed>30*864e5);if(old.length)await hardDelete(old.map(c=>c.id))}
-function findDupPhone(c){
- const mine=new Set(c.phones.map(p=>pk(p.v)).filter(Boolean));if(!mine.size)return null;
- return act().find(o=>o.id!==c.id&&o.phones.some(p=>mine.has(pk(p.v))))||null}
-async function viewed(id){if(!P.track)return;viewedIds=[id,...viewedIds.filter(x=>x!==id)].slice(0,20);await setM('viewed',viewedIds)}
-
-/* ---------- Profile ---------- */
-function profileH(c){
- const it=(i,body,extra='')=>`<div class="it">${ic(i,22)}<div>${body}</div>${extra}</div>`;
- const p0=c.phones[0];
- let h=`<div class="dh"><button class="ib" data-close aria-label="${E(t('close'))}">${ic('close')}</button><span style="display:flex"><button class="ib" data-act="cfav" aria-label="${E(t(c.fav?'fav_rem':'fav_add'))}" style="${c.fav?'color:#f9ab00':''}">${ic(c.fav?'star':'star_border')}</button><button class="ib" data-act="cedit" aria-label="${E(t('edit'))}">${ic('edit')}</button><button class="ib" data-act="cshare" aria-label="${E(t('share'))}">${ic('share')}</button><button class="ib" data-act="cmore" aria-label="${E(t('more'))}">${ic('more')}</button></span></div><div class="db"><div class="hero">${av(c,'big')}<h3>${E(nm(c))}</h3><p>${E([c.title,c.company].filter(Boolean).join(' · '))}</p>`
- +`<div class="acts">${p0?`<a class="btn o" href="tel:${E(p0.v)}">${ic('call',22)}${E(t('call'))}</a><a class="btn o" href="sms:${E(p0.v)}">${ic('sms',22)}${E(t('sms'))}</a>`:''}${p0&&digits(p0.v).length>=9?`<a class="btn o" target="_blank" rel="noopener" href="https://wa.me/${E(waNum(p0.v))}">${ic('chat',22)}${E(t('whatsapp'))}</a>`:''}${c.emails[0]?`<a class="btn o" href="mailto:${E(c.emails[0].v)}">${ic('mail',22)}${E(t('mail'))}</a>`:''}</div></div>`;
- c.phones.forEach((p,i)=>h+=it('call',`<a href="tel:${E(p.v)}">${E(p.v)}</a><small>${E(t('t_'+p.t))}</small>`,`<span style="display:flex"><a class="ib" href="sms:${E(p.v)}" aria-label="${E(t('sms'))}">${ic('sms',20)}</a>${digits(p.v).length>=9?`<a class="ib" target="_blank" rel="noopener" href="https://wa.me/${E(waNum(p.v))}" aria-label="${E(t('whatsapp'))}">${ic('chat',20)}</a>`:''}<button class="ib" data-act="copy" data-v="${E(p.v)}" aria-label="${E(t('copy_num'))}">${ic('copy',20)}</button></span>`));
- c.emails.forEach(p=>h+=it('mail',`<a href="mailto:${E(p.v)}">${E(p.v)}</a><small>${E(t('t_'+p.t))}</small>`,`<button class="ib" data-act="copy" data-v="${E(p.v)}" aria-label="${E(t('copy_num'))}">${ic('copy',20)}</button>`));
- if(c.company||c.title)h+=it('biz',E([c.title,c.company].filter(Boolean).join(', ')));
- if(c.address)h+=it('pin',`<a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.address)}">${E(c.address)}</a>`);
- if(c.bday)h+=it('cake',E(c.bday)+`<small>${E(t('birthday'))}</small>`);
- if(c.web)h+=it('web',safeUrl(c.web)?`<a href="${E(safeUrl(c.web))}" target="_blank" rel="noopener">${E(c.web)}</a>`:E(c.web));
- if(c.labels.length)h+=it('label',`<div class="chips">${c.labels.map(l=>`<button class="chip" data-act="grpopen" data-g="${E(l)}">${E(l)}</button>`).join('')}</div>`);
- if(c.notes)h+=it('note',E(c.notes).replace(/\n/g,'<br>'));
- return h+'</div>'}
-async function showDetail(id,noTrack){
- const c=contacts.find(x=>x.id===id);if(!c)return;cur=c;
- $('#dBox').innerHTML=profileH(c);if(!$('#dDlg').open)$('#dDlg').showModal();
- if(!noTrack)viewed(id)}
-$('#dDlg').addEventListener('close',()=>{if(unlocked)render()});
-function plainText(c){return [nm(c),...c.phones.map(p=>p.v),...c.emails.map(e=>e.v),c.company,c.address].filter(Boolean).join('\n')}
-async function shareContact(c){
- try{const f=new File([toVCF([c])],(nm(c).replace(/[^\w\- ]+/g,'')||'contact')+'.vcf',{type:'text/vcard'});
-  if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:nm(c)});return}
-  if(navigator.share){await navigator.share({title:nm(c),text:plainText(c)});return}
- }catch(e){if(e&&e.name==='AbortError')return}
- try{await navigator.clipboard.writeText(plainText(c));toast(t('shared_copied'))}catch{toast(t('err_generic'),'er')}}
-function exportList(list,name){
- if(!list.length){toast(t('exp_none'),'er');return}
- const fn=name||('contacts-'+day()+'.vcf');dl(fn,'text/vcard',toVCF(list));toast(t('exp_ok',{f:fn,n:list.length}),'sc')}
-
-/* ---------- Fomu ---------- */
-function rowEl(kind,tp,v){const d=document.createElement('div');d.className='rw';const opts=kind==='ph'?['mobile','home','work','other']:['home','work','other'];
- d.innerHTML=`<select aria-label="type">${opts.map(x=>`<option value="${x}"${x===tp?' selected':''}>${E(t('t_'+x))}</option>`).join('')}</select><input type="${kind==='ph'?'tel':'email'}" value="${E(v||'')}" placeholder="${E(t(kind==='ph'?'ph_phone':'ph_email'))}" autocomplete="off"><button type="button" class="ib" aria-label="${E(t('remove'))}">${ic('close',20)}</button>`;
- d.querySelector('button').onclick=()=>d.remove();return d}
-const addRow=(k,tp,v)=>$(k==='ph'?'#fPh':'#fEm').appendChild(rowEl(k,tp,v));
-function setPhoto(p){photo=p;$('#fAv').innerHTML=photo?`<img class="av big" src="${E(photo)}" alt="" style="width:72px;height:72px">`:`<div class="av big" style="background:var(--bg2);color:var(--tx2);width:72px;height:72px">${ic('person',36)}</div>`;$('#phDel').classList.toggle('hide',!photo)}
-function handlePhoto(f){if(!f)return;const u=URL.createObjectURL(f),im=new Image();
- im.onload=()=>{URL.revokeObjectURL(u);const s=256,m=Math.min(im.width,im.height),sx=(im.width-m)/2,sy=(im.height-m)/2,cv=document.createElement('canvas');cv.width=cv.height=s;
-  cv.getContext('2d').drawImage(im,sx,sy,m,m,0,0,s,s);setPhoto(cv.toDataURL('image/jpeg',.82))};
- im.onerror=()=>{URL.revokeObjectURL(u);$('#fErr').textContent=t('f_photo')};im.src=u}
-$('#photoIn').onchange=e=>{const f=e.target.files[0];e.target.value='';handlePhoto(f)};
-$('#camIn').onchange=e=>{const f=e.target.files[0];e.target.value='';handlePhoto(f)};
-function labelChip(g,on){return `<label class="chip${on?' on':''}"><input type="checkbox" class="hide" value="${E(g)}" ${on?'checked':''}> ${E(g)}</label>`}
-$('#fLb').addEventListener('change',e=>{if(e.target.matches('input'))e.target.closest('.chip').classList.toggle('on',e.target.checked)});
-function openForm(c){
- editing=c;$('#fTitle').textContent=t(c?'edit_contact':'new_contact');$('#fErr').textContent='';
- $('#fFirst').value=c?.first||'';$('#fMid').value=c?.middle||'';$('#fLast').value=c?.last||'';$('#fCo').value=c?.company||'';$('#fTi').value=c?.title||'';
- $('#fAddr').value=c?.address||'';$('#fBday').value=c?.bday||'';$('#fWeb').value=c?.web||'';$('#fNotes').value=c?.notes||'';$('#fNewLb').value='';
- $('#fPh').innerHTML='';$('#fEm').innerHTML='';
- (c?.phones.length?c.phones:[{t:'mobile',v:''}]).forEach(p=>addRow('ph',p.t,p.v));(c?.emails||[]).forEach(p=>addRow('em',p.t,p.v));
- $('#fLb').innerHTML=groupNames().map(g=>labelChip(g,!!c&&c.labels.includes(g)||(!c&&gf===g))).join('');
- $('#fDel').classList.toggle('hide',!c);setPhoto(c?.photo||'');
- $('#fDlg').showModal();$('#fFirst').focus()}
-const rowsOf=id=>[...document.querySelectorAll(id+' .rw')].map(r=>({t:r.querySelector('select').value,v:r.querySelector('input').value.trim()})).filter(x=>x.v);
-$('#fForm').onsubmit=async e=>{e.preventDefault();
- const er=$('#fErr');er.textContent='';
- const c=norm({...(editing||{id:uid(),fav:false,created:Date.now(),trashed:0}),first:$('#fFirst').value,middle:$('#fMid').value,last:$('#fLast').value,company:$('#fCo').value,title:$('#fTi').value,
-  phones:rowsOf('#fPh'),emails:rowsOf('#fEm'),address:$('#fAddr').value,bday:$('#fBday').value,web:$('#fWeb').value,notes:$('#fNotes').value,photo,
-  labels:[...$$('#fLb input:checked')].map(i=>i.value)});
- if(!c.first&&!c.middle&&!c.last&&!c.company&&!c.phones.length&&!c.emails.length){er.textContent=t('f_need');return}
- for(const p of c.phones)if(!/^[+\d\s().*#-]{3,}$/.test(p.v)){er.textContent=t('f_phone',{v:p.v});return}
- for(const m of c.emails)if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m.v)){er.textContent=t('f_email',{v:m.v});return}
- const d=findDupPhone(c);
- if(d&&!await ask({title:t('dup_title'),msg:t('dup_phone',{n:nm(d)}),ok:t('save')}))return;
- c.labels.filter(l=>!groupsMeta.includes(l)).forEach(l=>groupsMeta.push(l));await saveGroups();
- await save(c);const i=contacts.findIndex(x=>x.id===c.id);i>=0?contacts[i]=c:contacts.push(c);
- $('#fDlg').close();render();toast(t('saved'),'sc')};
-
-/* ---------- Kufuta / Makundi ---------- */
-async function confirmTrash(list){
- const ok=await ask({title:list.length===1?t('del_title'):t('del_many',{n:list.length}),msg:list.length===1?t('del_msg',{n:nm(list[0])}):t('del_msg_many',{n:list.length}),ok:t('delete'),danger:true});
- if(!ok)return false;
- await trashList(list);selMode=false;sel.clear();
- if($('#dDlg').open)$('#dDlg').close();
- render();toast(t('moved_trash'),null,{label:t('undo'),fn:async()=>{list.forEach(c=>c.trashed=0);await saveMany(list);render()}});return true}
-async function pickGroups(list){
- const names=groupNames(),n=list.length;
- modal(t('grp_pick'),`<div class="ml">${names.map(g=>{const k=list.filter(c=>c.labels.includes(g)).length;return `<label class="ck"><input type="checkbox" data-g="${E(g)}" data-init="${k===n?2:k>0?1:0}"> ${E(g)}</label>`}).join('')}</div><div class="ph"><input id="pgNew" data-ph="new_group" placeholder="${E(t('new_group'))}" style="flex:1"><button class="btn t" data-act="pgadd">${E(t('add'))}</button></div>`,`<button class="btn t" data-close>${E(t('cancel'))}</button><button class="btn p" data-act="pgapply">${E(t('apply'))}</button>`);
- $$('#mBox input[data-g]').forEach(i=>{const v=+i.dataset.init;i.checked=v===2;i.indeterminate=v===1});
- pickGroups.list=list}
-async function renameGroup(g){
- const nn=await ask({title:t('rename'),input:{label:t('grp_name'),value:g},ok:t('save')});
- if(nn===null)return;const name=nn.trim();if(!name||name===g)return;
- if(groupNames().includes(name)){toast(t('grp_exists'),'er');return}
- const ch=contacts.filter(c=>c.labels.includes(g));ch.forEach(c=>c.labels=c.labels.map(l=>l===g?name:l));
- if(ch.length)await saveMany(ch);groupsMeta=groupsMeta.filter(x=>x!==g);groupsMeta.push(name);await saveGroups();
- if(gf===g)gf=name;render();toast(t('grp_done'),'sc')}
-async function deleteGroup(g){
- if(!await ask({title:t('del_grp_t',{n:g}),msg:t('del_grp_m'),ok:t('delete'),danger:true}))return;
- const ch=contacts.filter(c=>c.labels.includes(g));ch.forEach(c=>c.labels=c.labels.filter(l=>l!==g));
- if(ch.length)await saveMany(ch);groupsMeta=groupsMeta.filter(x=>x!==g);await saveGroups();if(gf===g)gf=null;render();toast(t('grp_done'),'sc')}
-async function newGroup(){
- const nn=await ask({title:t('new_grp'),input:{label:t('grp_name')},ok:t('add')});
- if(nn===null)return;const name=nn.trim();if(!name)return;
- if(groupNames().includes(name)){toast(t('grp_exists'),'er');return}
- groupsMeta.push(name);await saveGroups();render();return name}
-
-/* ====================== Import ====================== */
-let imp=null;
-async function startImportFiles(files){
- let all=[];
- for(const f of files){
-  if(f.size>20*1024*1024){toast(t('imp_big'),'er');return}
-  const ext=(f.name.split('.').pop()||'').toLowerCase();
-  try{const tx=await readText(f);
-   if(ext==='vcf'||/BEGIN:VCARD/i.test(tx.slice(0,2000)))all=all.concat(parseVCF(tx));
-   else if(ext==='csv'||ext==='txt')all=all.concat(csvToContacts(parseCSV(tx)));
-   else{toast(t('imp_type',{f:f.name}),'er');return}
-  }catch(e){toast(t('imp_bad',{f:f.name,e:e.message}),'er');return}}
- prepareImport(all)}
-function prepareImport(all){
- if(!all.length){toast(t('imp_none'),'er');return}
- const ix=idxNew();act().forEach(c=>idxAdd(ix,c));
- const flags=all.map(c=>{const d=idxHas(ix,c);idxAdd(ix,c);return d});
- imp={all,flags};const dn=flags.filter(Boolean).length;
- modal(t('imp_title'),`<div class="pv"><b>${E(t('imp_sum',{a:all.length,b:all.length-dn,c:dn}))}</b></div><label class="ck"><input type="checkbox" id="impSkip" checked> ${E(t('imp_skip'))}</label>`,`<button class="btn t" data-close>${E(t('cancel'))}</button><button class="btn p" data-act="impgo">${E(t('imp_go'))}</button>`)}
-async function doImport(){
- const skip=$('#impSkip').checked;const add=imp.all.filter((c,i)=>!(skip&&imp.flags[i]));const d=imp.all.length-add.length;
- const now=Date.now();add.forEach(c=>{c.created=now;c.updated=now});
- if(add.length){await dbBulk(add);cloudBulk(add);contacts=contacts.concat(add);
-  const nl=[...new Set(add.flatMap(c=>c.labels))].filter(l=>!groupsMeta.includes(l));if(nl.length){groupsMeta.push(...nl);await saveGroups()}}
- $('#mDlg').close();imp=null;render();toast(d?t('imp_ok2',{n:add.length,d}):t('imp_ok',{n:add.length}),'sc')}
-$('#impIn').onchange=e=>{const f=[...e.target.files];e.target.value='';if(f.length)startImportFiles(f)};
-function importMenu(){
- const items=[{i:'upload',l:t('imp_src'),a:'impfile'}];
- if('contacts' in navigator&&'ContactsManager' in window)items.push({i:'person',l:t('imp_pick'),a:'imppick'});
- sheet(t('imp_title'),items)}
-async function pickFromPhone(){
- picking();
- try{const r=await navigator.contacts.select(['name','tel','email','address'],{multiple:true});
-  const list=r.map(x=>{const n=S((x.name||[])[0]).split(/\s+/);const a=(x.address||[])[0];
-   return norm({id:uid(),first:n.shift()||'',last:n.join(' '),phones:(x.tel||[]).map(v=>({t:'mobile',v})),emails:(x.email||[]).map(v=>({t:'home',v})),address:a?[a.streetAddress,a.city,a.country].filter(Boolean).join(', '):'',created:Date.now(),updated:Date.now()})
-  }).filter(c=>c.first||c.last||c.phones.length||c.emails.length);
-  prepareImport(list)}
- catch(e){if(e&&e.name!=='AbortError')toast(t('err_generic'),'er')}}
-
-/* ====================== Backup / Restore ====================== */
-async function aesKey(pass,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
-async function encryptStr(str,pass){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},await aesKey(pass,salt),new TextEncoder().encode(str));return JSON.stringify({app:'contact-backup',enc:true,v:2,salt:b64(salt),iv:b64(iv),data:b64(new Uint8Array(ct))})}
-async function decryptObj(o,pass){const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(o.iv)},await aesKey(pass,unb64(o.salt)),unb64(o.data));return JSON.parse(new TextDecoder().decode(pt))}
-async function doBackup(){
- const pass=await ask({title:t('backup'),msg:t('bk_msg'),input:{label:t('bk_pass'),type:'password'},ok:t('backup')});
- if(pass===null)return;
- const payload=JSON.stringify({app:'contact-backup',v:2,date:Date.now(),contacts,groups:groupNames(),prefs:{lang:P.lang,theme:P.theme,order:P.order,dens:P.dens,sub:P.sub,photos:P.photos,cc:P.cc}});
- const data=pass?await encryptStr(payload,pass):payload;
- const fn='contact-backup-'+day()+(pass?'-enc':'')+'.json';dl(fn,'application/json',data);
- lastBackup=Date.now();await setM('lastBackup',lastBackup);toast(t('bk_ok',{f:fn}),'sc');if(unlocked)render()}
-async function startRestore(f){
- if(f.size>200*1024*1024){toast(t('imp_big'),'er');return}
- let o;try{o=JSON.parse(await readText(f))}catch{toast(t('bk_invalid'),'er');return}
- if(o&&o.enc&&o.app==='contact-backup'){
-  const pass=await ask({title:t('restore_t'),msg:t('bk_need_pass'),input:{label:t('bk_pass'),type:'password'},ok:t('ok')});
-  if(!pass)return;try{o=await decryptObj(o,pass)}catch{toast(t('bk_bad_pass'),'er');return}}
- if(!o||o.app!=='contact-backup'||!Array.isArray(o.contacts)){toast(t('bk_invalid'),'er');return}
- const list=o.contacts.filter(x=>x&&typeof x==='object').map(x=>norm(x,x.id));
- imp={bk:o,list};
- modal(t('restore_t'),`<div class="pv"><b>${E(t('bk_info',{d:o.date?fmtDate(o.date):'?',n:list.length}))}</b></div><label class="ck"><input type="radio" name="rmode" value="merge" checked> ${E(t('bk_merge'))}</label><label class="ck"><input type="radio" name="rmode" value="replace"> ${E(t('bk_replace'))}</label>`,`<button class="btn t" data-close>${E(t('cancel'))}</button><button class="btn p" data-act="rgo">${E(t('restore'))}</button>`)}
-async function doRestore(){
- const mode=$('input[name=rmode]:checked').value,{bk,list}=imp;
- if(mode==='replace'){
-  if(!await ask({title:t('restore_t'),msg:t('bk_replace_c'),ok:t('restore'),danger:true}))return;
-  cloudWipe(contacts.filter(c=>!list.some(x=>x.id===c.id)));await dbClear();contacts=[];
-  await dbBulk(list);cloudBulk(list);contacts=list;
-  toast(t('bk_done2',{n:list.length}),'sc')}
- else{
-  const loc=new Map(contacts.map(c=>[c.id,c]));let a=0,b=0;const put=[];
-  for(const c of list){const l=loc.get(c.id);if(!l){put.push(c);a++}else if((c.updated||0)>(l.updated||0)){put.push(c);b++}}
-  if(put.length){await dbBulk(put);cloudBulk(put);const pm=new Map(put.map(c=>[c.id,c]));contacts=contacts.map(c=>pm.get(c.id)||c);for(const c of put)if(!loc.has(c.id))contacts.push(c)}
-  toast(t('bk_done',{a,b}),'sc')}
- if(Array.isArray(bk.groups)){groupsMeta=[...new Set([...groupsMeta,...bk.groups.map(S).filter(Boolean)])];await saveGroups()}
- $('#mDlg').close();imp=null;render()}
-$('#bkIn').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)startRestore(f)};
-
-/* ====================== Duplicates (merge) ====================== */
-let mg=null;
-function mergeView(){
- const inc=mg.group.filter(c=>mg.incl.has(c.id));
- const prim=inc.find(c=>c.id===mg.primary)||inc[0];
- const res=inc.length>=2?mergeC(prim,inc.filter(c=>c!==prim),t):null;
- modal(t('merge_t'),`<div class="ml">${mg.group.map(c=>`<div class="ck" style="gap:8px"><input type="checkbox" data-mi="${E(c.id)}" ${mg.incl.has(c.id)?'checked':''} aria-label="${E(nm(c))}"><div class="nmc" style="flex:1"><b>${E(nm(c))}</b><small>${E([c.phones.map(p=>p.v).join(', '),c.emails.map(e=>e.v).join(', ')].filter(Boolean).join(' · '))}</small></div><label style="margin:0;display:flex;gap:6px;align-items:center;white-space:nowrap"><input type="radio" name="mprim" data-mp="${E(c.id)}" ${prim&&prim.id===c.id?'checked':''}> ${E(t('merge_main'))}</label></div>`).join('')}</div>`
-  +(res?`<div class="sec-t" style="padding:6px 0">${E(t('merge_pre'))}</div><div class="pv"><b>${E(nm(res))}</b><br>${res.phones.map(p=>E(p.v)).join('<br>')}${res.emails.length?'<br>'+res.emails.map(p=>E(p.v)).join('<br>'):''}${res.company?'<br>'+E(res.company):''}${res.labels.length?'<br>'+E(res.labels.join(', ')):''}${res.notes?'<br><small class="muted">'+E(res.notes).replace(/\n/g,'<br>')+'</small>':''}</div>`:`<div class="err">${E(t('merge_need'))}</div>`),
-  `<button class="btn t" data-close>${E(t('cancel'))}</button><button class="btn p" data-act="mgdo" ${res?'':'disabled'}>${E(t('merge_go'))}</button>`);
- $('#mBox').onchange=e=>{const el=e.target;if(el.dataset.mi){el.checked?mg.incl.add(el.dataset.mi):mg.incl.delete(el.dataset.mi);if(!mg.incl.has(mg.primary))mg.primary=[...mg.incl][0];mergeView()}else if(el.dataset.mp){mg.primary=el.dataset.mp;mergeView()}}}
-async function doMerge(){
- const inc=mg.group.filter(c=>mg.incl.has(c.id));if(inc.length<2)return;
- const prim=inc.find(c=>c.id===mg.primary)||inc[0],others=inc.filter(c=>c!==prim);
- const m=mergeC(prim,others,t);await save(m);const i=contacts.findIndex(c=>c.id===m.id);contacts[i]=m;
- await trashList(others);$('#mDlg').close();mg=null;render();toast(t('merged_ok'),'sc')}
-
-/* ====================== Vitendo (event delegation) ====================== */
-let lpTimer=0,lpFired=false;
-function toggleSel(id){sel.has(id)?sel.delete(id):sel.add(id);if(selMode&&!sel.size)selMode=false;render()}
-const A={
- nav:(el)=>setView(el.dataset.v),
- fab:()=>view==='groups'?newGroup():openForm(null),
- newc:()=>openForm(null),
- open:(el)=>{if(lpFired){lpFired=false;return}if(selMode){toggleSel(el.dataset.id);return}showDetail(el.dataset.id)},
- fav:async(el)=>{const c=contacts.find(x=>x.id===el.dataset.id);if(c){c.fav=!c.fav;await save(c);render()}},
- menu:(el)=>{const c=contacts.find(x=>x.id===el.dataset.id);if(!c)return;cur=c;const p=c.phones[0];
-  sheet(nm(c),[...(p?[{i:'call',l:t('call'),a:'scall'},{i:'sms',l:t('sms'),a:'ssms'}]:[]),...(p&&digits(p.v).length>=9?[{i:'chat',l:t('whatsapp'),a:'swa'},{i:'copy',l:t('copy_num'),a:'scopy'}]:[]),{i:'share',l:t('share'),a:'cshare'},{i:'edit',l:t('edit'),a:'cedit'},{i:c.fav?'star':'star_border',l:t(c.fav?'fav_rem':'fav_add'),a:'sfav'},{i:'label',l:t('to_group'),a:'cgrp'},{i:'download',l:t('export_one'),a:'cexp'},{i:'check',l:t('select'),a:'ssel'},{i:'delete',l:t('delete'),a:'cdel',danger:true}])},
- scall:()=>{location.href='tel:'+cur.phones[0].v},ssms:()=>{location.href='sms:'+cur.phones[0].v},
- swa:()=>{window.open('https://wa.me/'+waNum(cur.phones[0].v),'_blank','noopener')},
- scopy:()=>A.copy({dataset:{v:cur.phones[0].v}}),
- sfav:async()=>{cur.fav=!cur.fav;await save(cur);render()},
- ssel:()=>{selMode=true;sel.add(cur.id);render()},
- copy:async(el)=>{try{await navigator.clipboard.writeText(el.dataset.v);toast(t('copied'),'sc')}catch{toast(t('err_generic'),'er')}},
- /* profile */
- cfav:async()=>{cur.fav=!cur.fav;await save(cur);showDetail(cur.id,true)},
- cedit:()=>{$('#dDlg').close();openForm(cur)},
- cshare:()=>shareContact(cur),
- cmore:()=>sheet(nm(cur),[{i:'label',l:t('to_group'),a:'cgrp'},{i:'download',l:t('export_one'),a:'cexp'},{i:'delete',l:t('delete'),a:'cdel',danger:true}]),
- cexp:()=>exportList([cur],(nm(cur).replace(/[^\w\- ]+/g,'')||'contact')+'.vcf'),
- cdel:()=>confirmTrash([cur]),
- cgrp:()=>pickGroups([cur]),
- fdel:()=>{$('#fDlg').close();confirmTrash([editing])},
- phgal:()=>{picking();$('#photoIn').click()},phcam:()=>{picking();$('#camIn').click()},phdel:()=>setPhoto(''),
- addph:()=>addRow('ph','mobile',''),addem:()=>addRow('em','home',''),
- fnewlb:()=>{const i=$('#fNewLb'),n=i.value.trim();if(!n)return;const ex=[...$$('#fLb input')].find(x=>x.value===n);if(ex){ex.checked=true;ex.closest('.chip').classList.add('on')}else $('#fLb').insertAdjacentHTML('beforeend',labelChip(n,true));i.value=''},
- /* chagua */
- selcancel:()=>{selMode=false;sel.clear();render()},
- selall:()=>{const ids=(view==='favs'?act().filter(c=>c.fav):gf?act().filter(c=>c.labels.includes(gf)):act()).filter(c=>!q||matchQ(c)).map(c=>c.id);ids.forEach(i=>sel.add(i));render()},
- selfav:async()=>{const l=contacts.filter(c=>sel.has(c.id));l.forEach(c=>c.fav=true);await saveMany(l);selMode=false;sel.clear();render()},
- selgrp:()=>pickGroups(contacts.filter(c=>sel.has(c.id))),
- selexp:()=>exportList(contacts.filter(c=>sel.has(c.id))),
- seldel:()=>confirmTrash(contacts.filter(c=>sel.has(c.id))),
- pgadd:async()=>{const i=$('#pgNew'),n=i.value.trim();if(!n)return;if(!groupNames().includes(n)){groupsMeta.push(n);await saveGroups()}const lst=pickGroups.list;pickGroups(lst);const cb=[...$$('#mBox input[data-g]')].find(x=>x.dataset.g===n);if(cb){cb.checked=true;cb.indeterminate=false}},
- pgapply:async()=>{const list=pickGroups.list,ch=new Set();
-  $$('#mBox input[data-g]').forEach(i=>{const g=i.dataset.g,init=+i.dataset.init;
-   if(i.checked&&!i.indeterminate){for(const c of list)if(!c.labels.includes(g)){c.labels.push(g);ch.add(c)}}
-   else if(!i.checked&&!i.indeterminate&&init===2){for(const c of list)if(c.labels.includes(g)){c.labels=c.labels.filter(l=>l!==g);ch.add(c)}}});
-  if(ch.size)await saveMany([...ch]);$('#mDlg').close();selMode=false;sel.clear();render();toast(t('grp_done'),'sc')},
- /* makundi */
- newgroup:async()=>{await newGroup()},
- grpopen:(el)=>{gf=el.dataset.g;if($('#dDlg').open)$('#dDlg').close();view='contacts';sel.clear();selMode=false;history.pushState({v:'contacts'},'');$('#main').scrollTop=0;render()},
- grpmenu:(el)=>{cur={g:el.dataset.g};sheet(el.dataset.g,[{i:'edit',l:t('rename'),a:'grpren',id:el.dataset.g},{i:'delete',l:t('del_grp'),a:'grpdel',id:el.dataset.g,danger:true}])},
- grpren:(el)=>renameGroup(el.dataset.id),grpdel:(el)=>deleteGroup(el.dataset.id),
- clrgf:()=>{gf=null;render()},
- addmembers:()=>{const cand=act().filter(c=>!c.labels.includes(gf)).sort((a,b)=>COL.compare(sortKey(a),sortKey(b)));
-  if(!cand.length){toast(t('grp_none'));return}
-  modal(t('add_members')+' · '+gf,`<div class="ml">${cand.map(c=>`<label class="ck"><input type="checkbox" data-am="${E(c.id)}"> ${av(c)}<span>${E(nm(c))}</span></label>`).join('')}</div>`,`<button class="btn t" data-close>${E(t('cancel'))}</button><button class="btn p" data-act="amgo">${E(t('add'))}</button>`)},
- amgo:async()=>{const ids=new Set([...$$('#mBox input[data-am]:checked')].map(i=>i.dataset.am));const l=contacts.filter(c=>ids.has(c.id));l.forEach(c=>c.labels.push(gf));if(l.length)await saveMany(l);$('#mDlg').close();render();toast(t('grp_done'),'sc')},
- jump:(el)=>{document.getElementById('L-'+el.dataset.l)?.scrollIntoView({block:'start'})},
- /* mipangilio */
- setlang:async(el)=>{P.lang=el.dataset.v;await savePrefs();applyPrefs()},
- locknow:()=>{if(hasLock)showLock();else{toast(t('banner_pw'));A.setpass()}},
- setpass:()=>{
-  modal(t('pw_title'),`<form id="pwForm">${hasLock?`<label for="pwC">${E(t('pw_cur'))}</label><input id="pwC" type="password" autocomplete="current-password">`:''}<label for="pwN">${E(t('pw_new'))}</label><input id="pwN" type="password" autocomplete="new-password"><label for="pwR">${E(t('pw_rep'))}</label><input id="pwR" type="password" autocomplete="new-password"><div class="err" id="pwE" role="alert"></div><button type="submit" class="hide"></button></form>`,
-   `${hasLock?`<button class="btn d" data-act="pwrem">${E(t('pw_remove'))}</button><span class="sp"></span>`:''}<button class="btn t" data-close>${E(t('cancel'))}</button><button class="btn p" data-act="pwsave">${E(t('save'))}</button>`);
-  $('#pwForm').onsubmit=e=>{e.preventDefault();A.pwsave()};setTimeout(()=>(hasLock?$('#pwC'):$('#pwN')).focus(),60)},
- pwsave:async()=>{const er=$('#pwE');er.textContent='';
-  if(hasLock&&!await checkLock($('#pwC').value)){er.textContent=t('pw_cur_wrong');return}
-  const p=$('#pwN').value;if(p.length<4){er.textContent=t('pw_short');return}if(p!==$('#pwR').value){er.textContent=t('pw_mismatch');return}
-  await setM('lock',await makeLock(p));await setM('welcomed',1);hasLock=true;$('#mDlg').close();render();toast(t('pw_set_ok'),'sc')},
- pwrem:async()=>{const er=$('#pwE');er.textContent='';
-  if(!await checkLock($('#pwC').value)){er.textContent=t('pw_cur_wrong');return}
-  if(!await ask({title:t('pw_remove'),msg:t('pw_remove_c'),ok:t('pw_remove'),danger:true}))return;
-  await delM('lock');hasLock=false;P.bio='';await savePrefs();$('#mDlg').close();render();toast(t('pw_removed'),'sc')},
- biotg:async(el)=>{
-  if(el.checked){try{await bioEnable();toast(t('bio_on'),'sc')}catch{el.checked=false;toast(t('bio_fail'),'er')}}
-  else{P.bio='';await savePrefs();toast(t('bio_off'))}},
- bioun:()=>bioUnlockUI(),
- imp:()=>importMenu(),impfile:()=>{picking();$('#impIn').click()},imppick:()=>pickFromPhone(),impgo:()=>doImport(),
- expall:()=>exportList(act()),
- expcsv:()=>{const l=act();if(!l.length){toast(t('exp_none'),'er');return}const fn='contacts-'+day()+'.csv';dl(fn,'text/csv',toCSV(l));toast(t('exp_ok',{f:fn,n:l.length}),'sc')},
- backup:()=>doBackup(),restore:()=>{picking();$('#bkIn').click()},rgo:()=>doRestore(),
- trashgo:()=>setView('trash'),dupsgo:()=>setView('dups'),
- tsel:(el)=>{sel.has(el.dataset.id)?sel.delete(el.dataset.id):sel.add(el.dataset.id);render()},
- tselall:()=>{trashed().forEach(c=>sel.add(c.id));render()},
- trestsel:async()=>{const l=contacts.filter(c=>sel.has(c.id)&&c.trashed);if(!l.length)return;l.forEach(c=>c.trashed=0);await saveMany(l);sel.clear();render();toast(t('restored',{n:l.length}),'sc')},
- tdelsel:async()=>{const l=contacts.filter(c=>sel.has(c.id)&&c.trashed);if(!l.length)return;
-  if(!await ask({title:t('del_forever_t',{n:l.length}),msg:t('del_forever_m'),ok:t('del_forever'),danger:true}))return;
-  await hardDelete(l.map(c=>c.id));sel.clear();render();toast(t('deleted_n',{n:l.length}))},
- tempty:async()=>{const l=trashed();if(!l.length)return;
-  if(!await ask({title:t('empty_trash'),msg:t('del_forever_m'),ok:t('del_forever'),danger:true}))return;
-  await hardDelete(l.map(c=>c.id));sel.clear();render();toast(t('deleted_n',{n:l.length}))},
- dupreview:(el)=>{const g=dupList()[+el.dataset.i];if(!g)return;const best=g.slice().sort((a,b)=>(b.phones.length+b.emails.length+(b.photo?1:0))-(a.phones.length+a.emails.length+(a.photo?1:0)))[0];mg={group:g,incl:new Set(g.map(c=>c.id)),primary:best.id};mergeView()},
- dupignore:async(el)=>{const g=dupList()[+el.dataset.i];if(!g)return;ignoredDups.push(g.map(c=>c.id).sort().join('|'));await setM('dupIgnore',ignoredDups);render()},
- mgdo:()=>doMerge(),
- wipec:async()=>{
-  if(!await ask({title:t('wipe_c_t'),msg:t('wipe_c_m'),ok:t('delete'),danger:true,must:t('w_word')}))return;
-  cloudWipe(contacts.slice());await dbClear();contacts=[];viewedIds=[];await setM('viewed',[]);render();toast(t('all_wiped'))},
- wipea:async()=>{
-  if(!await ask({title:t('wipe_a_t'),msg:t('wipe_a_m'),ok:t('delete'),danger:true,must:t('w_word')}))return;
-  try{if(auth&&cloudUser)await auth.signOut()}catch{}
-  try{localStorage.removeItem('contact_last')}catch{}
-  db.close();const r=indexedDB.deleteDatabase('contact_local');r.onsuccess=r.onerror=r.onblocked=()=>location.reload()},
- cloudlogin:()=>{$('#aErr').textContent='';authMode(false);$('#aDlg').showModal();setTimeout(()=>$('#aEmail').focus(),60)},
- cloudout:async()=>{if(!await ask({title:t('cloud_logout'),msg:t('cloud_logout_c'),ok:t('cloud_logout')}))return;try{await auth.signOut()}catch(x){toast(aMsg(x),'er')}},
- clearviewed:async()=>{viewedIds=[];await setM('viewed',[]);toast(t('viewed_cleared'))},
- install:async()=>{if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice.catch(()=>{});deferredInstall=null;render()}
+   alert(total+' contacts zimeingizwa.');
+  }catch(e){alert('Imeshindikana ku-import: '+e.message);}
+ };
+ f.click();
 };
-document.addEventListener('click',async e=>{
- const el=e.target.closest('[data-act]');if(!el||el.id==='bioTg')return;
- if(el.hasAttribute('data-sh')&&$('#sheet').open)$('#sheet').close();
- const f=A[el.dataset.act];if(!f)return;
- if(el.tagName==='INPUT')return;
- try{await f(el,e)}catch(x){fail(x)}});
-document.addEventListener('change',async e=>{
- const el=e.target;
- if(el.id==='bioTg'){try{await A.biotg(el)}catch(x){fail(x)}return}
- const k=el.dataset&&el.dataset.pref;if(!k)return;
- let v=el.type==='checkbox'?el.checked:el.value;
- if(k==='away'||k==='idle')v=+v;
- if(k==='cc')v=digits(v);
- P[k]=v;await savePrefs();applyPrefs();bumpIdle()});
-document.addEventListener('keydown',e=>{
- if(e.key==='Enter'&&(e.target.classList.contains('row')||e.target.classList.contains('gcard'))){e.preventDefault();e.target.click()}});
-/* kuchagua kwa long-press */
-$('#view').addEventListener('pointerdown',e=>{
- const r=e.target.closest('.row[data-act="open"]');if(!r||e.target.closest('button'))return;
- clearTimeout(lpTimer);lpTimer=setTimeout(()=>{lpFired=true;selMode=true;sel.add(r.dataset.id);if(navigator.vibrate)navigator.vibrate(15);render()},550)});
-['pointerup','pointercancel','pointerleave','scroll'].forEach(ev=>$('#view').addEventListener(ev,()=>clearTimeout(lpTimer),true));
-$('#main').addEventListener('scroll',()=>clearTimeout(lpTimer),{passive:true});
-$('#view').addEventListener('contextmenu',e=>{if(e.target.closest('.row'))e.preventDefault()});
-let qt;$('#q').oninput=e=>{clearTimeout(qt);const v=e.target.value;qt=setTimeout(()=>{q=v.trim().toLowerCase();render()},120)};
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;if(unlocked&&view==='settings')render()});
-window.addEventListener('error',e=>{if(e&&e.message&&!/ResizeObserver/.test(e.message))console.error(e.error||e.message)});
-window.addEventListener('unhandledrejection',e=>{console.error(e.reason)});
 
-/* ====================== Kuanza ====================== */
-(async function boot(){
- try{
-  db=await openDB('contact_local');
-  P={...DEF,...(await getM('prefs')||{})};
-  contacts=(await dbAll()).map(c=>norm(c,c.id));
-  await migrateOld();contacts=(await dbAll()).map(c=>norm(c,c.id));
-  let g=await getM('groups');
-  if(!g){g=t('defgroups').split(',');await setM('groups',g)}
-  groupsMeta=g;viewedIds=await getM('viewed')||[];ignoredDups=await getM('dupIgnore')||[];lastBackup=await getM('lastBackup')||0;
-  await purgeOld();
- }catch(e){console.error(e);P={...DEF};$('#bootMsg').textContent=t('dbfail');$('#boot .spin').remove();return}
- const lk=await getM('lock');hasLock=!!lk;
- applyPrefs();attachAuth();
- if(lk)showLock();
- else if(!await getM('welcomed')&&!contacts.length)showOnly('wel');
- else openApp();
- if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
+/* VCF export */
+$('export').onclick=()=>{
+ if(!contacts.length){alert('Hakuna contacts za ku-export.');return;}
+ const data=contacts.map(c=>
+ 'BEGIN:VCARD\r\nVERSION:3.0\r\nFN:'+c.name+
+ '\r\nTEL;TYPE=CELL:'+c.phone+
+ (c.phone2?'\r\nTEL;TYPE=OTHER:'+c.phone2:'')+
+ (c.email?'\r\nEMAIL:'+c.email:'')+
+ (c.company?'\r\nORG:'+c.company:'')+
+ '\r\nEND:VCARD'
+ ).join('\r\n');
+ const blob=new Blob([data],{type:'text/vcard'});
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(blob);a.download='My-Contacts.vcf';a.click();
+ URL.revokeObjectURL(a.href);
+};
+
+/* Tumia session ya login iliyopo */
+const authUnsubscribe=auth.onAuthStateChanged(user=>{
+ if(unsubscribe){unsubscribe();unsubscribe=null;}
+ currentUser=user;
+ if(!user){
+  contacts=[];
+  $('list').innerHTML='<div class="empty">Inasubiri akaunti ya mtumiaji kuingia.</div>';
+  return;
+ }
+ unsubscribe=path().orderBy('name').onSnapshot(snapshot=>{
+  contacts=snapshot.docs.map(d=>({id:d.id,...d.data()}));
+  render(window.contactFavorites||false);
+ },error=>{
+  $('list').innerHTML='<div class="empty">Tatizo la kusoma contacts: '+esc(error.message)+'</div>';
+ });
+});
+
+/* Ruhusu parent website kufunga module inapobadilisha ukurasa */
+window.contactModuleCleanup=()=>{
+ if(unsubscribe)unsubscribe();
+ authUnsubscribe();
+};
 })();
 </script>
-</body>
-</html>
