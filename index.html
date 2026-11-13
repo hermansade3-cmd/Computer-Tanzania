@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="sw"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#0b1220">
+<title>Computer</title>
+<style>
+*{box-sizing:border-box;margin:0}body{font:13px system-ui,sans-serif;height:100vh;overflow:hidden;background:linear-gradient(135deg,#0b3d91,#1e88e5 55%,#5ec8ff);user-select:none}
+#desk{position:absolute;inset:0 0 40px 0;padding:8px;display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;gap:4px}
+.ic{width:84px;padding:6px 2px;text-align:center;color:#fff;border-radius:4px;cursor:pointer;text-shadow:0 1px 3px #000;word-break:break-word}
+.ic:hover,.ic.s{background:rgba(255,255,255,.22)}.ic b{display:block;font-size:34px;font-weight:400}
+#tb{position:absolute;bottom:0;left:0;right:0;height:40px;background:rgba(20,24,36,.94);display:flex;align-items:center;gap:4px;padding:0 6px;color:#fff;z-index:99999}
+#tb button{background:none;border:0;color:#fff;height:32px;padding:0 10px;border-radius:4px;cursor:pointer;font:inherit;max-width:150px;overflow:hidden;white-space:nowrap}
+#tb button:hover{background:#ffffff30}#tb button.on{background:#ffffff38;border-bottom:2px solid #5ec8ff}
+#st{font-size:20px!important;color:#5ec8ff!important}#tasks{flex:1;display:flex;gap:4px;overflow:hidden}#clk{font-size:12px;text-align:right;line-height:1.2;padding:0 6px}
+#menu{position:absolute;bottom:42px;left:4px;width:260px;background:rgba(25,30,45,.97);color:#fff;border-radius:8px;padding:8px;display:none;z-index:99998}
+#menu div{padding:8px 10px;border-radius:4px;cursor:pointer}#menu div:hover{background:#ffffff25}
+.w{position:absolute;background:#fff;border-radius:8px;box-shadow:0 8px 30px #0008;display:flex;flex-direction:column;overflow:hidden;border:1px solid #556;min-width:260px;min-height:160px;resize:both}
+.w.mx{inset:0 0 40px 0!important;width:auto!important;height:auto!important;border-radius:0}
+.h{background:#1f2a44;color:#fff;padding:6px 8px;display:flex;align-items:center;gap:6px;cursor:move;touch-action:none}.h span{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.h i{font-style:normal;width:28px;text-align:center;cursor:pointer;border-radius:3px}.h i:hover{background:#ffffff30}.h i.x:hover{background:#e81123}
+.b{flex:1;overflow:auto;display:flex;flex-direction:column;min-height:0;color:#111}
+.bar{background:#eef1f6;padding:5px;display:flex;gap:5px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #ccd}
+.bar button,.bar select,.bar input{padding:3px 9px;border:1px solid #aab;background:#fff;border-radius:3px;cursor:pointer;font:inherit}
+textarea.ed{flex:1;border:0;padding:8px;font:13px Consolas,monospace;resize:none;outline:0;white-space:pre;user-select:text}
+.pg{background:#fff;padding:24px;flex:1;outline:0;line-height:1.6;user-select:text;overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,92px);gap:6px;padding:10px;align-content:start}
+.it{text-align:center;padding:6px;border-radius:4px;cursor:pointer;word-break:break-all;font-size:12px}.it:hover{background:#cfe6ff}.it b{display:block;font-size:34px;font-weight:400}
+table{border-collapse:collapse;font-size:13px}td,th{border:1px solid #bbb;padding:0}th{background:#e8ebf0;padding:3px 10px}td input{border:0;width:100px;padding:4px;font:inherit;outline:0}td input:focus{background:#e3f0ff}
+.term{background:#0c0c0c;color:#ddd;font:13px Consolas,monospace;padding:8px;flex:1;overflow:auto;white-space:pre-wrap;user-select:text}.term input{background:none;border:0;color:#fff;font:inherit;outline:0;width:70%}
+.sl{background:#222;flex:1;display:flex;align-items:center;justify-content:center;padding:10px}.sl div{background:#fff;aspect-ratio:16/9;width:min(100%,520px);padding:24px;display:flex;flex-direction:column;justify-content:center}
+.sl h2{color:#c43e1c;margin-bottom:10px}.pdf{background:#777;flex:1;padding:14px;overflow:auto}.pdf div{background:#fff;max-width:520px;margin:auto;padding:30px;min-height:480px;box-shadow:0 2px 8px #0006;user-select:text;line-height:1.6}
+pre{padding:10px;font:12px Consolas,monospace;white-space:pre-wrap;user-select:text}canvas{max-width:100%;background:#000}
+</style><style>
+body{font-family:system-ui,sans-serif;background:radial-gradient(ellipse at 30% 90%,#0a2a8a 0,transparent 55%),radial-gradient(ellipse at 70% 20%,#4fc3f7 0,transparent 50%),radial-gradient(ellipse at 50% 55%,#1565e8 0,transparent 60%),linear-gradient(160deg,#0b1d6e,#2a7de1 60%,#9be0ff)}
+#desk{inset:0 0 48px 0}.ic{font-size:12px;width:80px}.ic b{font-size:32px}
+#tb{height:48px;background:rgba(238,240,246,.82);backdrop-filter:blur(30px) saturate(1.8);border-top:1px solid #fff6;color:#111;justify-content:space-between;padding:0 8px}
+#tb button{color:#111;width:42px;height:40px;padding:0;font-size:22px;border-radius:6px;position:relative;max-width:none}
+#tb button:hover{background:#fffa}#tb button.on{background:#ffffffb0;border:0}
+#ctr{display:flex;align-items:center;gap:2px}#tasks{flex:none}#pins{display:flex;gap:2px}
+#tasks button::after{content:'';position:absolute;bottom:2px;left:50%;width:6px;height:3px;margin-left:-3px;background:#777;border-radius:2px;transition:.2s}
+#tasks button.on::after{width:16px;margin-left:-8px;background:#0067c0}
+#st{display:grid!important;grid-template-columns:1fr 1fr;gap:2px;padding:11px!important}#st i{background:#0078d4;border-radius:1px}
+#wd,#tray{flex:1;display:flex;align-items:center;font-size:12px;gap:10px}#wd{gap:8px;line-height:1.15}#tray{justify-content:flex-end}
+#clk{text-align:right;font-size:12px;padding:2px 8px;border-radius:5px}#clk:hover,.tr:hover{background:#fffa}.tr{padding:6px 8px;border-radius:5px;cursor:default;font-size:15px}
+.w{border-radius:9px;border:1px solid #0003;box-shadow:0 12px 40px #0006;background:#fff;animation:pop .18s ease-out}
+@keyframes pop{from{transform:scale(.94);opacity:0}}
+.w.mx{inset:0 0 48px 0!important}
+.h{background:#f3f3f3;color:#111;padding:0 0 0 12px;height:34px;cursor:default;font-size:12px}
+.h i{width:46px;height:34px;line-height:34px;font-size:13px;color:#111}.h i:hover{background:#0000000f}.h i.x:hover{background:#c42b1c;color:#fff}
+.bar{background:#f9f9f9;border-bottom:1px solid #e5e5e5}.bar button,.bar select,.bar input{border:1px solid transparent;background:transparent;border-radius:5px;padding:4px 10px}
+.bar button:hover{background:#0000000d}.bar input{background:#fff;border:1px solid #ddd;border-bottom:2px solid #0067c0}
+#menu{left:50%;transform:translateX(-50%);bottom:58px;width:580px;max-width:96vw;height:640px;max-height:calc(100vh - 70px);background:rgba(243,243,246,.9);backdrop-filter:blur(40px) saturate(1.8);color:#111;border-radius:12px;border:1px solid #fff8;box-shadow:0 12px 50px #0006;padding:0;flex-direction:column;overflow:hidden}
+#menu div{padding:0;border-radius:0;cursor:default}#menu div:hover{background:none}
+#menu input{margin:22px 28px 6px;padding:10px 14px;border-radius:20px;border:1px solid #ddd;border-bottom:2px solid #0067c0;font:inherit;outline:0}
+.sc{flex:1;overflow:auto;padding:6px 28px}.sc h4{margin:12px 0 8px;font-size:13px}
+.pg6{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+#menu .sa{text-align:center;padding:9px 2px;border-radius:6px;font-size:11px}#menu .sa b{display:block;font-size:30px;font-weight:400}
+#menu .sa:hover,#menu .rc:hover{background:#0000000d}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:2px}#menu .rc{display:flex;gap:10px;align-items:center;padding:8px;border-radius:6px;font-size:12px}#menu .rc b{font-size:26px;font-weight:400}
+#menu .ft{display:flex;justify-content:space-between;align-items:center;padding:14px 30px;background:#e9ebf1;border-top:1px solid #ddd;cursor:default}
+#menu .ft span{padding:8px 10px;border-radius:6px;cursor:pointer}#menu .ft span:hover{background:#0000000f}
+.sd{width:170px;background:#f3f3f3;padding:8px;overflow:auto;border-right:1px solid #e5e5e5;font-size:12px}.sd div{padding:7px 10px;border-radius:5px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sd div:hover{background:#0000000a}.sd div.on{background:#0000000f;border-left:3px solid #0067c0}
+.ad{flex:1;background:#fff;border:1px solid #ddd;border-radius:5px;padding:4px 10px;min-width:100px;overflow:hidden;white-space:nowrap}
+.stt{padding:4px 12px;font-size:12px;color:#555;border-top:1px solid #e5e5e5;background:#f9f9f9}
+.it{width:auto}.it b{font-size:42px}
+#lock{position:fixed;inset:0;z-index:999999;background:inherit;color:#fff;display:flex;flex-direction:column;align-items:center;padding-top:14vh;transition:transform .5s ease-in-out;cursor:pointer;text-shadow:0 2px 12px #0008}
+#lock h1{font-size:96px;font-weight:300}#lock p{font-size:24px}#lock small{position:absolute;bottom:40px;font-size:14px}
+#lock.up{transform:translateY(-100%)}
+</style><style>
+html,body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+@media(max-width:760px){
+#wd,#tray .tr{display:none}#tb{padding:0 4px}#tb button{width:38px}
+.sd{display:none}.w{min-width:0}.w.mx{inset:0 0 48px 0!important;border-radius:0;resize:none}
+.h{height:40px}.h i{height:40px;line-height:40px;width:52px}
+.ic{width:72px;font-size:11px}.ic b{font-size:30px}
+#menu{width:100vw;max-width:100vw;bottom:48px;border-radius:12px 12px 0 0;height:75vh}.pg6{grid-template-columns:repeat(4,1fr)}.rg{grid-template-columns:1fr}
+.grid{grid-template-columns:repeat(auto-fill,78px)}
+.pg{padding:14px}.term,textarea.ed{font-size:14px}
+}
+</style><style>#tb{overflow:hidden}html,body{max-width:100vw;overflow:hidden}#lock.up{visibility:hidden;transition:transform .5s ease-in-out,visibility 0s .5s}
+@media(max-width:760px){#sr,#pins button:nth-child(n+4){display:none}#tray{flex:0 0 auto}#clk{font-size:11px;padding:0 4px}#ctr{min-width:0;flex:1;justify-content:center}#tasks{display:flex;overflow:hidden}}</style><style>.w.mx,.w.mx{inset:0!important}@media(max-width:760px){.w.mx{inset:0!important}}</style><style>
+.grid.lst{display:flex;flex-direction:column;gap:0;padding:0;align-content:normal}
+.lst .lh,.lst .it{display:grid;grid-template-columns:34px 34px 1fr 150px;align-items:center;gap:6px;text-align:left;padding:5px 10px;border-radius:0;font-size:13px;word-break:normal}
+.lst .lh{position:sticky;top:0;z-index:1;background:#f3f3f3;border-bottom:1px solid #ddd;font-weight:600;color:#555;cursor:default}
+.lst .it{border-bottom:1px solid #f0f0f0}.lst .it:nth-child(even){background:#fafafa}.lst .it:hover{background:#cfe6ff}
+.lst .it b{font-size:22px;text-align:center}.lst .it em{font-style:normal;color:#888;font-size:11px;text-align:right}
+.lst .it span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lst .it small{color:#666}
+@media(max-width:760px){.lst .lh,.lst .it{grid-template-columns:26px 28px 1fr 84px}}
+
+.si{width:1em;height:1em;display:inline-block;vertical-align:middle;flex:none;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.3))}
+.ic b,.it b{line-height:0;padding:2px 0}.ic b .si{width:48px;height:48px;filter:drop-shadow(0 2px 3px #0007)}.it b .si{width:44px;height:44px}
+.lst .it b .si{width:26px;height:26px}#menu .sa b .si{width:34px;height:34px}#menu .rc b .si{width:30px;height:30px}
+#tb button .si{width:24px;height:24px}.h span .si{width:18px;height:18px;vertical-align:-4px}.sd div .si,#menu .ft .si{width:18px;height:18px;vertical-align:-4px}
+.ic b,#menu .sa b,#menu .rc b,.it b{display:flex;justify-content:center;align-items:center}
+.lst .it b{justify-content:center}
+</style></head><body>
+<!--
+  MY COMPUTER — Folda zote (Nyaraka, Picha, Video, Muziki, Programu, Code, Zilizobanwa, Database, Mfumo, Diski, Desktop, AppData, Recycle Bin) ziko TUPU.
+  Mafaili yanaonekana ni yale tu mtumiaji anayoyaweka mwenyewe.
+-->
+
+<div id="desk"></div>
+<div id="menu"></div>
+<div id="tb"><div id="wd"><span style="font-size:26px">☀️</span><span>27°C<br>Jua</span></div>
+<div id="ctr"><button id="st" title="Start"><i></i><i></i><i></i><i></i></button><button id="sr" title="Tafuta">🔍</button><span id="pins"></span><div id="tasks"></div></div>
+<div id="tray"><span class="tr">⌃</span><span class="tr">📶 🔊 🔋</span><button id="fsb" title="Skrini nzima">⛶</button><div id="clk"></div></div></div>
+<div id="lock"><h1 id="lt"></h1><p id="ld"></p><small>Bonyeza popote kufungua</small></div>
+<script>/* ================= MAFAILI YOTE (kila faili mstari wake) ================= */
+const AL={"Microsoft-Edge.exe": "Web-Browser.exe", "Microsoft-Copilot.exe": "AI-Assistant.exe", "Microsoft-Office.exe": "Office-Suite.exe", "Microsoft-Word.exe": "Writer.exe", "Microsoft-Excel.exe": "Spreadsheet.exe", "Microsoft-PowerPoint.exe": "Presenter.exe", "Microsoft-Outlook.exe": "Mail-Client.exe", "Microsoft-OneNote.exe": "Notebook.exe", "Mozilla-Firefox.exe": "Open-Browser.exe", "Google-Chrome.exe": "Fast-Browser.exe", "Microsoft-Games.exe": "Game-Center.exe", "Microsoft-Photos.exe": "Photo-Gallery.exe", "Microsoft-MediaPlayer.exe": "Media-Player.exe", "Microsoft-Maps.exe": "Map-Navigator.exe", "Microsoft-Weather.exe": "Weather-Forecast.exe", "Microsoft-Translator.exe": "Translator.exe", "Microsoft-Calendar.exe": "Calendar.exe", "Microsoft-Clock.exe": "World-Clock.exe", "Microsoft-Camera.exe": "Camera.exe", "Microsoft-Money.exe": "Currency-Exchange.exe", "Microsoft-News.exe": "News-Reader.exe", "Microsoft-TaskManager.exe": "Process-Monitor.exe", "Microsoft-Dictionary.exe": "Dictionary.exe", "Microsoft-Encyclopedia.exe": "Knowledge-Base.exe", "Microsoft-Todo.exe": "Task-List.exe", "Microsoft-StickyNotes.exe": "Quick-Notes.exe", "Microsoft-Recorder.exe": "Voice-Recorder.exe", "Microsoft-QRCode.exe": "QR-Code.exe", "Microsoft-Converter.exe": "Unit-Converter.exe", "Microsoft-Passwords.exe": "Password-Vault.exe", "Microsoft-Crypto.exe": "Crypto-Markets.exe", "Microsoft-DeviceManager.exe": "Hardware-Manager.exe", "Microsoft-Backup.exe": "Backup-Restore.exe", "Microsoft-DiskCleanup.exe": "Disk-Cleaner.exe", "Microsoft-PDFReader.exe": "PDF-Reader.exe", "Microsoft-ScreenRecorder.exe": "Screen-Recorder.exe", "Microsoft-Contacts.exe": "Contacts.exe", "Microsoft-Clipboard.exe": "Clipboard-History.exe", "Microsoft-TextToSpeech.exe": "Text-to-Speech.exe", "Microsoft-Network.exe": "Network-Status.exe", "Microsoft-Accessibility.exe": "Accessibility.exe", "Microsoft-Store.exe": "Software-Store.exe", "Visual-Studio-Code.exe": "Code-Editor.exe", "Python-IDE.exe": "Script-IDE.exe", "Facebook.exe": "Social-Connect.exe", "Instagram.exe": "Photo-Share.exe", "TikTok.exe": "Short-Videos.exe", "YouTube.exe": "Video-Stream.exe", "regedit.exe": "Registry-Editor.exe", "wordpad.exe": "Rich-Text-Editor.exe", "msinfo32.exe": "System-Info.exe", "charmap.exe": "Character-Map.exe", "Scientific-Calculator.exe": "Scientific-Calculator.exe", "cmd.exe": "Terminal.exe", "calc.exe": "Calculator.exe", "paint.exe": "Draw.exe", "notepad.exe": "Text-Pad.exe", "windows.iso": "system.iso", "windows.wmv": "system-video.wmv", "apple.mov": "fruit.mov", "Calculator.lnk": "Calculator-Shortcut.lnk"};
+const _j=a=>a.join(',');
+const FOLD={
+/* 01. Nyaraka (Documents) — mafaili 11 */
+"Nyaraka (Documents)":_j([
+  "notes.txt",                 // 01
+  "report.doc",                // 02
+  "report.docx",               // 03
+  "manual.pdf",                // 04
+  "letter.rtf",                // 05
+  "document.odt",              // 06
+  "presentation.ppt",          // 07
+  "presentation.pptx",         // 08
+  "budget.xls",                // 09
+  "budget.xlsx",               // 10
+  "data.csv",                  // 11
+]),
+/* 02. Picha (Pictures) — mafaili 8 */
+"Picha (Pictures)":_j([
+  "picha1.jpg",                // 01
+  "picha2.jpeg",               // 02
+  "nembo.png",                 // 03
+  "mchezo.gif",                // 04
+  "old.bmp",                   // 05
+  "mpya.webp",                 // 06
+  "mchoro.svg",                // 07
+  "app.ico",                   // 08
+]),
+/* 03. Video (Videos) — mafaili 6 */
+"Video (Videos)":_j([
+  "video1.mp4",                // 01
+  "filamu.mkv",                // 02
+  "zamani.avi",                // 03
+  "apple.mov",                 // 04
+  "windows.wmv",               // 05
+  "wavuti.webm",               // 06
+]),
+/* 04. Muziki (Music) — mafaili 6 */
+"Muziki (Music)":_j([
+  "wimbo.mp3",                 // 01
+  "ubora.wav",                 // 02
+  "aac-sauti.aac",             // 03
+  "flac-sauti.flac",           // 04
+  "ogg-sauti.ogg",             // 05
+  "app-sauti.m4a",             // 06
+]),
+/* 05. Programu (Programs) — mafaili 73 */
+"Programu (Programs)":_j([
+  "cmd.exe",                   // 01
+  "calc.exe",                  // 02
+  "notepad.exe",               // 03
+  "paint.exe",                 // 04
+  "setup.msi",                 // 05
+  "vipengele.dll",             // 06
+  "driver.sys",                // 07
+  "anza.bat",                  // 08
+  "amri.cmd",                  // 09
+  "script.ps1",                // 10
+  "Calculator.lnk",            // 11
+  "Microsoft-Edge.exe",        // 12
+  "Microsoft-Copilot.exe",     // 13
+  "Microsoft-Office.exe",      // 14
+  "Microsoft-Word.exe",        // 15
+  "Microsoft-Excel.exe",       // 16
+  "Microsoft-PowerPoint.exe",  // 17
+  "Microsoft-Outlook.exe",     // 18
+  "Microsoft-OneNote.exe",     // 19
+  "Mozilla-Firefox.exe",       // 20
+  "Google-Chrome.exe",         // 21
+  "Microsoft-Games.exe",        // 22
+  "Microsoft-Photos.exe",  // 23
+  "Microsoft-MediaPlayer.exe",  // 24
+  "Microsoft-Maps.exe",  // 25
+  "Microsoft-Weather.exe",  // 26
+  "Microsoft-Translator.exe",  // 27
+  "Microsoft-Calendar.exe",  // 28
+  "Microsoft-Clock.exe",  // 29
+  "Microsoft-Camera.exe",  // 30
+  "Microsoft-Money.exe",  // 31
+  "Microsoft-News.exe",  // 32
+  "Microsoft-TaskManager.exe",  // 33
+  "Microsoft-Dictionary.exe",  // 34
+  "Microsoft-Encyclopedia.exe",  // 35
+  "Microsoft-Todo.exe",  // 36
+  "Microsoft-StickyNotes.exe",  // 37
+  "Microsoft-Recorder.exe",  // 38
+  "Microsoft-QRCode.exe",  // 39
+  "Microsoft-Converter.exe",  // 40
+  "Microsoft-Passwords.exe",  // 41
+  "Microsoft-Crypto.exe",  // 42
+  "Microsoft-DeviceManager.exe",  // 43
+  "Microsoft-Backup.exe",  // 44
+  "Microsoft-DiskCleanup.exe",  // 45
+  "Microsoft-PDFReader.exe",  // 46
+  "Microsoft-ScreenRecorder.exe",  // 47
+  "Microsoft-Contacts.exe",  // 48
+  "Microsoft-Clipboard.exe",  // 49
+  "Microsoft-TextToSpeech.exe",  // 50
+  "Microsoft-Network.exe",  // 51
+  "Microsoft-Accessibility.exe",  // 52
+  "Visual-Studio-Code.exe",  // 53
+  "Python-IDE.exe",  // 54
+  "HTML-CSS-JS-Editor.exe",  // 55
+  "Scientific-Calculator.exe",  // 56
+  "Circuit-Designer.exe",  // 57
+  "Music-DJ-Mix.exe",  // 58
+  "Facebook.exe",  // 59
+  "Instagram.exe",  // 60
+  "TikTok.exe",  // 61
+  "YouTube.exe",  // 62
+  "regedit.exe",  // 63
+  "wordpad.exe",  // 64
+  "msinfo32.exe",  // 65
+  "charmap.exe",  // 66
+  "Hex-Viewer.exe",  // 67
+  "Hash-Checker.exe",  // 68
+  "Zip-Manager.exe",  // 69
+  "Text-Compare.exe",  // 70
+  "Color-Picker.exe",  // 71
+  "Dev-Toolbox.exe",  // 72
+  "Microsoft-Store.exe",  // 73
+]),
+/* 06. Code (Dev) — mafaili 12 */
+"Code (Dev)":_j([
+  "index.html",                // 01
+  "style.css",                 // 02
+  "app.js",                    // 03
+  "config.json",               // 04
+  "data.xml",                  // 05
+  "hello.py",                  // 06
+  "Hello.java",                // 07
+  "main.cpp",                  // 08
+  "index.php",                 // 09
+  "query.sql",                 // 10
+  "app.ts",                    // 11
+  "README.md",                 // 12
+]),
+/* 07. Zilizobanwa (Archives) — mafaili 5 */
+"Zilizobanwa (Archives)":_j([
+  "mafaili.zip",               // 01
+  "backup.rar",                // 02
+  "picha.7z",                  // 03
+  "source.tar",                // 04
+  "logs.gz",                   // 05
+]),
+/* 08. Database — mafaili 6 */
+"Database":_j([
+  "app.db",                    // 01
+  "watu.sqlite",               // 02
+  "watu.sqlite3",              // 03
+  "ofisi.mdb",                 // 04
+  "mauzo.accdb",               // 05
+  "database.bak",              // 06
+]),
+/* 09. Mfumo (System) — mafaili 9 */
+"Mfumo (System)":_j([
+  "mfumo.log",                 // 01
+  "muda.tmp",                  // 02
+  "settings.ini",              // 03
+  "config.cfg",                // 04
+  "data.dat",                  // 05
+  "usajili.reg",               // 06
+  "kazi.cab",                  // 07
+  "hati.vbs",                  // 08
+  "hitilafu.dmp",              // 09
+]),
+/* 10. Diski (Disks) — mafaili 7 */
+"Diski (Disks)":_j([
+  "windows.iso",               // 01
+  "diski.img",                 // 02
+  "mashine.vhd",               // 03
+  "mashine.vhdx",              // 04
+  "vmware.vmdk",               // 05
+  "paketi.ova",                // 06
+  "paketi.ovf",                // 07
+]),
+};
+const ico={"txt": "📄", "doc": "📘", "docx": "📘", "pdf": "📕", "rtf": "📝", "odt": "📃", "ppt": "📙", "pptx": "📙", "xls": "📗", "xlsx": "📗", "csv": "📊", "jpg": "🖼️", "jpeg": "🖼️", "png": "🖼️", "gif": "🎞️", "bmp": "🖼️", "webp": "🖼️", "svg": "🎨", "ico": "⭐", "mp4": "🎬", "Music": "🎵", "exe": "⚙️", "msi": "📦", "dll": "🧩", "sys": "🛠️", "bat": "📟", "cmd": "📟", "ps1": "📟", "lnk": "🔗", "html": "🌐", "css": "🎨", "js": "🟨", "json": "🧾", "xml": "🧾", "py": "🐍", "java": "☕", "cpp": "➕", "php": "🐘", "sql": "🗃️", "ts": "🟦", "md": "📝", "zip": "🗜️", "rar": "🗜️", "7z": "🗜️", "tar": "🗜️", "gz": "🗜️", "db": "🗄️", "sqlite": "🗄️", "sqlite3": "🗄️", "mdb": "🗄️", "accdb": "🗄️", "bak": "💾", "log": "📜", "tmp": "🕑", "ini": "⚙️", "cfg": "⚙️", "dat": "🔢", "reg": "🧬", "cab": "📦", "vbs": "📜", "dmp": "💥", "iso": "💿", "img": "💿", "vhd": "💽", "vhdx": "💽", "vmdk": "💽", "ova": "🖥️", "ovf": "🖥️"};
+const ICN={"Microsoft-Edge.exe":"🌐","Microsoft-Copilot.exe":"✨","Microsoft-Office.exe":"🏢","Microsoft-Word.exe":"📘","Microsoft-Excel.exe":"📗","Microsoft-PowerPoint.exe":"📙","Microsoft-Outlook.exe":"📧","Microsoft-OneNote.exe":"📓","Mozilla-Firefox.exe":"🦊","Google-Chrome.exe":"🌍","Microsoft-Games.exe":"🎮","Microsoft-Photos.exe":"🖼️","Microsoft-MediaPlayer.exe":"🎵","Microsoft-Maps.exe":"🗺️","Microsoft-Weather.exe":"☀️","Microsoft-Translator.exe":"🌐","Microsoft-Calendar.exe":"📅","Microsoft-Clock.exe":"⏰","Microsoft-Camera.exe":"📷","Microsoft-Money.exe":"💱","Microsoft-News.exe":"📰","Microsoft-TaskManager.exe":"📊","Microsoft-Dictionary.exe":"📖","Microsoft-Encyclopedia.exe":"📚","Microsoft-Todo.exe":"✅","Microsoft-StickyNotes.exe":"🗒️","Microsoft-Recorder.exe":"🎙️","Microsoft-QRCode.exe":"🔳","Microsoft-Converter.exe":"📐","Microsoft-Passwords.exe":"🔐","Microsoft-Crypto.exe":"🪙","Microsoft-DeviceManager.exe":"🖥️","Microsoft-Backup.exe":"🛡️","Microsoft-DiskCleanup.exe":"🧹","Microsoft-PDFReader.exe":"📕","Microsoft-ScreenRecorder.exe":"🎥","Microsoft-Contacts.exe":"👥","Microsoft-Clipboard.exe":"📋","Microsoft-TextToSpeech.exe":"🗣️","Microsoft-Network.exe":"📡","Microsoft-Accessibility.exe":"♿","Visual-Studio-Code.exe":"💻","Python-IDE.exe":"🐍","HTML-CSS-JS-Editor.exe":"🌐","Scientific-Calculator.exe":"🔬","Circuit-Designer.exe":"🔌","Music-DJ-Mix.exe":"🎧","Facebook.exe":"📘","Instagram.exe":"📸","TikTok.exe":"🎵","YouTube.exe":"▶️","regedit.exe":"🧩","wordpad.exe":"📝","msinfo32.exe":"ℹ️","charmap.exe":"🔣","Hex-Viewer.exe":"🔢","Hash-Checker.exe":"#️⃣","Zip-Manager.exe":"🗜️","Text-Compare.exe":"🔀","Color-Picker.exe":"🎨","Dev-Toolbox.exe":"🛠️"};
+/* ===== SADE ICONS (SVG, bila emoji) ===== */
+const G={
+doc:'<path d="M5 6h14M5 11h14M5 16h9"/>',
+tbl:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9.5h18M3 14.5h18M9 4v16"/>',
+bar:'<path d="M5 20V11M12 20V4M19 20v-6"/>',
+img:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5L5 20"/>',
+vid:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/>',
+mus:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+zip:'<rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 12h4"/>',
+db:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+code:'<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+brace:'<path d="M8 4C6 4 6 6 6 8s0 3-2 4c2 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s0 3 2 4c-2 1-2 2-2 4s0 4-2 4"/>',
+gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2.5l1.6 2.2 2.7-.6.9 2.6 2.6.9-.6 2.7L21.5 12l-2.2 1.6.6 2.7-2.6.9-.9 2.6-2.7-.6L12 21.5l-1.6-2.2-2.7.6-.9-2.6-2.6-.9.6-2.7L2.5 12l2.2-1.6-.6-2.7 2.6-.9.9-2.6 2.7.6z"/>',
+term:'<path d="M4 17l6-6-6-6M12 19h8"/>',
+globe:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',
+star:'<path d="M12 3l2.2 6 6.3.4-5 4 1.7 6.2L12 16l-5.2 3.6 1.7-6.2-5-4 6.3-.4z"/>',
+spark:'<path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2zM19 3v4M17 5h4"/>',
+case:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 13h18"/>',
+mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+note:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v18M12 8h4"/>',
+chrome:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 8.5h8.5M8.9 14l-4.3-7.4M15 14l-4.3 7.4"/>',
+pad:'<rect x="2" y="6" width="20" height="12" rx="5"/><path d="M7 10v4M5 12h4"/><circle cx="15.5" cy="11" r=".6"/><circle cx="17.5" cy="13" r=".6"/>',
+pin:'<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>',
+tr:'<path d="M4 5h8M8 3v2M5 5c0 4 3 7 6 8M11 5c0 3-3 7-7 9M13 20l4-9 4 9M14.5 17h5"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+clk:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+cam:'<path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13.5" r="3.5"/>',
+swap:'<path d="M7 7h13l-3-3M17 17H4l3 3"/>',
+news:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10M7 17h10"/>',
+act:'<path d="M2 12h4l3-8 4 16 3-8h6"/>',
+book:'<path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3zM4 17a3 3 0 0 1 3-3h12"/>',
+lib:'<path d="M3 20h18M5 20V8h4v12M11 20V4h4v16M17 20l1-9 4 1-1 8"/>',
+chk:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 12l2.5 2.5L16 9.5"/>',
+stk:'<path d="M4 4h16v11l-5 5H4zM15 20v-5h5"/>',
+mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M14 21h3M21 17v4"/>',
+rul:'<path d="M3 17L17 3l4 4L7 21zM7 13l2 2M10 10l2 2M13 7l2 2"/>',
+lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+coin:'<circle cx="12" cy="12" r="9"/><path d="M10 7v10M10 7h3.5a2.5 2.5 0 0 1 0 5H10m3.5 0a2.5 2.5 0 0 1 0 5H10M12 5v2M12 17v2"/>',
+mon:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+shld:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/>',
+trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+hdd:'<rect x="3" y="13" width="18" height="7" rx="2"/><path d="M3 13l3-8h12l3 8M7 16.5h.01M11 16.5h.01"/>',
+rec:'<rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/>',
+usr:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.5.7 4 2.7 4 6"/>',
+clp:'<rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/>',
+spk:'<path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>',
+wifi:'<path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0M12 19.5v.01"/>',
+acc:'<circle cx="12" cy="4.5" r="2"/><path d="M4 8.5l8 1.5 8-1.5M12 10v5M12 15l-3.5 6M12 15l3.5 6"/>',
+py:'<path d="M12 3c-4 0-5 1.5-5 3v3h5v1H5.5C3.5 10 3 12 3 14s1 4 3 4h2v-3a3 3 0 0 1 3-3h4a2.5 2.5 0 0 0 2.5-2.5V6c0-2-2-3-5.5-3z"/><path d="M12 21c4 0 5-1.5 5-3v-3h-5v-1h6.5c2 0 2.5-2 2.5-4s-1-4-3-4h-2v3a3 3 0 0 1-3 3h-4A2.5 2.5 0 0 0 7 14v4c0 2 2 3 5 3z"/>',
+ide:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M10 13l-2 2 2 2M14 13l2 2-2 2"/>',
+calc:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18.5h.01M12 18.5h.01M16 18.5h.01"/>',
+flask:'<path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3M7.5 15h9"/>',
+chip:'<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>',
+hp:'<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="1.5"/><rect x="17" y="14" width="4" height="7" rx="1.5"/>',
+fb:'<path fill="#fff" stroke="none" d="M14 21v-8h3l.5-3.5H14V7.5c0-1 .5-1.8 2-1.8h1.8V2.6C17.2 2.5 16.2 2.4 15.2 2.4 12.6 2.4 10.5 4 10.5 7v2.5h-3V13h3v8z"/>',
+ig:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/>',
+tt:'<path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.3 2.5 2 4.2 5 4.5"/>',
+yt:'<path fill="#fff" stroke="none" d="M9.5 8l6.5 4-6.5 4z"/>',
+pal:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.5-2.2-.5-1.3.3-2.3 1.8-2.3H18a3 3 0 0 0 3-3C21 7 17 3 12 3z"/><path d="M7.5 11h.01M10 7.5h.01M14.5 7.5h.01"/>',
+pen:'<path d="M4 20h4L20 8l-4-4L4 16z"/>',
+pc:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/>',
+disc:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 6a6 6 0 0 1 6 6"/>',
+link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+pkg:'<path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/>',
+puz:'<path d="M10 4a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v6H4v-6h2a2 2 0 1 0 0-4H4V6h6z"/>',
+warn:'<path d="M12 3l10 18H2zM12 10v5M12 18v.01"/>',
+sld:'<path d="M4 6h16M4 12h4M12 12h8M4 18h12M18 18h2"/><circle cx="10" cy="12" r="1.5"/><circle cx="17" cy="18" r="1.5"/>',
+sav:'<path d="M5 3h12l4 4v14H5zM8 3v6h8V3M8 21v-7h8v7"/>',
+grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+shp:'<circle cx="7" cy="7" r="3.5"/><rect x="13" y="3.5" width="8" height="8" rx="1"/><path d="M5 21l4-8 4 8z"/>',
+srv:'<rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/>'};
+const hx=(h,a)=>{const n=parseInt(h.slice(1),16),f=v=>Math.max(0,Math.min(255,Math.round(a>0?v+(255-v)*a:v*(1+a))));return '#'+[n>>16,n>>8&255,n&255].map(v=>f(v).toString(16).padStart(2,'0')).join('')};
+const LG=(id,a,b,x2,y2)=>`<linearGradient id="${id}" x1="0" y1="0" x2="${x2==null?0:x2}" y2="${y2==null?1:y2}"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
+const GLS='<linearGradient id="gls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>';
+const gl=(g,t,w,c)=>`<g transform="${t}" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="${w}"><g stroke="#000" opacity=".28" transform="translate(0 .9)">${G[g]||G.doc}</g><g stroke="${c||'#fff'}">${G[g]||G.doc}</g></g>`;
+const svg=b=>`<svg class="si" viewBox="0 0 32 32" aria-hidden="true">${b}</svg>`;
+const PG=(c,g,l)=>{const t=l||'',i=c.slice(1),w=t.length>3?25:21;return svg(`<defs>${LG('p'+i,'#ffffff','#d5dde7')}${LG('b'+i,hx(c,.28),hx(c,-.22))}${LG('k'+i,'#f3f6fa','#b9c4d1',1,1)}</defs><ellipse cx="16" cy="30.4" rx="10.5" ry="1.3" fill="#000" opacity=".25"/><path d="M7 2h13l7 7v19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="url(#p${i})" stroke="#7d8da0" stroke-width="1"/><path d="M6 3.2h13" stroke="#fff" stroke-width="1" opacity=".9"/><path d="M20 2v5a2 2 0 0 0 2 2h5z" fill="url(#k${i})" stroke="#7d8da0" stroke-width="1" stroke-linejoin="round"/>`+(g?gl(g,'translate(10.5 6.5) scale(.52)',2.4,c):`<path d="M9 8h8M9 11.5h12M9 15h12" stroke="#b7c2cf" stroke-width="1.6" stroke-linecap="round"/>`)+`<rect x="3" y="18.5" width="${w}" height="9" rx="2.2" fill="url(#b${i})" stroke="${hx(c,-.4)}" stroke-width=".6"/><rect x="3.4" y="18.9" width="${w-.8}" height="3.8" rx="1.8" fill="#fff" opacity=".28"/><text x="${3+w/2}" y="25.3" font-size="${t.length>3?5.6:t.length>2?6.4:7.6}" font-weight="800" fill="#fff" stroke="#000" stroke-opacity=".25" stroke-width=".25" text-anchor="middle" font-family="Arial,sans-serif">${t}</text>`)};
+const FILLED=new Set(['tbl','img','vid','zip','db','mail','case','note','cal','news','mon','hdd','pad','stk','chk','clp','lock','shld','pin','trash','book','pkg','chip','star','pc','srv','sav','warn','disc','coin','globe','clk','cam','puz','shp']);
+const MIC=(a,b)=>{const i='m'+a.slice(1);return svg(`<defs>${LG('mm','#fbfcfd','#8693a1',1,0)}${LG('mc'+i,a,b)}</defs><ellipse cx="16" cy="30.3" rx="8" ry="1.2" fill="#000" opacity=".28"/><path d="M7 14a9 9 0 0 0 18 0M16 23v4.6" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><rect x="9.5" y="26" width="13" height="4" rx="2" fill="#fff"/><rect x="10.7" y="1.3" width="10.6" height="19" rx="5.3" fill="#fff"/><path d="M7 14a9 9 0 0 0 18 0M16 23v4.6" fill="none" stroke="#56626f" stroke-width="2" stroke-linecap="round"/><rect x="10.5" y="27" width="11" height="2.6" rx="1.3" fill="#56626f"/><rect x="11.5" y="2.3" width="9" height="17" rx="4.5" fill="url(#mm)" stroke="#56626f" stroke-width=".8"/><path d="M12 7h8M12 9.8h8M12 12.6h8" stroke="#6b7785" stroke-width=".7"/><rect x="11.5" y="15.2" width="9" height="2.8" fill="url(#mc${i})"/><rect x="12.7" y="3.6" width="1.8" height="9" rx=".9" fill="#fff" opacity=".8"/>`)};
+const PPL=(a,b)=>{const i='u'+a.slice(1);return svg(`<defs>${LG('ua'+i,hx(a,.25),hx(a,-.2))}${LG('ub'+i,hx(b,.2),hx(b,-.35))}</defs><ellipse cx="16" cy="30.3" rx="12" ry="1.3" fill="#000" opacity=".25"/><g stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><circle cx="22" cy="9.5" r="4.6" fill="url(#ub${i})"/><path d="M13.5 24.5c0-5.2 3.6-8.6 8.5-8.6s8.5 3.4 8.5 8.6z" fill="url(#ub${i})"/><circle cx="11" cy="10.6" r="5.4" fill="url(#ua${i})"/><path d="M1.5 28.5c0-6.6 4.2-10.6 9.5-10.6s9.5 4 9.5 10.6z" fill="url(#ua${i})"/></g><ellipse cx="9.4" cy="8.6" rx="2" ry="1.4" fill="#fff" opacity=".5"/>`)};
+const FBL=()=>svg(`<defs>${LG('fbg','#3b8bff','#0a47c4')}</defs><ellipse cx="16" cy="30.3" rx="9" ry="1.2" fill="#000" opacity=".25"/><circle cx="16" cy="15.5" r="14" fill="url(#fbg)" stroke="#fff" stroke-width="2"/><path d="M17.5 28V18.5h3.2l.5-3.7h-3.7v-2.3c0-1.1.4-1.8 1.9-1.8h1.9V7.4c-.4 0-1.5-.2-2.8-.2-2.8 0-4.6 1.7-4.6 4.7v2.9h-3.1v3.7h3.1V28z" fill="#fff"/>`);
+const YTL=()=>svg(`<defs>${LG('ytg','#ff4a4a','#c40000')}</defs><ellipse cx="16" cy="29.5" rx="12" ry="1.3" fill="#000" opacity=".25"/><rect x="1.5" y="6" width="29" height="20" rx="6.5" fill="url(#ytg)" stroke="#fff" stroke-width="2"/><path d="M13 11l8 5-8 5z" fill="#fff"/><path d="M4 11c0-3 2-4 5-4h14c3 0 5 1 5 4-8 3-16 3-24 0z" fill="#fff" opacity=".22"/>`);
+const CUST={mic:MIC,usr:PPL,fb:FBL,yt:YTL};
+const STL=()=>svg(`<defs>${LG('sbg','#ffffff','#c9d6e6')}${LG('sbh','#3aa0ff','#0b4fd6')}</defs><ellipse cx="16" cy="30.3" rx="11" ry="1.3" fill="#000" opacity=".28"/><path d="M10.5 11V9.2a5.5 5.5 0 0 1 11 0V11" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="4.2" stroke-linecap="round" transform="translate(0 .8)"/><path d="M10.5 11V9.2a5.5 5.5 0 0 1 11 0V11" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round"/><path d="M10.5 11V9.2a5.5 5.5 0 0 1 11 0V11" fill="none" stroke="url(#sbh)" stroke-width="2.2" stroke-linecap="round"/><path d="M4.6 11h22.8l-1.7 15.3a2.8 2.8 0 0 1-2.8 2.5H9.1a2.8 2.8 0 0 1-2.8-2.5z" fill="url(#sbg)" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M4.6 11h22.8l-.5 4.4H5.1z" fill="url(#sbh)" opacity=".9"/><rect x="10.2" y="16.6" width="5.2" height="5.2" rx=".8" fill="#f25022"/><rect x="16.6" y="16.6" width="5.2" height="5.2" rx=".8" fill="#7fba00"/><rect x="10.2" y="22.8" width="5.2" height="5.2" rx=".8" fill="#00a4ef"/><rect x="16.6" y="22.8" width="5.2" height="5.2" rx=".8" fill="#ffb900"/><path d="M6 12.2h20" stroke="#fff" stroke-opacity=".55" stroke-width="1" stroke-linecap="round"/>`);
+CUST.store=STL;
+const IL=(a,b,g)=>{if(CUST[g])return CUST[g](a,b);const i='l'+a.slice(1)+b.slice(1),P=G[g]||G.doc,fl=FILLED.has(g);return svg(`<defs><linearGradient id="${i}" gradientUnits="userSpaceOnUse" x1="0" y1="2" x2="0" y2="22"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><ellipse cx="16" cy="30.3" rx="9" ry="1.2" fill="#000" opacity=".25"/><g transform="translate(2.2 1.6) scale(1.1)" stroke-linecap="round" stroke-linejoin="round" fill="none"><g stroke="#000" stroke-opacity=".28" stroke-width="4.6" transform="translate(0 1.2)">${P}</g><g stroke="#fff" stroke-width="4.6">${P}</g><g stroke="url(#${i})" stroke-width="2.5"${fl?` fill="${hx(a,.72)}"`:''}>${P}</g></g>`)};
+const LBL=(c,t)=>svg(`<ellipse cx="16" cy="30" rx="10" ry="1.2" fill="#000" opacity=".25"/><text x="16" y="21" font-size="${t.length>3?10:t.length>2?12.5:15}" font-weight="900" text-anchor="middle" font-family="Arial,sans-serif" fill="${c}" stroke="#fff" stroke-width="3.4" paint-order="stroke" stroke-linejoin="round">${t}</text>`);
+const AP=(a,b,g)=>IL(a,b,g);
+const FO=(c,g)=>{const i=c.slice(1),F='M3 13a2 2 0 0 1 2-2h22a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z';return svg(`<defs>${LG('fb'+i,hx(c,-.18),hx(c,-.42))}${LG('ff'+i,hx(c,.4),hx(c,-.05))}</defs><ellipse cx="16" cy="29.6" rx="12.5" ry="1.4" fill="#000" opacity=".25"/><path d="M3 8a2 2 0 0 1 2-2h7l3 3h12a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="url(#fb${i})"/><rect x="6" y="9" width="20" height="9" rx="1" fill="#fff"/><path d="M8 12h14M8 14.5h10" stroke="#c9d2dc" stroke-width="1.2" stroke-linecap="round"/><path d="${F}" fill="url(#ff${i})" stroke="${hx(c,-.45)}" stroke-width=".7"/><path d="M4.5 12.3h23" stroke="#fff" stroke-opacity=".7" stroke-width="1" stroke-linecap="round"/>`+(g?gl(g,'translate(10.5 14.6) scale(.46)',2.8):''))};
+const PC=()=>svg(`<defs>${LG('mb','#59626f','#1b1f27')}${LG('ms','#7fd6ff','#0a3f9e',.9,1)}${LG('mn','#e1e6ec','#8794a3')}${LG('mp','#fff','#bfe6ff')}<radialGradient id="mg" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#9be3ff" stop-opacity=".9"/><stop offset="1" stop-color="#9be3ff" stop-opacity="0"/></radialGradient></defs><ellipse cx="16" cy="30" rx="11" ry="1.4" fill="#000" opacity=".3"/><rect x="2" y="2.5" width="28" height="20" rx="2.6" fill="url(#mb)" stroke="#0b0d12" stroke-width=".8"/><rect x="3.8" y="4.2" width="24.4" height="15.8" rx="1" fill="url(#ms)"/><ellipse cx="16" cy="12.2" rx="9" ry="6.5" fill="url(#mg)"/><g fill="url(#mp)"><rect x="12" y="8.3" width="3.7" height="3.5" rx=".4"/><rect x="16.3" y="8.3" width="3.7" height="3.5" rx=".4"/><rect x="12" y="12.4" width="3.7" height="3.5" rx=".4"/><rect x="16.3" y="12.4" width="3.7" height="3.5" rx=".4"/></g><path d="M3.8 4.2h13l-8.5 15.8H3.8z" fill="#fff" opacity=".16"/><circle cx="16" cy="21.3" r=".5" fill="#6ee06e"/><path d="M12.6 22.8h6.8l1 3.4h-8.8z" fill="url(#mn)" stroke="#6b7684" stroke-width=".5"/><rect x="8.5" y="26" width="15" height="2.6" rx="1.3" fill="url(#mn)" stroke="#6b7684" stroke-width=".6"/><rect x="9.5" y="26.3" width="13" height=".8" rx=".4" fill="#fff" opacity=".7"/>`);
+const FILE_SPEC={txt:['#78909c','doc'],md:['#546e7a',0,'MD'],rtf:['#5c6bc0','doc'],log:['#8d6e63','doc'],odt:['#1e88e5','doc'],doc:['#1e6fd9','doc'],docx:['#1e6fd9','doc'],pdf:['#e53935',0,'PDF'],ppt:['#f4511e','bar'],pptx:['#f4511e','bar'],xls:['#1e9e5a','tbl'],xlsx:['#1e9e5a','tbl'],csv:['#00897b','tbl'],
+jpg:['#8e44ad','img'],jpeg:['#8e44ad','img'],png:['#8e44ad','img'],gif:['#d81b60','vid'],bmp:['#8e44ad','img'],webp:['#8e44ad','img'],svg:['#f57c00','shp'],ico:['#fbc02d','star'],mp4:['#d32f2f','vid'],mp3:['#ec407a','mic'],wav:['#ec407a','mic'],Music:['#ec407a','mic'],
+exe:['#1976d2','pc'],msi:['#6d4c41','pkg'],dll:['#00838f','puz'],sys:['#455a64','chip'],bat:['#37474f','term'],cmd:['#37474f','term'],ps1:['#1a4a8c','term'],vbs:['#6d4c41','term'],lnk:['#0097a7','link'],
+html:['#e65100','code'],css:['#1565c0','brace'],js:['#f9a825',0,'JS'],json:['#43a047','brace'],xml:['#00897b','code'],py:['#2e7dbf','py'],java:['#c62828','book'],cpp:['#00599c',0,'C++'],php:['#6a5acd',0,'PHP'],sql:['#546e7a','db'],ts:['#2f74c0',0,'TS'],
+zip:['#ef6c00','zip'],rar:['#ef6c00','zip'],'7z':['#ef6c00','zip'],tar:['#ef6c00','zip'],gz:['#ef6c00','zip'],cab:['#6d4c41','pkg'],db:['#546e7a','db'],sqlite:['#546e7a','db'],sqlite3:['#546e7a','db'],mdb:['#a4373a','db'],accdb:['#a4373a','db'],bak:['#6d4c41','sav'],
+tmp:['#90a4ae','clk'],ini:['#607d8b','gear'],cfg:['#607d8b','gear'],dat:['#757575',0,'DAT'],reg:['#5e35b1','sld'],dmp:['#c62828','warn'],iso:['#455a64','disc'],img:['#455a64','disc'],vhd:['#455a64','hdd'],vhdx:['#455a64','hdd'],vmdk:['#455a64','hdd'],ova:['#37474f','srv'],ovf:['#37474f','srv']};
+const APP_SPEC={'Microsoft-Edge.exe':['#0ea5e9','#16a34a','globe'],'Microsoft-Copilot.exe':['#7c3aed','#06b6d4','spark'],'Microsoft-Office.exe':['#e64a19','#ff8a65','case'],'Microsoft-Word.exe':['#1e6fd9','#4f9cf5','doc'],'Microsoft-Excel.exe':['#188a4e','#34c27a','tbl'],'Microsoft-PowerPoint.exe':['#d9411e','#ff7a4d','bar'],'Microsoft-Outlook.exe':['#0f6cbd','#3aa0f3','mail'],'Microsoft-OneNote.exe':['#7b2fa8','#b066d9','note'],'Mozilla-Firefox.exe':['#ff6d00','#e91e63','globe'],'Google-Chrome.exe':['#ea4335','#fbbc05','chrome'],'Microsoft-Games.exe':['#2e7d32','#66bb6a','pad'],'Microsoft-Photos.exe':['#8e24aa','#ec407a','img'],'Microsoft-MediaPlayer.exe':['#e91e63','#ff7043','mus'],'Microsoft-Maps.exe':['#0097a7','#26c6da','pin'],'Microsoft-Weather.exe':['#1e88e5','#fbc02d','sun'],'Microsoft-Translator.exe':['#3949ab','#5c6bc0','tr'],'Microsoft-Calendar.exe':['#1565c0','#42a5f5','cal'],'Microsoft-Clock.exe':['#455a64','#78909c','clk'],'Microsoft-Camera.exe':['#37474f','#607d8b','cam'],'Microsoft-Money.exe':['#2e7d32','#9ccc65','swap'],'Microsoft-News.exe':['#c62828','#ef5350','news'],'Microsoft-TaskManager.exe':['#00796b','#26a69a','act'],'Microsoft-Dictionary.exe':['#4527a0','#7e57c2','book'],'Microsoft-Encyclopedia.exe':['#6d4c41','#a1887f','lib'],'Microsoft-Todo.exe':['#1976d2','#64b5f6','chk'],'Microsoft-StickyNotes.exe':['#f9a825','#ffd54f','stk'],'Microsoft-Recorder.exe':['#d32f2f','#ff7043','mic'],'Microsoft-QRCode.exe':['#263238','#546e7a','qr'],'Microsoft-Converter.exe':['#ef6c00','#ffa726','rul'],'Microsoft-Passwords.exe':['#37474f','#1e88e5','lock'],'Microsoft-Crypto.exe':['#f57c00','#fbc02d','coin'],'Microsoft-DeviceManager.exe':['#0277bd','#29b6f6','mon'],'Microsoft-Backup.exe':['#2e7d32','#43a047','shld'],'Microsoft-DiskCleanup.exe':['#00897b','#4db6ac','hdd'],'Microsoft-PDFReader.exe':['#c62828','#ef5350','doc'],'Microsoft-ScreenRecorder.exe':['#ad1457','#ec407a','rec'],'Microsoft-Contacts.exe':['#0277bd','#4fc3f7','usr'],'Microsoft-Clipboard.exe':['#5d4037','#8d6e63','clp'],'Microsoft-TextToSpeech.exe':['#6a1b9a','#ab47bc','spk'],'Microsoft-Network.exe':['#1565c0','#26c6da','wifi'],'Microsoft-Accessibility.exe':['#1976d2','#42a5f5','acc'],'Visual-Studio-Code.exe':['#0065a9','#2b9bf0','code'],'Python-IDE.exe':['#306998','#f2c53d','py'],'HTML-CSS-JS-Editor.exe':['#e65100','#ff9800','ide'],'Scientific-Calculator.exe':['#6a1b9a','#8e24aa','flask'],'Circuit-Designer.exe':['#00695c','#26a69a','chip'],'Music-DJ-Mix.exe':['#4a148c','#e040fb','hp'],'Facebook.exe':['#1877f2','#0a58c9','fb'],'Instagram.exe':['#f58529','#c13584','ig'],'TikTok.exe':['#111827','#fe2c55','tt'],'YouTube.exe':['#e00000','#ff4d4d','yt'],'cmd.exe':['#1c1c1c','#4b4b4b','term'],'calc.exe':['#00897b','#26a69a','calc'],'paint.exe':['#e91e63','#ff9800','pal'],'notepad.exe':['#1e88e5','#64b5f6','pen'],'regedit.exe':['#5e35b1','#9575cd','sld'],'wordpad.exe':['#1565c0','#64b5f6','doc'],'msinfo32.exe':['#00695c','#4db6ac','chip'],'charmap.exe':['#ad1457','#f06292','tr'],'Hex-Viewer.exe':['#37474f','#78909c','code'],'Hash-Checker.exe':['#2e7d32','#81c784','shld'],'Zip-Manager.exe':['#ef6c00','#ffb74d','zip'],'Text-Compare.exe':['#6a1b9a','#ba68c8','swap'],'Color-Picker.exe':['#d81b60','#ffb300','spark'],'Dev-Toolbox.exe':['#283593','#7986cb','brace'],'Microsoft-Store.exe':['#0b4fd6','#3aa0ff','store']};
+const SYS_SPEC={pc:['#1565c0','#42a5f5','pc'],bin:['#546e7a','#90a4ae','trash'],desk:['#0277bd','#4fc3f7','mon'],set:['#546e7a','#90a4ae','gear'],off:['#00796b','#26a69a','hdd']};
+const FOLD_SPEC={Nyaraka:['#3b82d6','doc'],Picha:['#ab47bc','img'],Video:['#e53935','vid'],Muziki:['#ec407a','mus'],Programu:['#3949ab','grid'],Code:['#00897b','code'],Zilizobanwa:['#ef6c00','zip'],Database:['#546e7a','db'],Mfumo:['#607d8b','gear'],Diski:['#455a64','hdd']};
+const IA=k=>{if(k==='pc'||k==='desk')return PC();const s=SYS_SPEC[k];return AP(s[0],s[1],s[2])};
+const FD=k=>{k=String(k);if(typeof BIN!=='undefined'&&k===BIN)return IA('bin');if(k==='Desktop')return IA('desk');const s=FOLD_SPEC[k.split(' ')[0]];return FO(s?s[0]:'#f2b01e',s?s[1]:0)};
+const FIL=n=>{const a=APP_SPEC[n];if(a)return IL(a[0],a[1],a[2]);const s=FILE_SPEC[String(n).split('.').pop()]||FILE_SPEC[n]||['#78909c','doc'];return s[2]&&!s[1]?LBL(s[0],s[2]):IL(s[0],hx(s[0],-.35),s[1])};
+const fi=FIL;
+
+</script>
+<script>const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const ext=n=>n.split('.').pop().toLowerCase();
+const TTO={"Backup-Restore": "Backup & Restore", "HTML-CSS-JS-Editor": "HTML/CSS/JS Editor", "Circuit-Designer": "Circuit Designer", "Music-DJ-Mix": "Music DJ Mix"};
+const TT=n=>{n=String(AL[n]||n);const b=n.replace(/\.[^.]+$/,'')||n;return TTO[b]||b.replace(/-/g,' ')};
+/* ===== WINDOWS ===== */
+let Z=10,wins=[];
+function win(title,icon,w,h,body,onclose){
+ const el=E('div','w'),hd=E('div','h','<span>'+icon+' &nbsp;'+esc(title)+'</span><i>─</i><i>☐</i><i class="x">✕</i>'),b=E('div','b');
+ b.append(body);el.append(hd,b);
+ const n=wins.length%8*26;el.style.cssText=`left:${40+n}px;top:${30+n}px;width:${Math.min(w,innerWidth-10)}px;height:${Math.min(h,innerHeight-60)}px;z-index:${++Z}`;
+ $('#desk').append(el);if(innerWidth<760)el.classList.add('mx');
+ const tk=E('button','',icon);tk.title=title;$('#tasks').append(tk);
+ const o={el,close(){onclose&&onclose();el.remove();tk.remove();wins=wins.filter(x=>x!==o)},foc(){el.style.zIndex=++Z;el.style.display='flex';wins.forEach(x=>x.tk.classList.remove('on'));tk.classList.add('on')},tk};
+ wins.push(o);o.foc();
+ el.addEventListener('pointerdown',()=>o.foc());
+ const [mn,mx,cl]=hd.querySelectorAll('i');cl.onclick=o.close;mx.onclick=()=>el.classList.toggle('mx');mn.onclick=()=>{el.style.display='none';tk.classList.remove('on')};
+ hd.ondblclick=()=>el.classList.toggle('mx');
+ tk.onclick=()=>el.style.display==='none'||!tk.classList.contains('on')?o.foc():mn.onclick();
+ let d=null;hd.onpointerdown=e=>{if(e.target.tagName==='I'||el.classList.contains('mx'))return;d=[e.clientX-el.offsetLeft,e.clientY-el.offsetTop];hd.setPointerCapture(e.pointerId)};
+ hd.onpointermove=e=>{if(d){el.style.left=e.clientX-d[0]+'px';el.style.top=Math.max(0,e.clientY-d[1])+'px'}};hd.onpointerup=()=>d=null;
+ return o}
+function bar(...a){const d=E('div','bar');a.forEach(x=>{if(typeof x==='string')d.append(E('span','',x));else{const bt=E('button','',x[0]);bt.onclick=x[1];d.append(bt)}});return d}
+const wrap=(...c)=>{const d=E('div');d.style.cssText='display:flex;flex-direction:column;flex:1;min-height:0';d.append(...c);return d};
+/* ===== EXPLORER ===== */
+function explorer(f){
+ let cur=f||null,H=[cur],hi=0;const box=wrap(),side=E('div','sd'),body=E('div','grid'),ad=E('div','ad'),stt=E('div','stt'),q=E('input');q.placeholder='Tafuta';q.style.width='120px';
+ const go=(c,p)=>{cur=c;if(!p){H=H.slice(0,hi+1);H.push(c);hi++}q.value='';draw()};
+ const bk=E('button','','←'),fw=E('button','','→'),up=E('button','','↑');bk.onclick=()=>{if(hi>0){hi--;go(H[hi],1)}};fw.onclick=()=>{if(hi<H.length-1){hi++;go(H[hi],1)}};up.onclick=()=>go(null);
+ const nav=E('div','bar');nav.append(bk,fw,up,ad,q);const row=E('div');row.style.cssText='display:flex;flex:1;min-height:0';row.append(side,body);body.style.flex=1;body.style.overflow='auto';
+ function draw(){ad.textContent='Kompyuta Hii › Diski (C:)'+(cur?' › '+cur:'');side.innerHTML='';
+  const si=(t,c)=>{const d=E('div',c===cur?'on':'',t);d.onclick=()=>go(c);side.append(d)};si(IA('pc')+' Kompyuta Hii',null);Object.keys(FOLD).forEach(k=>si(FD(k)+' '+k.split(' ')[0],k));
+  body.innerHTML='';body.classList.add('lst');let n=0;const t=q.value.toLowerCase();
+  body.append(E('div','lh','<span>#</span><span></span><span>Jina</span><span>Aina</span>'));
+  const mk=(ic,nm,ty,fn)=>{n++;const i=E('div','it','<em>'+String(n).padStart(2,'0')+'</em><b>'+ic+'</b><span>'+esc(nm)+'</span><small>'+ty+'</small>');i.ondblclick=fn;i.onclick=()=>{body.querySelectorAll('.it').forEach(z=>z.style.background='');i.style.background='#cce4f7'};body.append(i)};
+  if(!cur)Object.keys(FOLD).filter(k=>k.toLowerCase().includes(t)).forEach(k=>mk(FD(k),k,'Folda · '+FOLD[k].split(',').length+' vitu',()=>go(k)));
+  else FOLD[cur].split(',').filter(x=>x.toLowerCase().includes(t)).sort((x,y)=>x.localeCompare(y,undefined,{sensitivity:'base'})).forEach(x=>mk(fi(x),x,ext(x).toUpperCase()+' · Faili',()=>openF(cur,x)));
+  stt.textContent=n+' vitu'+(OFFN?'  ·  💾 '+OFFN+' vimehifadhiwa offline':'')}
+ q.oninput=draw;draw();box.append(nav,row,stt);win('Explorer',FD('Nyaraka'),680,420,box)}
+/* ===== OFFLINE STORAGE (IndexedDB) ===== */
+let OFFN=0,PAT=null,syncing=0;
+/* IndexedDB halisi: 'files' = programu za repo (HTML), 'blobs' = mafaili ya mtumiaji (Explorer), 'meta' = manifest/miss/nakala ya V. Ikishindikana, inaanguka kwenye kumbukumbu ya kikao. */
+const IDX=(()=>{const mem={files:new Map(),blobs:new Map(),meta:new Map()};let dbp;
+ const open=()=>dbp||(dbp=new Promise(r=>{try{const q=indexedDB.open('SadeComputerDB',1);q.onupgradeneeded=()=>{['files','blobs','meta'].forEach(n=>q.result.createObjectStore(n))};q.onsuccess=()=>{q.result.onversionchange=()=>{q.result.close();dbp=null};r(q.result)};q.onerror=q.onblocked=()=>r(null)}catch(_){r(null)}}));
+ const R=async(s,m,fn,fb)=>{const d=await open();if(!d)return fb(mem[s]);return new Promise((res,rej)=>{let o;try{const t=d.transaction(s,m),q=fn(t.objectStore(s));if(q)q.onsuccess=()=>o=q.result;t.oncomplete=()=>res(o);t.onerror=t.onabort=()=>rej(t.error||new Error('IndexedDB'))}catch(e){rej(e)}})};
+ const mk=s=>({get:k=>R(s,'readonly',o=>o.get(k),m=>m.get(k)),put:(k,v)=>R(s,'readwrite',o=>o.put(v,k),m=>{m.set(k,v)}),del:k=>R(s,'readwrite',o=>o.delete(k),m=>{m.delete(k)}),keys:()=>R(s,'readonly',o=>o.getAllKeys(),m=>[...m.keys()]),clear:()=>R(s,'readwrite',o=>o.clear(),m=>{m.clear()})});
+ return{files:mk('files'),blobs:mk('blobs'),meta:mk('meta'),ok:async()=>!!await open()}})();
+const _nf=p=>p.catch(e=>{console.warn('IndexedDB',e)});
+const DB={get:k=>_nf(IDX.files.get(k)),put:(k,v)=>_nf(IDX.files.put(k,v)),keys:async()=>(await _nf(IDX.files.keys()))||[],getM:k=>_nf(IDX.meta.get(k)),putM:(k,v)=>_nf(IDX.meta.put(k,v))};
+const SYN={t:0,d:0};
+/* Cache API (safu ya pili): kurasa za programu zinahifadhiwa pia kama Response kwa URL yake, ili SW iziwasilishe offline. IndexedDB inabaki na maandishi + metadata. */
+const CN='sade-apps-v1',CAC=!!(self.caches&&/^https?:$/.test(location.protocol));
+const cabs=p=>new URL(p,location.href).href;
+const cput=async(p,txt)=>{if(!CAC||!p)return;try{await(await caches.open(CN)).put(cabs(p),new Response(txt,{headers:{'content-type':'text/html;charset=utf-8'}}))}catch(_){}};
+const cfind=async(s,n)=>{if(!CAC)return;try{const c=await caches.open(CN);for(const p of paths(s,n)){const m=await c.match(cabs(p));if(m)return{html:await m.text(),t:Date.now(),p}}}catch(_){}};
+const savF=async(key,r)=>{await DB.put(key,{html:r.txt,t:Date.now(),p:r.p});await cput(r.p,r.txt)};
+const TOTAL=()=>Object.keys(FOLD).reduce((a,k)=>a+FOLD[k].split(',').length,0);
+const cnt=()=>DB.keys().then(k=>{OFFN=k.length;const o=$('#off');if(o){o.textContent=syncing?'⏳':'💾';o.title='💾 Offline: programu '+OFFN+'/'+TOTAL()+' zimehifadhiwa kwenye kifaa'+(syncing?' (inapakua '+SYN.d+'/'+SYN.t+')':'')+' — bonyeza kusimamia'}});
+const paths=(s,n)=>{const e=encodeURIComponent(n)+'.html',P=[e,'faili/'+s+'/'+e,'Sade-Computer/'+e,'Sade-Computer/faili/'+s+'/'+e,'faili/'+e];return P.concat(P.map(x=>x.toLowerCase()))};
+async function fetchF(s,n,fast,to){const L=paths(s,n);if(location.protocol==='file:')return{p:L[0]};if(!navigator.onLine)return null;
+ for(const i of(fast&&PAT!=null?[PAT]:[...L.keys()])){const c=new AbortController(),t=setTimeout(()=>c.abort(),to||8000);
+  try{const r=await fetch(L[i],{cache:'no-store',signal:c.signal});if(r.ok&&/html/.test(r.headers.get('content-type')||'')){const txt=await r.text();clearTimeout(t);if(/MAFAILI YOTE \(kila faili/.test(txt))continue;if(PAT==null)PAT=i;return{p:L[i],txt}}}catch(_){}clearTimeout(t)}
+ return null}
+/* Pakua mafaili yote nyuma ya pazia mtu akiwa online, yahifadhiwe kwenye IndexedDB */
+async function sync(force){if(syncing||location.protocol==='file:'||!navigator.onLine)return;if(!force&&navigator.connection&&navigator.connection.saveData)return;syncing=1;
+ await DB.putM('manifest',{FOLD,t:Date.now()});const jobs=[];Object.keys(FOLD).forEach(k=>FOLD[k].split(',').forEach(n=>jobs.push([k.split(' ')[0],n])));
+ const now=Date.now(),AGE=6048e5,MISS=432e5;let idx=0;SYN.t=jobs.length;SYN.d=0;
+ const work=async()=>{while(idx<jobs.length&&navigator.onLine){const[s,n]=jobs[idx++],key=s+'/'+n,old=await DB.get(key),ms=await DB.getM('miss:'+key);
+  if(!force&&((old&&now-old.t<AGE)||(ms&&now-ms<MISS))){SYN.d++;continue}
+  const r=await fetchF(s,n,1);if(r&&r.txt!=null){await savF(key,r);cnt()}else if(navigator.onLine)await DB.putM('miss:'+key,Date.now());SYN.d++}};
+ try{await Promise.all([work(),work(),work()])}finally{syncing=0;cnt()}}
+const _off=E('span','tr','💾');_off.id='off';_off.title='💾 Offline inaandaa…';$('#tray').insertBefore(_off,$('#tray').firstChild);
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+addEventListener('load',()=>{setTimeout(cnt,300);setTimeout(()=>sync(),1500)});addEventListener('online',()=>sync());addEventListener('offline',()=>cnt());
+if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
+/* ===== OPEN FILE ===== */
+async function openF(f,n){const s=f.split(' ')[0],P=paths(s,n).slice(0,5),key=s+'/'+n;
+ const fr=E('iframe');fr.allow='camera;microphone;geolocation;clipboard-read;clipboard-write;display-capture;autoplay;fullscreen';fr.style.cssText='flex:1;border:0;width:100%;background:#fff';fr.onload=()=>{if(TAP)try{fr.contentDocument.activeElement.blur()}catch(_){}};win(TT(n),fi(n),640,430,fr);
+ let c0=await DB.get(key);if(!c0){c0=await cfind(s,n);if(c0)DB.put(key,c0)}
+ const r=(c0&&!navigator.onLine)?null:await fetchF(s,n,!!c0,c0?3500:8000);
+ if(r&&r.txt!=null)savF(key,r).then(cnt);
+ if(r)fr.src=r.p;
+ else{const c=c0||await DB.get(key);if(c&&c.html)fr.srcdoc=c.html;
+  else fr.srcdoc='<body style="font:14px sans-serif;padding:20px"><h3>⚠ Faili halijapatikana</h3><p><b>'+esc(n)+'.html</b> halipo kwenye repo (na halijahifadhiwa offline bado). Nimejaribu:</p><pre>'+P.join('\n')+'</pre><p>Pakia faili hilo kwenye root ya repo, kisha fungua ukiwa online mara moja.</p>'}}
+addEventListener('message',e=>{if(e.data&&e.data.close)wins.slice().forEach(w=>{const r=w.el.querySelector('iframe');if(r&&r.contentWindow===e.source)w.close()})});
+const TAP=matchMedia('(pointer:coarse)').matches;
+document.addEventListener('click',e=>{if(!TAP)return;const t=e.target.closest('.it,.ic');if(t&&t.ondblclick)t.ondblclick(e)});
+/* ===== DESKTOP / START ===== */
+const DI=[[IA('pc'),'Kompyuta Hii',()=>explorer()],[FD('Nyaraka'),'Nyaraka',()=>explorer('Nyaraka (Documents)')],[FD('Picha'),'Picha',()=>explorer('Picha (Pictures)')],[FIL('cmd.exe'),'Terminal',()=>openF('Programu (Programs)','cmd.exe')],[FIL('calc.exe'),'Calculator',()=>openF('Programu (Programs)','calc.exe')],[FIL('paint.exe'),'Draw',()=>openF('Programu (Programs)','paint.exe')],[FIL('notepad.exe'),'Text Pad',()=>openF('Programu (Programs)','notepad.exe')],[FIL('Microsoft-Edge.exe'),'Web Browser',()=>openF('Programu (Programs)','Microsoft-Edge.exe'),1],[FIL('Microsoft-Copilot.exe'),'AI Assistant',()=>openF('Programu (Programs)','Microsoft-Copilot.exe'),1],[FIL('Microsoft-Office.exe'),'Office Suite',()=>openF('Programu (Programs)','Microsoft-Office.exe'),1],[FIL('Microsoft-Word.exe'),'Writer',()=>openF('Programu (Programs)','Microsoft-Word.exe'),1],[FIL('Microsoft-Excel.exe'),'Spreadsheet',()=>openF('Programu (Programs)','Microsoft-Excel.exe'),1],[FIL('Microsoft-PowerPoint.exe'),'Presenter',()=>openF('Programu (Programs)','Microsoft-PowerPoint.exe'),1],[FIL('Microsoft-Outlook.exe'),'Mail Client',()=>openF('Programu (Programs)','Microsoft-Outlook.exe'),1],[FIL('Microsoft-OneNote.exe'),'Notebook',()=>openF('Programu (Programs)','Microsoft-OneNote.exe'),1],[FIL('Mozilla-Firefox.exe'),'Open Browser',()=>openF('Programu (Programs)','Mozilla-Firefox.exe'),1],[FIL('Google-Chrome.exe'),'Fast Browser',()=>openF('Programu (Programs)','Google-Chrome.exe'),1],[FIL('Microsoft-Games.exe'),'Game Center',()=>openF('Programu (Programs)','Microsoft-Games.exe'),1],[FIL('Microsoft-Photos.exe'),'Photo Gallery',()=>openF('Programu (Programs)','Microsoft-Photos.exe'),1],[FIL('Microsoft-MediaPlayer.exe'),'Media Player',()=>openF('Programu (Programs)','Microsoft-MediaPlayer.exe'),1],[FIL('Microsoft-Maps.exe'),'Map Navigator',()=>openF('Programu (Programs)','Microsoft-Maps.exe'),1],[FIL('Microsoft-Weather.exe'),'Weather Forecast',()=>openF('Programu (Programs)','Microsoft-Weather.exe'),1],[FIL('Microsoft-Translator.exe'),'Translator',()=>openF('Programu (Programs)','Microsoft-Translator.exe'),1],[FIL('Microsoft-Calendar.exe'),'Calendar',()=>openF('Programu (Programs)','Microsoft-Calendar.exe'),1],[FIL('Microsoft-Clock.exe'),'World Clock',()=>openF('Programu (Programs)','Microsoft-Clock.exe'),1],[FIL('Microsoft-Camera.exe'),'Camera',()=>openF('Programu (Programs)','Microsoft-Camera.exe'),1],[FIL('Microsoft-Money.exe'),'Currency Exchange',()=>openF('Programu (Programs)','Microsoft-Money.exe'),1],[FIL('Microsoft-News.exe'),'News Reader',()=>openF('Programu (Programs)','Microsoft-News.exe'),1],[FIL('Microsoft-TaskManager.exe'),'Process Monitor',()=>openF('Programu (Programs)','Microsoft-TaskManager.exe'),1],[FIL('Microsoft-Dictionary.exe'),'Dictionary',()=>openF('Programu (Programs)','Microsoft-Dictionary.exe'),1],[FIL('Microsoft-Encyclopedia.exe'),'Knowledge Base',()=>openF('Programu (Programs)','Microsoft-Encyclopedia.exe'),1],[FIL('Microsoft-Todo.exe'),'Task List',()=>openF('Programu (Programs)','Microsoft-Todo.exe'),1],[FIL('Microsoft-StickyNotes.exe'),'Quick Notes',()=>openF('Programu (Programs)','Microsoft-StickyNotes.exe'),1],[FIL('Microsoft-Recorder.exe'),'Voice Recorder',()=>openF('Programu (Programs)','Microsoft-Recorder.exe'),1],[FIL('Microsoft-QRCode.exe'),'QR Code',()=>openF('Programu (Programs)','Microsoft-QRCode.exe'),1],[FIL('Microsoft-Converter.exe'),'Unit Converter',()=>openF('Programu (Programs)','Microsoft-Converter.exe'),1],[FIL('Microsoft-Passwords.exe'),'Password Vault',()=>openF('Programu (Programs)','Microsoft-Passwords.exe'),1],[FIL('Microsoft-Crypto.exe'),'Crypto Markets',()=>openF('Programu (Programs)','Microsoft-Crypto.exe'),1],[IA('bin'),'Recycle Bin',()=>alert('Recycle Bin ni tupu')],[IA('set'),'Settings',()=>settings(),1]];
+DI.filter(x=>!x[3]).forEach(([i,n,f])=>{const d=E('div','ic','<b>'+i+'</b>'+n);d.ondblclick=f;d.onclick=()=>{document.querySelectorAll('.ic').forEach(x=>x.classList.remove('s'));d.classList.add('s')};$('#desk').append(d)});
+[0,5,6,7,8].forEach(k=>{const b=E('button','',DI[k][0]);b.title=DI[k][1];b.onclick=DI[k][2];$('#pins').append(b)});
+const M=$('#menu'),REC=[];
+function buildMenu(){M.innerHTML='';const q=E('input');q.placeholder='Tafuta programu, mafaili…';const sc=E('div','sc'),close=()=>M.style.display='none';
+ const home=()=>{sc.innerHTML='<h4>Zilizobandikwa</h4>';const g=E('div','pg6');DI.forEach(([i,n,f])=>{const d=E('div','sa','<b>'+i+'</b>'+n);d.onclick=()=>{close();f()};g.append(d)});sc.append(g);
+  sc.append(E('h4','','Mitandao ya Kijamii'));const r=E('div','rg');[['YouTube.exe','Video Stream','Tazama video'],['Facebook.exe','Social Connect','Marafiki na habari'],['Instagram.exe','Photo Share','Picha na reels'],['TikTok.exe','Short Videos','Video fupi']].forEach(([x,n,d])=>{const e=E('div','rc','<b>'+fi(x)+'</b><span>'+n+'<br><small style="color:#666">'+d+'</small></span>');e.onclick=()=>{close();openF('Programu (Programs)',x)};r.append(e)});sc.append(r)};
+ q.oninput=()=>{const t=q.value.toLowerCase();if(!t)return home();sc.innerHTML='<h4>Matokeo</h4>';const L=[];DI.forEach(x=>x[1].toLowerCase().includes(t)&&L.push([x[0],x[1],x[2]]));Object.keys(FOLD).forEach(k=>FOLD[k].split(',').forEach(n=>(AL[n]||n).toLowerCase().includes(t)&&L.push([fi(n),AL[n]||n,()=>openF(k,n)])));
+  L.slice(0,9).forEach(([i,n,f])=>{const d=E('div','rc','<b>'+i+'</b><span>'+n+'</span>');d.onclick=()=>{close();f()};sc.append(d)});if(!L.length)sc.append('Hakuna kilichopatikana')};
+ const ft=E('div','ft');const usr=E('span','');usr.style.cursor='pointer';const uN=localStorage.getItem('sadeuser');usr.textContent='🧑‍💻 '+(uN||'Log in');usr.title=uN?'Akaunti yako':'Ingia / Jisajili';usr.onclick=()=>{close();loginBox()};ft.append(usr);const pw=E('span','','⏻ Funga');pw.onclick=()=>{close();lock()};const rs=E('span','','🧹 Reset');rs.onclick=()=>{localStorage.removeItem('sadepc');localStorage.removeItem('sadevfs2');(window.resetV?resetV():Promise.resolve()).then(()=>location.reload())};const r2=E('div');r2.append(rs,pw);ft.append(r2);
+ home();M.append(q,sc,ft);if(!TAP)setTimeout(()=>q.focus(),50)}
+const toggle=e=>{e.stopPropagation();if(M.style.display==='flex')M.style.display='none';else{buildMenu();M.style.display='flex'}};
+$('#st').onclick=toggle;$('#sr').onclick=toggle;M.onclick=e=>e.stopPropagation();document.addEventListener('click',()=>M.style.display='none');
+const L=$('#lock');function lock(){L.classList.remove('up')}L.onclick=()=>L.classList.add('up');addEventListener('keydown',()=>L.classList.add('up'));
+const tick=()=>{const n=new Date();$('#clk').innerHTML=n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'<br>'+n.toLocaleDateString();$('#lt').textContent=n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});$('#ld').textContent=n.toLocaleDateString('sw-TZ',{weekday:'long',day:'numeric',month:'long'})};tick();setInterval(tick,1000);
+</script>
+<style>
+#cm{position:fixed;display:none;z-index:100001;min-width:200px;background:rgba(250,250,252,.98);color:#111;border-radius:8px;box-shadow:0 8px 30px #0006;padding:4px;border:1px solid #ccd;font:13px system-ui,sans-serif}
+#cm div{padding:9px 12px;border-radius:4px;cursor:pointer;white-space:nowrap}#cm div:hover{background:#cce4f7}#cm div.off{color:#999;cursor:default}#cm div.off:hover{background:none}#cm hr{border:0;border-top:1px solid #ddd;margin:3px 0}
+.it.sel{background:#cce4f7!important}.it.cut{opacity:.5}.gh{position:fixed;z-index:100002;pointer-events:none;background:#1e88e5;color:#fff;padding:4px 10px;border-radius:12px;font:12px sans-serif;box-shadow:0 2px 8px #0005}
+#pins{overflow-x:auto;scrollbar-width:none}@media(max-width:760px){#pins button:nth-child(n+4){display:inline-block!important}#pins{max-width:46vw}}
+</style>
+<script>
+/* ===== MFUMO WA MAFAILI (VFS): copy, cut, paste, delete, rename, desktop, pin, recycle bin ===== */
+const VK='sadevfs2',BIN='Recycle Bin';let V,CB=null,ACT=null,lpT=0;const EXP=new Set(),dsel=new Set();
+try{V=JSON.parse(localStorage.getItem(VK)||'null')}catch(_){}
+V=V||{};V.F=V.F||{};V.U=V.U||[];V.seen=V.seen||{};V.sp=V.sp||[];V.wp=V.wp||0;
+V.pin=V.pin||[0,5,6,7,8].map(k=>({t:'d',k}));
+/* Folda zote ziko TUPU. Mafaili yanaonekana ni yale tu ambayo mtumiaji ameyaweka (kupakia / kutengeneza / kunakili). Orodha ya FOLD inabaki kama rejista ya programu tu (haionyeshwi kama mafaili). */
+function purgeSeed(){
+ const isSeed=e=>e&&!e.bk&&!e.dir&&e.o&&Object.prototype.hasOwnProperty.call(FOLD,e.o[0]);
+ Object.keys(V.F||{}).forEach(k=>{V.F[k]=(V.F[k]||[]).filter(e=>!isSeed(e)&&!(e.bk==='appdata-mirror'))});
+ V.seen={};V.rc=(V.rc||[]).filter(r=>V.F[r.fo]&&V.F[r.fo].some(e=>e.n===r.n));
+ Object.keys(FOLD).forEach(k=>{V.F[k]=V.F[k]||[]});
+ V.F.Desktop=V.F.Desktop||[];V.F[BIN]=V.F[BIN]||[];
+ if(!V.F.AppData){V.F.AppData=[]}if(!V.U.includes('AppData'))V.U.push('AppData');
+}
+window.purgeSeed=purgeSeed;
+V.F.Desktop=V.F.Desktop||[];V.F[BIN]=V.F[BIN]||[];purgeSeed();
+/* uhamisho: hali iliyohifadhiwa na majina ya zamani */
+Object.values(V.F).forEach(L=>L.forEach(e=>{if(e.o&&e.n===e.o[1]&&AL[e.n])e.n=AL[e.n]}));
+[...V.sp,...V.pin].forEach(p=>{if(p.o&&p.n===p.o[1]&&AL[p.n])p.n=AL[p.n]});
+const keys=()=>[...Object.keys(FOLD),'Desktop',...V.U,BIN],get=(fo,n)=>(V.F[fo]||[]).find(x=>x.n===n);
+const persist=()=>{try{localStorage.setItem(VK,JSON.stringify(V))}catch(_){}window.saveV&&saveV();refresh()};
+const refresh=()=>{EXP.forEach(f=>f());drawDesk();drawPins()};
+const uniq=(fo,n)=>{const L=V.F[fo].map(x=>x.n);if(!L.includes(n))return n;const i=n.lastIndexOf('.'),b=i>0?n.slice(0,i):n,x=i>0?n.slice(i):'';let k=1,m;do{m=b+' - Copy'+(k>1?' ('+k+')':'')+x;k++}while(L.includes(m));return m};
+function xfer(items,dest,cut){items.forEach(([fo,n])=>{const e=get(fo,n);if(!e||(cut&&fo===dest))return;V.F[dest].push({n:uniq(dest,n),o:e.o});if(cut)V.F[fo]=V.F[fo].filter(x=>x!==e)})}
+function del(items){if(!items.length)return;if(items.every(x=>x[0]===BIN)){if(!confirm('Futa kabisa vitu '+items.length+'? Haviwezi kurejeshwa.'))return;items.forEach(([fo,n])=>V.F[BIN]=V.F[BIN].filter(x=>x.n!==n))}
+ else items.forEach(([fo,n])=>{if(fo===BIN)return;const e=get(fo,n);if(!e)return;V.F[fo]=V.F[fo].filter(x=>x!==e);V.F[BIN].push({n:e.n,o:e.o,d:fo})});persist()}
+function restore(items){items.forEach(([fo,n])=>{const e=get(BIN,n);if(!e)return;const d=V.F[e.d]?e.d:'Desktop';V.F[BIN]=V.F[BIN].filter(x=>x!==e);V.F[d].push({n:uniq(d,e.n),o:e.o})});persist()}
+function paste(d){if(!CB||!d)return;if(d===BIN){if(CB.cut){del(CB.items);CB=null}return}xfer(CB.items,d,CB.cut);if(CB.cut)CB=null;persist()}
+function ren(fo,n){const e=get(fo,n);if(!e)return;const v=(prompt('Jina jipya:',n)||'').trim();if(!v||v===n)return;if(get(fo,v)){alert('Jina hilo lipo tayari.');return}e.n=v;persist()}
+const cp=(items,cut)=>{if(items.length){CB={cut,items:items.slice()};refresh()}};
+function newF(){const v=(prompt('Jina la folda mpya:','Folda mpya')||'').trim();if(!v)return;if(V.F[v]){alert('Jina hilo lipo tayari.');return}V.F[v]=[];V.U.push(v);persist()}
+function delF(k){if(V.F[k].length){alert('Folda ina vitu. Vihamishe au vifute kwanza.');return}delete V.F[k];V.U=V.U.filter(x=>x!==k);persist()}
+const pinFile=(fo,n)=>{const e=get(fo,n);if(e&&!V.pin.some(p=>p.t==='f'&&p.n===e.n&&p.o+''===e.o+''))V.pin.push({t:'f',o:e.o,n:e.n})};
+V.fr=V.fr||[];V.sort=V.sort||'az';
+const FK=(fo,n)=>fo+'/'+n,isFr=k=>V.fr.includes(k),setFr=(ks,on)=>{ks.forEach(k=>{const i=V.fr.indexOf(k);if(on&&i<0)V.fr.push(k);if(!on&&i>=0)V.fr.splice(i,1)});persist()},
+cmpN=(a,b)=>(V.sort==='za'?-1:1)*String(a).localeCompare(String(b),undefined,{sensitivity:'base',numeric:true}),
+cmpF=(ka,na,kb,nb)=>{const fa=V.fr.indexOf(ka),fb=V.fr.indexOf(kb);if(fa>=0||fb>=0)return fa<0?1:fb<0?-1:fa-fb;return cmpN(na,nb)},
+togSort=()=>{V.sort=V.sort==='az'?'za':'az';persist()};
+DI.push([IA('off'),'Hifadhi Offline',()=>storageWin()]);
+DI.push([FIL('Microsoft-DeviceManager.exe'),'Hardware Manager',()=>openF('Programu (Programs)','Microsoft-DeviceManager.exe'),1]);DI.push([FIL('Microsoft-Backup.exe'),'Backup & Restore',()=>openF('Programu (Programs)','Microsoft-Backup.exe'),1]);DI.push([FIL('Microsoft-DiskCleanup.exe'),'Disk Cleaner',()=>openF('Programu (Programs)','Microsoft-DiskCleanup.exe'),1]);DI.push([FIL('Microsoft-PDFReader.exe'),'PDF Reader',()=>openF('Programu (Programs)','Microsoft-PDFReader.exe'),1]);DI.push([FIL('Microsoft-ScreenRecorder.exe'),'Screen Recorder',()=>openF('Programu (Programs)','Microsoft-ScreenRecorder.exe'),1]);DI.push([FIL('Microsoft-Contacts.exe'),'Contacts',()=>openF('Programu (Programs)','Microsoft-Contacts.exe'),1]);DI.push([FIL('Microsoft-Clipboard.exe'),'Clipboard History',()=>openF('Programu (Programs)','Microsoft-Clipboard.exe'),1]);DI.push([FIL('Microsoft-TextToSpeech.exe'),'Text to Speech',()=>openF('Programu (Programs)','Microsoft-TextToSpeech.exe'),1]);DI.push([FIL('Microsoft-Network.exe'),'Network Status',()=>openF('Programu (Programs)','Microsoft-Network.exe'),1]);DI.push([FIL('Microsoft-Accessibility.exe'),'Accessibility',()=>openF('Programu (Programs)','Microsoft-Accessibility.exe'),1]);DI.push([FIL('Visual-Studio-Code.exe'),'Code Editor',()=>openF('Programu (Programs)','Visual-Studio-Code.exe'),1]);DI.push([FIL('Python-IDE.exe'),'Script IDE',()=>openF('Programu (Programs)','Python-IDE.exe'),1]);DI.push([FIL('HTML-CSS-JS-Editor.exe'),'HTML/CSS/JS Editor',()=>openF('Programu (Programs)','HTML-CSS-JS-Editor.exe'),1]);DI.push([FIL('Scientific-Calculator.exe'),'Scientific Calculator',()=>openF('Programu (Programs)','Scientific-Calculator.exe'),1]);DI.push([FIL('Circuit-Designer.exe'),'Circuit Designer',()=>openF('Programu (Programs)','Circuit-Designer.exe'),1]);DI.push([FIL('Music-DJ-Mix.exe'),'Music DJ Mix',()=>openF('Programu (Programs)','Music-DJ-Mix.exe'),1]);DI.push([FIL('Facebook.exe'),'Social Connect',()=>openF('Programu (Programs)','Facebook.exe'),1]);DI.push([FIL('Instagram.exe'),'Photo Share',()=>openF('Programu (Programs)','Instagram.exe'),1]);DI.push([FIL('TikTok.exe'),'Short Videos',()=>openF('Programu (Programs)','TikTok.exe'),1]);DI.push([FIL('YouTube.exe'),'Video Stream',()=>openF('Programu (Programs)','YouTube.exe'),1]);DI.push([FIL('regedit.exe'),'Registry Editor',()=>openF('Programu (Programs)','regedit.exe'),1]);DI.push([FIL('wordpad.exe'),'Rich Text Editor',()=>openF('Programu (Programs)','wordpad.exe'),1]);DI.push([FIL('msinfo32.exe'),'System Info',()=>openF('Programu (Programs)','msinfo32.exe'),1]);DI.push([FIL('charmap.exe'),'Character Map',()=>openF('Programu (Programs)','charmap.exe'),1]);DI.push([FIL('Hex-Viewer.exe'),'Hex Viewer',()=>openF('Programu (Programs)','Hex-Viewer.exe'),1]);DI.push([FIL('Hash-Checker.exe'),'Hash Checker',()=>openF('Programu (Programs)','Hash-Checker.exe'),1]);DI.push([FIL('Zip-Manager.exe'),'Zip Manager',()=>openF('Programu (Programs)','Zip-Manager.exe'),1]);DI.push([FIL('Text-Compare.exe'),'Text Compare',()=>openF('Programu (Programs)','Text-Compare.exe'),1]);DI.push([FIL('Color-Picker.exe'),'Color Picker',()=>openF('Programu (Programs)','Color-Picker.exe'),1]);DI.push([FIL('Dev-Toolbox.exe'),'Dev Toolbox',()=>openF('Programu (Programs)','Dev-Toolbox.exe'),1]);DI.push([FIL('Microsoft-Store.exe'),'Software Store',()=>openF('Programu (Programs)','Microsoft-Store.exe'),1]);
+const ORIG=DI.length;
+function startAdd(o,n){DI.push([fi(o[1]),n,()=>openE({n,o}),1,o])}
+const startFile=(fo,n)=>{const e=get(fo,n);if(e&&!V.sp.some(p=>p.n===e.n&&p.o+''===e.o+'')){V.sp.push({o:e.o,n:e.n});startAdd(e.o,e.n)}};
+V.sp.forEach(p=>startAdd(p.o,p.n));
+DI.forEach(d=>{if(d[1]==='Recycle Bin')d[2]=()=>explorer(BIN)});
+function openE(e){if(!e)return;openF(e.o[0],e.o[1]);const w=wins[wins.length-1];if(w&&e.n!==e.o[1]){const s=w.el.querySelector('.h span');if(s)s.innerHTML=fi(e.o[1])+' &nbsp;'+esc(TT(e.n))}}
+/* ----- menyu ya kubofya kulia / kubonyeza muda mrefu ----- */
+const CM=E('div');CM.id='cm';document.body.append(CM);
+function menu(x,y,items){CM.innerHTML='';items.forEach(it=>{if(!it){CM.append(E('hr'));return}const d=E('div',it[2]?'off':'',it[0]);if(!it[2])d.onclick=ev=>{ev.stopPropagation();CM.style.display='none';it[1]()};CM.append(d)});CM.style.display='block';const r=CM.getBoundingClientRect();CM.style.left=Math.max(4,Math.min(x,innerWidth-r.width-4))+'px';CM.style.top=Math.max(4,Math.min(y,innerHeight-r.height-4))+'px'}
+document.addEventListener('pointerdown',e=>{if(!CM.contains(e.target))CM.style.display='none'},true);
+function lp(el,fn){el.addEventListener('contextmenu',e=>{e.preventDefault();e.stopPropagation();lpT=Date.now();fn(e.clientX,e.clientY,e)});
+ let t,sx,sy;el.addEventListener('touchstart',e=>{const p=e.touches[0];sx=p.clientX;sy=p.clientY;clearTimeout(t);t=setTimeout(()=>{lpT=Date.now();fn(sx,sy,e)},520)},{passive:true});
+ ['touchmove','touchend','touchcancel'].forEach(k=>el.addEventListener(k,e=>{if(k==='touchmove'){const p=e.touches[0];if(Math.hypot(p.clientX-sx,p.clientY-sy)<10)return}clearTimeout(t)},{passive:true}))}
+function fileMenu(x,y,fo,names){const it=names.map(n=>[fo,n]),one=names.length===1,bin=fo===BIN,M=[];
+ if(!bin)M.push(['Fungua',()=>names.forEach(n=>openE(get(fo,n)))],null);
+ if(bin)M.push(['Rejesha (Restore)',()=>restore(it)],null);
+ M.push(['⬇️ Hifadhi kwenye Kompyuta',()=>saveOut(it)],['✂️ Kata (Cut)',()=>cp(it,1)],['⧉ Nakili (Copy)',()=>cp(it,0),bin],['✏️ Badili jina',()=>ren(...it[0]),!one||bin],['🗑️ Futa',()=>del(it)]);
+ if(!bin){M.push(null,['⬆️ Weka mbele',()=>setFr(it.map(a=>FK(...a)),1)],['↧ Toa mbele',()=>setFr(it.map(a=>FK(...a)),0)],['🖥️ Tuma Desktop',()=>{xfer(it,'Desktop',0);persist()},fo==='Desktop'],['📌 Pin kwenye Taskbar',()=>{it.forEach(a=>pinFile(...a));persist()}],['🔲 Pin kwenye Start',()=>{it.forEach(a=>startFile(...a));persist()}]);
+  if(fo==='Desktop')M.push(['↩️ Rudisha kwenye folda asili',()=>{it.forEach(a=>xfer([a],get(...a).o[0],1));persist()}])}
+ menu(x,y,M)}
+/* ----- kuburuta (drag & drop) kwa kipanya ----- */
+function drag(e,items){const sx=e.clientX,sy=e.clientY;let g=null;
+ const mv=ev=>{if(!g&&Math.hypot(ev.clientX-sx,ev.clientY-sy)>6){g=E('div','gh','📄 '+items().length);document.body.append(g)}if(g){g.style.left=ev.clientX+12+'px';g.style.top=ev.clientY+12+'px'}};
+ const up=ev=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);if(!g)return;g.remove();lpT=Date.now();drop(ev,items(),ev.ctrlKey)};
+ addEventListener('pointermove',mv);addEventListener('pointerup',up)}
+function drop(ev,items,copy){const el=document.elementFromPoint(ev.clientX,ev.clientY);if(!el||!items.length)return;
+ if(el.closest('#tb')){items.forEach(a=>pinFile(...a));persist();return}
+ const t=el.closest('[data-fold]');if(!t||!t.dataset.fold||(t.id==='desk'&&el.closest('.w')))return;const d=t.dataset.fold;
+ if(d===BIN){del(items);return}xfer(items,d,!copy);persist()}
+/* ----- Explorer mpya ----- */
+function explorer(f){
+ let cur=f||null,H=[cur],hi=0,multi=0,sel=new Set(),last=null,order=[],n=0;const box=wrap(),side=E('div','sd'),body=E('div','grid'),ad=E('div','ad'),stt=E('div','stt'),q=E('input');q.placeholder='Tafuta';q.style.width='120px';
+ const go=(c,p)=>{cur=c;sel.clear();last=null;if(!p){H=H.slice(0,hi+1);H.push(c);hi++}q.value='';draw()};
+ const bk=E('button','','←'),fw=E('button','','→'),up=E('button','','↑');bk.onclick=()=>{if(hi>0){hi--;go(H[hi],1)}};fw.onclick=()=>{if(hi<H.length-1){hi++;go(H[hi],1)}};up.onclick=()=>go(null);
+ const nav=E('div','bar');nav.append(bk,fw,up,ad,q);const tbr=E('div','bar');
+ const S=()=>cur?[...sel].map(x=>[cur,x]):[],ctx={folder:()=>cur,S,all:()=>{if(cur){V.F[cur].forEach(e=>sel.add(e.n));paint()}}};
+ const B=(t,ti,fn)=>{const b=E('button','',t);b.title=ti;b.onclick=()=>{ACT=ctx;fn()};tbr.append(b);return b};
+ B('✂️','Kata (Cut)',()=>cp(S(),1));B('⧉','Nakili (Copy)',()=>cp(S(),0));B('📋','Bandika (Paste)',()=>paste(cur));B('✏️','Badili jina',()=>{const s=S();if(s.length===1)ren(...s[0])});B('🗑️','Futa',()=>del(S()));
+ B('🖥️','Tuma Desktop',()=>{xfer(S(),'Desktop',0);persist()});B('⬇️','Hifadhi kwenye Kompyuta (Download)',()=>saveOut(S()));B('📤','Pakia faili kutoka Kompyuta',()=>pickUpload(cur&&cur!==BIN?cur:'Desktop'));B('📌','Pin Taskbar',()=>{S().forEach(a=>pinFile(...a));persist()});B('⬆️','Weka mbele (kwanza kwenye orodha)',()=>setFr(S().map(a=>FK(...a)),1));B('↧','Toa mbele',()=>setFr(S().map(a=>FK(...a)),0));B('🔤','Panga A→Z / Z→A',togSort);B('➕','Folda mpya',()=>cur?alert('Fungua "Kompyuta Hii" kutengeneza folda mpya.'):newF());
+ const mb=B('☑','Chagua vingi (multi-select)',()=>{multi=!multi;mb.style.background=multi?'#cce4f7':''});
+ const row=E('div');row.style.cssText='display:flex;flex:1;min-height:0';row.append(side,body);body.style.flex=1;body.style.overflow='auto';
+ const status=()=>{stt.textContent=n+' vitu'+(sel.size?'  ·  '+sel.size+' vimechaguliwa':'')+(CB?'  ·  📋 '+CB.items.length+(CB.cut?' vimekatwa':' vimenakiliwa'):'')};
+ const paint=()=>{body.querySelectorAll('.it').forEach(r=>r.classList.toggle('sel',sel.has(r.dataset.k)));status()};
+ const pick=(k,e)=>{if(multi||e.ctrlKey||e.metaKey){sel.has(k)?sel.delete(k):sel.add(k)}else if(e.shiftKey&&last!=null){const a=order.indexOf(last),b=order.indexOf(k);order.slice(Math.min(a,b),Math.max(a,b)+1).forEach(x=>sel.add(x))}else{sel.clear();sel.add(k)}last=k;paint()};
+ const nm=k=>FD(k)+' '+(k===BIN?'Recycle Bin':k==='Desktop'?'Desktop':k.split(' ')[0]);
+ function draw(){if(cur&&!V.F[cur])cur=null;ad.textContent='Kompyuta Hii › Diski (C:)'+(cur?' › '+cur:'');side.innerHTML='';
+  const si=(t,c)=>{const d=E('div',c===cur?'on':'',t);d.onclick=()=>go(c);if(c)d.dataset.fold=c;side.append(d)};si(IA('pc')+' Kompyuta Hii',null);keys().forEach(k=>si(nm(k),k));
+  body.innerHTML='';body.classList.add('lst');body.dataset.fold=cur||'';order=[];n=0;const t=q.value.toLowerCase();
+  body.append(E('div','lh','<span>#</span><span></span><span>Jina</span><span>Aina</span>'));
+  const mk=(ic,name,ty,fn,key)=>{n++;order.push(key);const cut=CB&&CB.cut&&cur&&CB.items.some(x=>x[0]===cur&&x[1]===key);
+   const i=E('div','it'+(sel.has(key)?' sel':'')+(cut?' cut':''),'<em>'+String(n).padStart(2,'0')+'</em><b>'+ic+'</b><span>'+(isFr(cur?FK(cur,key):'k:'+key)?'📌 ':'')+esc(name)+'</span><small>'+ty+'</small>');i.dataset.k=key;if(!cur)i.dataset.fold=key;
+   i.ondblclick=()=>{if(!multi&&Date.now()-lpT>700)fn()};i.onclick=e=>{ACT=ctx;pick(key,e)};
+   i.onpointerdown=e=>{if(!cur||e.pointerType!=='mouse'||e.button)return;if(!sel.has(key)&&!e.ctrlKey){sel.clear();sel.add(key);paint()}drag(e,S)};
+   lp(i,(x,y)=>{ACT=ctx;if(!cur)return menu(x,y,[['Fungua',()=>go(key)],[isFr('k:'+key)?'⬇️ Toa mbele':'⬆️ Weka mbele',()=>setFr(['k:'+key],!isFr('k:'+key))],['Futa folda',()=>delF(key),!V.U.includes(key)]]);if(!sel.has(key)){sel.clear();sel.add(key);paint()}fileMenu(x,y,cur,[...sel])});body.append(i)};
+  if(!cur)keys().filter(k=>k.toLowerCase().includes(t)).sort((a,b)=>cmpF('k:'+a,a,'k:'+b,b)).forEach(k=>mk(FD(k),k,'Folda · '+V.F[k].length+' vitu',()=>go(k),k));
+  else V.F[cur].filter(e=>e.n.toLowerCase().includes(t)).sort((x,y)=>cmpF(FK(cur,x.n),x.n,FK(cur,y.n),y.n)).forEach(e=>mk(fi(e.o[1]),e.n,ext(e.n).toUpperCase()+' · Faili',()=>cur===BIN?alert('Rejesha faili kwanza ili kulifungua.'):openE(e),e.n));
+  status()}
+ lp(body,(x,y,e)=>{if(e.target.closest('.it'))return;ACT=ctx;menu(x,y,[['📋 Bandika (Paste)',()=>paste(cur),!CB||!cur],['Chagua zote',ctx.all,!cur],['➕ Folda mpya',newF,!!cur],['🔄 Onyesha upya',draw],cur===BIN?['🧹 Mwaga Recycle Bin',()=>del(V.F[BIN].map(a=>[BIN,a.n])),!V.F[BIN].length]:null].filter(Boolean))});
+ q.oninput=draw;EXP.add(draw);draw();box.append(nav,tbr,row,stt);win('Explorer',FD('Nyaraka'),680,420,box,()=>{EXP.delete(draw);if(ACT===ctx)ACT=dctx})}
+/* ----- Desktop ----- */
+const D=$('#desk');D.dataset.fold='Desktop';
+const dctx={folder:()=>'Desktop',S:()=>[...dsel].map(x=>['Desktop',x]),all:()=>{V.F.Desktop.forEach(e=>dsel.add(e.n));paintD()}};ACT=dctx;
+const paintD=()=>D.querySelectorAll(':scope>.ic').forEach(r=>r.classList.toggle('s',dsel.has(r.dataset.k)));
+const WP=['linear-gradient(135deg,#0b3d91,#1e88e5 55%,#5ec8ff)','linear-gradient(135deg,#1b5e20,#43a047 55%,#a5d6a7)','linear-gradient(135deg,#4a148c,#8e24aa 55%,#f48fb1)','linear-gradient(135deg,#111,#37474f 60%,#78909c)'];
+function drawDesk(){const LL=[];document.body.style.background=WP[V.wp%WP.length];D.querySelectorAll(':scope>.ic').forEach(x=>x.remove());
+ DI.forEach(([i,name,fn,fl],k)=>{if(fl)return;const d=E('div','ic','<b>'+i+'</b>'+(isFr('d:'+name)?'📌 ':'')+name);d.dataset.k='#'+k;d.ondblclick=()=>{if(Date.now()-lpT>700)fn()};d.onclick=()=>{dsel.clear();paintD();d.classList.add('s');ACT=dctx};
+  lp(d,(x,y)=>menu(x,y,[['Fungua',fn],[isFr('d:'+name)?'↧ Toa mbele':'⬆️ Weka mbele',()=>setFr(['d:'+name],!isFr('d:'+name))],['📌 Pin kwenye Taskbar',()=>{if(!V.pin.some(p=>p.t==='d'&&p.k===k))V.pin.push({t:'d',k});persist()}]]));LL.push(['d:'+name,name,d])});
+ V.F.Desktop.forEach(e=>{const d=E('div','ic','<b>'+fi(e.o[1])+'</b>'+(isFr(FK('Desktop',e.n))?'📌 ':'')+esc(e.n));d.dataset.k=e.n;d.ondblclick=()=>{if(Date.now()-lpT>700)openE(e)};
+  d.onclick=ev=>{ACT=dctx;if(!(ev.ctrlKey||ev.metaKey))dsel.clear();dsel.has(e.n)?dsel.delete(e.n):dsel.add(e.n);paintD()};
+  d.onpointerdown=ev=>{if(ev.pointerType!=='mouse'||ev.button)return;if(!dsel.has(e.n)){if(!ev.ctrlKey)dsel.clear();dsel.add(e.n);paintD()}drag(ev,dctx.S)};
+  lp(d,(x,y)=>{ACT=dctx;if(!dsel.has(e.n)){dsel.clear();dsel.add(e.n);paintD()}fileMenu(x,y,'Desktop',[...dsel])});LL.push([FK('Desktop',e.n),e.n,d])});LL.sort((a,b)=>cmpF(a[0],a[1],b[0],b[1])).forEach(x=>D.append(x[2]));paintD()}
+D.addEventListener('click',e=>{if(e.target===D){dsel.clear();paintD();ACT=dctx}});
+lp(D,(x,y,e)=>{if(e.target.closest('.ic,.w'))return;ACT=dctx;menu(x,y,[['📋 Bandika (Paste)',()=>paste('Desktop'),!CB],['Chagua zote',dctx.all],['📤 Pakia faili kutoka Kompyuta',()=>pickUpload('Desktop')],['🔄 Onyesha upya',refresh],[V.sort==='az'?'🔤 Panga: Z→A':'🔤 Panga: A→Z',togSort],['⛶ Skrini nzima (F11)',toggleFS],['🖼️ Badilisha mandhari',()=>{V.wp=(V.wp+1)%WP.length;persist()}],['⚙️ Settings (Personalize)',()=>settings()],['💻 Kompyuta Hii',()=>explorer()]])});
+/* ----- Taskbar pins na Start ----- */
+function drawPins(){const P=$('#pins');P.innerHTML='';V.pin.forEach((p,i)=>{let ic,ti,fn;if(p.t==='d'){const d=DI[p.k];if(!d)return;ic=d[0];ti=d[1];fn=d[2]}else{ic=fi(p.o[1]);ti=p.n;fn=()=>openE({n:p.n,o:p.o})}
+ const b=E('button','',ic);b.title=ti;b.onclick=fn;lp(b,(x,y)=>menu(x,y,[['Fungua',fn],['📌 Ondoa kwenye Taskbar',()=>{V.pin.splice(i,1);persist()}]]));P.append(b)})}
+lp($('#tasks'),(x,y,e)=>{const b=e.target.closest&&e.target.closest('button');const w=b&&wins.find(o=>o.tk===b);if(w)menu(x,y,[['Fungua',()=>w.foc()],['✕ Funga dirisha',()=>w.close()]])});
+lp(M,(x,y,e)=>{const s=e.target.closest&&e.target.closest('.pg6 .sa');if(!s)return;const k=[...s.parentNode.children].indexOf(s),d=DI[k];if(!d)return;
+ menu(x,y,[['Fungua',()=>{M.style.display='none';d[2]()}],['📌 Pin kwenye Taskbar',()=>{if(!V.pin.some(p=>p.t==='d'&&p.k===k))V.pin.push({t:'d',k});persist()}],k>=ORIG?['Ondoa kwenye Start',()=>{V.sp=V.sp.filter(p=>p.n!==d[1]);DI.splice(k,1);V.pin=V.pin.filter(p=>p.t!=='d'||p.k<DI.length);persist();buildMenu()}]:null].filter(Boolean))});
+/* ----- Kinanda: Ctrl+C / X / V, Delete, F2, Ctrl+A ----- */
+addEventListener('keydown',e=>{if(!ACT||/INPUT|TEXTAREA/.test(e.target.tagName))return;const c=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();
+ if(c&&k==='c'){cp(ACT.S(),0)}else if(c&&k==='x'){cp(ACT.S(),1)}else if(c&&k==='v'){paste(ACT.folder())}else if(c&&k==='a'){e.preventDefault();ACT.all()}else if(k==='delete'){del(ACT.S())}else if(k==='f2'){const s=ACT.S();if(s.length===1)ren(...s[0])}});
+/* ----- SKRINI NZIMA ----- */
+const fsOn=()=>document.fullscreenElement||document.webkitFullscreenElement;
+function toggleFS(){const d=document.documentElement;try{if(fsOn()){localStorage.setItem('sade_fs','0');(document.exitFullscreen||document.webkitExitFullscreen).call(document)}else{localStorage.setItem('sade_fs','1');const p=(d.requestFullscreen||d.webkitRequestFullscreen).call(d);p&&p.catch&&p.catch(()=>{})}}catch(e){}}
+$('#fsb').onclick=e=>{e.stopPropagation();toggleFS()};
+const fsUp=()=>{$('#fsb').textContent=fsOn()?'🗗':'⛶';$('#fsb').title=fsOn()?'Toka skrini nzima':'Skrini nzima'};
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,fsUp));
+const fsAuto=()=>{removeEventListener('pointerdown',fsAuto,true);removeEventListener('keydown',fsAuto,true);if(localStorage.getItem('sade_fs')!=='0'&&!fsOn()){try{const d=document.documentElement,p=(d.requestFullscreen||d.webkitRequestFullscreen).call(d);p&&p.catch&&p.catch(()=>{})}catch(e){}}};
+addEventListener('pointerdown',fsAuto,true);addEventListener('keydown',fsAuto,true);
+{const k=DI.findIndex(d=>d[1]==='Software Store');if(k>=0&&!V.stp){V.stp=1;if(!V.pin.some(p=>p.t==='d'&&p.k===k))V.pin.splice(Math.min(4,V.pin.length),0,{t:'d',k});try{localStorage.setItem(VK,JSON.stringify(V))}catch(_){}}}
+refresh();
+</script>
+<style>html,body{height:100dvh;width:100vw}#fsb{background:none;border:0;font-size:16px;width:34px;height:34px;border-radius:6px;cursor:pointer;color:inherit}#fsb:hover{background:rgba(127,127,127,.25)}</style>
+<style id="w11">
+:root{--ac:#0067c0;--mica:rgba(243,243,243,.82);--fg:#1a1a1a;--bd:rgba(0,0,0,.12)}
+body.dark{--mica:rgba(32,32,32,.86);--fg:#fff;--bd:rgba(255,255,255,.14)}
+body{font-family:system-ui,sans-serif}
+#tb{background:var(--mica)!important;backdrop-filter:blur(30px) saturate(1.6);color:var(--fg)!important;border-top:1px solid var(--bd)!important}
+#tb button,#clk,#wd,#tray .tr{color:var(--fg)!important}
+#tb button{border-radius:6px;transition:background .15s}#tb button:hover,#tray .tr:hover,#clk:hover{background:rgba(127,127,127,.22)!important}
+#tb button.on{position:relative;background:rgba(127,127,127,.16)!important;border-bottom:0!important}
+#tb button.on::after{content:"";position:absolute;left:50%;bottom:2px;width:16px;height:3px;margin-left:-8px;border-radius:2px;background:var(--ac)}
+#clk,#tray .tr{border-radius:6px;padding:2px 6px;cursor:pointer}
+#sd2{width:7px;align-self:stretch;border-left:1px solid var(--bd);cursor:pointer;margin-left:4px;flex:none}#sd2:hover{background:rgba(127,127,127,.25)}
+.ic{border:1px solid transparent;border-radius:4px}.ic.s,.ic:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.32)}
+.w{border-radius:8px!important;border:1px solid var(--bd)!important;box-shadow:0 10px 40px rgba(0,0,0,.35)!important;animation:w11p .18s ease-out;background:#f9f9f9}
+@keyframes w11p{from{opacity:0;transform:scale(.95)}}
+.h{background:#f3f3f3!important;color:#1a1a1a!important;padding:0 0 0 12px!important;height:32px;font-size:12px;gap:0!important}
+.h i{width:46px!important;height:32px;line-height:32px;border-radius:0!important;font-size:12px;color:inherit}
+.h i:hover{background:rgba(0,0,0,.07)!important}.h i.x:hover{background:#c42b1c!important;color:#fff}
+.w .bar{background:#f9f9f9;border-bottom:1px solid #e5e5e5}.w .bar button{border:0;background:transparent;border-radius:4px}.w .bar button:hover{background:rgba(0,0,0,.08)}.w .ad{border-radius:6px}
+.it.sel{background:color-mix(in srgb,var(--ac) 20%,transparent)!important}.sd div.on{border-left-color:var(--ac)!important}
+body.dark .h{background:#202020!important;color:#fff!important}body.dark .h i:hover{background:rgba(255,255,255,.1)!important}
+body.dark .w,body.dark .w .b,body.dark .w .bar,body.dark .w .sd,body.dark .w .grid,body.dark .w .lh{background:#272727!important;color:#eee!important;border-color:#3a3a3a!important}
+body.dark .w .bar button:hover,body.dark .sd div:hover{background:rgba(255,255,255,.1)!important}body.dark .w .bar input,body.dark .w .ad{background:#333!important;color:#fff;border-color:#555}
+body.dark .lst .it{border-color:#333;background:#272727!important}body.dark .lst .it.sel{background:color-mix(in srgb,var(--ac) 30%,#272727)!important}body.dark #cm{background:rgba(44,44,44,.97);color:#fff;border-color:#444}body.dark #cm div:hover{background:#ffffff1a}body.dark #menu{background:rgba(32,32,32,.92)!important;color:#fff!important}body.dark #menu .ft{background:#2b2b2b!important}body.dark #menu input{background:#333;color:#fff;border-color:#555}
+#qp{position:fixed;display:none;right:8px;bottom:56px;width:360px;max-width:calc(100vw - 16px);max-height:calc(100vh - 70px);overflow:auto;z-index:100000;background:var(--mica);backdrop-filter:blur(40px) saturate(1.8);color:var(--fg);border:1px solid var(--bd);border-radius:12px;padding:14px;box-shadow:0 12px 40px #0005}
+.qg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.qt{background:rgba(127,127,127,.18);border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;font-size:12px}.qt b{display:block;font-size:22px;font-weight:400}.qt.on{background:var(--ac);color:#fff}
+.qs{display:flex;gap:10px;align-items:center;margin:8px 0}.qs input{flex:1;accent-color:var(--ac)}
+.ch{display:flex;align-items:center;gap:6px;margin:14px 0 6px}.ch b{flex:1;text-transform:capitalize}.ch button{background:none;border:0;color:inherit;cursor:pointer;padding:4px 8px;border-radius:4px}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:2px;font-size:12px}.cg span{padding:7px 0;border-radius:50%}.cg .dh{opacity:.6}.cg .td{background:var(--ac);color:#fff}
+#bt{position:fixed;inset:0;background:#000;z-index:300000;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:26px}
+#bt .lg{display:grid;grid-template-columns:repeat(2,38px);gap:4px}#bt .lg i{width:38px;height:38px;background:#0a8cff}
+#bt .sp{width:34px;height:34px;border:4px solid #fff3;border-top-color:#fff;border-radius:50%;animation:w11s 1s linear infinite}@keyframes w11s{to{transform:rotate(360deg)}}
+#bt .pw{background:none;border:2px solid #fff6;color:#fff;font-size:28px;width:64px;height:64px;border-radius:50%;cursor:pointer}
+#dim{position:fixed;inset:0;pointer-events:none;z-index:200000}#nl{position:fixed;inset:0;pointer-events:none;z-index:200001;background:rgba(255,150,0,.14);mix-blend-mode:multiply;display:none}
+.s11{flex:1;padding:16px;overflow:auto}.s11 h3{margin:0 0 10px;font-weight:600}.s11 .card{background:rgba(127,127,127,.12);border-radius:8px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wp{width:84px;height:52px;border-radius:6px;cursor:pointer;border:2px solid transparent}.wp.on{border-color:var(--ac)}.ac1{width:28px;height:28px;border-radius:50%;cursor:pointer}.ac1.on{outline:2px solid var(--fg);outline-offset:2px}
+.swt{width:44px;height:22px;border-radius:11px;background:#8886;position:relative;cursor:pointer}.swt::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s}.swt.on{background:var(--ac)}.swt.on::after{left:25px}
+</style>
+<script>
+/* ===== WINDOWS 11 LAYER: Settings, Action Center, Power, Snap, Dark mode ===== */
+V.set=Object.assign({dark:0,acc:'#0067c0',wifi:1,bt:1,air:0,nl:0,bs:0,vol:60,br:100},V.set||{});const Sx=V.set,sv=()=>{try{localStorage.setItem(VK,JSON.stringify(V))}catch(_){}window.saveV&&saveV();};
+WP.length=0;WP.push(
+ 'radial-gradient(55% 75% at 30% 65%,#59b4ff,transparent 62%),radial-gradient(50% 70% at 72% 38%,#0b4fd6,transparent 66%),radial-gradient(35% 45% at 55% 55%,#a5dcff,transparent 60%),linear-gradient(135deg,#041a4d,#0a3fb8)',
+ 'radial-gradient(55% 75% at 30% 65%,#7b4dff,transparent 62%),radial-gradient(50% 70% at 72% 38%,#c2185b,transparent 66%),linear-gradient(135deg,#0b0b1e,#25124d)',
+ 'radial-gradient(55% 75% at 30% 65%,#43e0a1,transparent 62%),radial-gradient(50% 70% at 72% 38%,#0b8457,transparent 66%),linear-gradient(135deg,#032a1d,#0b6b4b)',
+ 'radial-gradient(55% 75% at 30% 65%,#ffb067,transparent 62%),radial-gradient(50% 70% at 72% 38%,#e5484d,transparent 66%),linear-gradient(135deg,#3b0a2a,#b3315a)');
+const dim=E('div');dim.id='dim';const nlo=E('div');nlo.id='nl';document.body.append(dim,nlo);
+function applyS(){document.body.classList.toggle('dark',!!Sx.dark);document.documentElement.style.setProperty('--ac',Sx.acc);dim.style.background='rgba(0,0,0,'+((100-Sx.br)/100*.85)+')';nlo.style.display=Sx.nl?'block':'none';
+ const t=[...document.querySelectorAll('#tray .tr')].find(x=>/📶|🚫|✈/.test(x.textContent));if(t)t.textContent=(Sx.air?'✈️':Sx.wifi?'📶':'🚫')+' 🔊 '+(Sx.bs?'🌿':'🔋')}
+/* ----- Action Center: quick settings + kalenda ----- */
+const QP=E('div');QP.id='qp';document.body.append(QP);let cal=new Date();
+const TL=[['📶','Wi-Fi','wifi'],['🔵','Bluetooth','bt'],['✈️','Airplane mode','air'],['🌙','Night light','nl'],['🌓','Dark mode','dark'],['🌿','Battery saver','bs']];
+function drawQ(){QP.innerHTML='';const g=E('div','qg');TL.forEach(([i,n,k])=>{const t=E('div','qt'+(Sx[k]?' on':''),'<b>'+i+'</b><span>'+n+'</span>');t.onclick=()=>{Sx[k]=Sx[k]?0:1;if(k==='air'&&Sx.air)Sx.wifi=Sx.bt=0;if((k==='wifi'||k==='bt')&&Sx[k])Sx.air=0;sv();applyS();drawQ()};g.append(t)});QP.append(g);
+ const sl=(ic,k,min)=>{const r=E('div','qs','<span>'+ic+'</span>'),i=E('input');i.type='range';i.min=min;i.max=100;i.value=Sx[k];i.oninput=()=>{Sx[k]=+i.value;sv();applyS()};r.append(i);QP.append(r)};sl('☀️','br',20);sl('🔊','vol',0);
+ const y=cal.getFullYear(),m=cal.getMonth(),h=E('div','ch','<b>'+cal.toLocaleDateString('sw-TZ',{month:'long',year:'numeric'})+'</b>'),pv=E('button','','▲'),nx=E('button','','▼');pv.onclick=()=>{cal=new Date(y,m-1,1);drawQ()};nx.onclick=()=>{cal=new Date(y,m+1,1);drawQ()};h.append(pv,nx);QP.append(h);
+ const cg=E('div','cg');for(let i=0;i<7;i++)cg.append(E('span','dh',new Date(2023,0,1+i).toLocaleDateString('sw-TZ',{weekday:'short'}).slice(0,3)));
+ const f=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate(),T=new Date();for(let i=0;i<f;i++)cg.append(E('span'));
+ for(let d=1;d<=n;d++)cg.append(E('span',y===T.getFullYear()&&m===T.getMonth()&&d===T.getDate()?'td':'',d));QP.append(cg)}
+function togQ(e){e&&e.stopPropagation();if(QP.style.display==='block'){QP.style.display='none';return}M.style.display='none';cal=new Date();drawQ();QP.style.display='block'}
+document.addEventListener('pointerdown',e=>{if(QP.style.display==='block'&&!QP.contains(e.target)&&!e.target.closest('#clk,#tray .tr'))QP.style.display='none'},true);
+$('#clk').onclick=togQ;document.querySelectorAll('#tray .tr').forEach(x=>x.onclick=togQ);
+const sd2=E('i');sd2.id='sd2';sd2.title='Onyesha Desktop';$('#tb').append(sd2);
+sd2.onclick=()=>{const a=wins.some(w=>w.el.style.display!=='none');wins.forEach(w=>{w.el.style.display=a?'none':'flex';w.tk.classList.toggle('on',!a)})};
+/* ----- Power: Lock, Sleep, Restart, Shut down ----- */
+const LGO='<div class="lg"><i></i><i></i><i></i><i></i></div>';
+function boot(msg,cb,ms){const b=E('div','',LGO+'<div class="sp"></div>'+(msg?'<p>'+msg+'</p>':''));b.id='bt';document.body.append(b);setTimeout(()=>cb(b),ms||1800)}
+function sleep(){const o=E('div');o.id='bt';o.onclick=()=>{o.remove();lock()};document.body.append(o)}
+function shut(){boot('Shutting down…',b=>{b.innerHTML='<button class="pw" title="Washa">⏻</button>';b.firstChild.onclick=()=>{b.innerHTML=LGO+'<div class="sp"></div>';setTimeout(()=>{b.remove();lock()},1800)}},1600)}
+const power=(x,y)=>menu(x,y,[['🔒 Funga (Lock)',lock],['🌙 Sleep',sleep],['🔄 Restart',()=>boot('Restarting…',()=>location.reload())],['⏻ Shut down',shut]]);
+M.addEventListener('click',e=>{const s=e.target.closest('.ft span');if(s&&/⏻/.test(s.textContent)){e.stopPropagation();e.preventDefault();M.style.display='none';power(e.clientX,e.clientY)}},true);
+try{if(!sessionStorage.getItem('w11b')){sessionStorage.setItem('w11b',1);boot('',b=>b.remove(),1400)}}catch(_){}
+/* ----- Snap: buruta dirisha ukingoni (kushoto/kulia = nusu, juu = maximize) ----- */
+const _win=win;win=function(...a){const o=_win(...a),hd=o.el.querySelector('.h');
+ hd.addEventListener('pointerup',e=>{if(innerWidth<760||o.el.classList.contains('mx'))return;const W=innerWidth,H=innerHeight-48,s=o.el.style;
+  if(e.clientY<4)o.el.classList.add('mx');else if(e.clientX<6||e.clientX>W-6){s.top='0px';s.height=H+'px';s.width=W/2+'px';s.left=e.clientX<6?'0px':W/2+'px'}});return o};
+/* ----- Settings ----- */
+function settings(){const box=wrap(),row=E('div'),side=E('div','sd'),main=E('div','s11');row.style.cssText='display:flex;flex:1;min-height:0';row.append(side,main);box.append(row);let cur='🎨 Personalization';
+ const card=h=>{const c=E('div','card',h||'');main.append(c);return c},tog=(c,k)=>{const s=E('div','swt'+(Sx[k]?' on':''));s.onclick=()=>{Sx[k]=Sx[k]?0:1;sv();applyS();s.classList.toggle('on')};c.append(s)},
+ rng=(c,k,min)=>{const i=E('input');i.type='range';i.min=min;i.max=100;i.value=Sx[k];i.style.cssText='flex:1;accent-color:var(--ac)';i.oninput=()=>{Sx[k]=+i.value;sv();applyS()};c.append(i)};
+ const pg={'🎨 Personalization':()=>{main.innerHTML='<h3>Personalization</h3>';const w=card('Background');WP.forEach((g,i)=>{const d=E('div','wp'+(V.wp%WP.length===i?' on':''));d.style.background=g;d.onclick=()=>{V.wp=i;persist();draw()};w.append(d)});
+   const a=card('Accent color');['#0067c0','#107c10','#c42b1c','#8764b8','#ca5010','#00b7c3'].forEach(c=>{const d=E('div','ac1'+(Sx.acc===c?' on':''));d.style.background=c;d.onclick=()=>{Sx.acc=c;sv();applyS();draw()};a.append(d)});
+   tog(card('<span style="flex:1">Dark mode</span>'),'dark')},
+  '🖥️ System':()=>{main.innerHTML='<h3>System</h3>';let c=card('☀️ Brightness');rng(c,'br',20);tog(card('<span style="flex:1">🌙 Night light</span>'),'nl');c=card('🔊 Volume');rng(c,'vol',0);tog(card('<span style="flex:1">🌿 Battery saver</span>'),'bs')},
+  'ℹ️ About':()=>{main.innerHTML='<h3>About</h3>';card('<div><b>MY-PC</b><br>Pro OS 11 · My Computer<br>Version 23H2 · OS build 22631<br>Mafaili: '+Object.values(V.F).reduce((a,b)=>a+b.length,0)+' · Recycle Bin: '+V.F[BIN].length+'</div>')}};
+ function draw(){side.innerHTML='';Object.keys(pg).forEach(k=>{const d=E('div',k===cur?'on':'',k);d.onclick=()=>{cur=k;draw()};side.append(d)});pg[cur]()}
+ draw();win('Settings',IA('set'),640,440,box)}
+applyS();
+</script>
+<style id="xp-css">
+.xp{--bg:#f3f3f3;--pn:#fff;--tx:#1a1a1a;--mu:#6b6b6b;--ln:rgba(0,0,0,.1);--hv:rgba(0,0,0,.06);--sl:rgba(0,103,192,.16);display:flex;flex-direction:column;flex:1;min-height:0;background:var(--bg);color:var(--tx);font:13px "Segoe UI",system-ui,sans-serif;position:relative;outline:0}
+body.dark .xp{--bg:#202020;--pn:#2b2b2b;--tx:#f2f2f2;--mu:#a8a8a8;--ln:rgba(255,255,255,.12);--hv:rgba(255,255,255,.08);--sl:rgba(76,194,255,.22)}
+.xld{display:none;position:absolute;top:0;left:0;right:0;height:3px;z-index:9;background:linear-gradient(90deg,transparent,var(--ac,#0067c0),transparent) no-repeat;background-size:40% 100%;animation:xld 1s linear infinite}
+body.xbusy .xld{display:block}@keyframes xld{from{background-position:-40% 0}to{background-position:140% 0}}
+.xt,.xa{display:flex;gap:2px;align-items:center;padding:4px 6px;flex-wrap:wrap}.xa{flex-wrap:nowrap;border-bottom:1px solid var(--ln)}
+.xb{border:0;background:none;color:inherit;font:inherit;padding:0 9px;min-width:32px;height:32px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;transition:background .12s,transform .1s}
+.xb:hover{background:var(--hv)}.xb:active{transform:scale(.95)}.xb.on{background:var(--sl)}.xb:focus-visible,.xi:focus-visible,.xq:focus-visible,.xc button:focus-visible{outline:2px solid var(--ac,#0067c0);outline-offset:-2px}
+.xhb{display:none}.xp.nar .xhb{display:inline-flex}.xsep{width:1px;height:20px;background:var(--ln);margin:0 3px}
+.xc{flex:1;min-width:0;display:flex;align-items:center;overflow-x:auto;background:var(--pn);border:1px solid var(--ln);border-radius:6px;height:32px;padding:0 4px;scrollbar-width:none}
+.xc button{border:0;background:none;color:inherit;font:inherit;padding:2px 6px;border-radius:4px;cursor:pointer;white-space:nowrap}.xc button:hover{background:var(--hv)}.xc i{opacity:.5;font-style:normal}
+.xq{width:170px;height:32px;border:1px solid var(--ln);border-radius:6px;background:var(--pn);color:inherit;padding:0 8px;font:inherit;flex:none}
+.xm{display:flex;flex:1;min-height:0;position:relative}
+.xs{width:190px;overflow:auto;padding:6px;border-right:1px solid var(--ln);flex:none;background:var(--bg);transition:transform .2s;display:flex;flex-direction:column}
+.xs1{display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:6px;cursor:pointer;white-space:nowrap;overflow:hidden}.xs1:hover{background:var(--hv)}.xs1.on{background:var(--sl)}.xs1.dz{outline:2px dashed var(--ac,#0067c0)}
+.xch{width:14px;font-style:normal;text-align:center;opacity:.7;flex:none}.xsn{overflow:hidden;text-overflow:ellipsis}.xsp{flex:1}.xsm{font-size:11px;color:var(--mu);padding:6px}
+.xg{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--pn);position:relative}
+.xh{display:none;grid-template-columns:30px minmax(90px,1fr) 128px 84px 72px;gap:8px;padding:4px 12px 4px 6px;border-bottom:1px solid var(--ln);color:var(--mu);font-size:12px}.xp.det .xh{display:grid}.xh span{cursor:pointer;white-space:nowrap}.xh span:hover{color:var(--tx)}
+.xl{flex:1;overflow:auto;padding:6px;align-content:start}.xl.dz{outline:2px dashed var(--ac,#0067c0);outline-offset:-6px}
+.xi{cursor:pointer;border-radius:6px;border:1px solid transparent;position:relative;min-width:0}.xi:hover{background:var(--hv)}.xi.sel{background:var(--sl);border-color:var(--ac,#0067c0)}.xi.cut{opacity:.5}.xi.dz{outline:2px dashed var(--ac,#0067c0)}
+.xn{display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1;overflow:hidden}.xn svg,.xn img{max-width:100%;max-height:100%;width:1em;height:1em}.xn.th{background-size:cover;background-position:center;border-radius:4px;font-size:0}
+.xe small{display:block;color:var(--mu);font-size:11px}.xd2,.xt2,.xz{display:none;color:var(--mu);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xp.grd .xl{display:grid;grid-template-columns:repeat(auto-fill,104px);gap:4px}.xp.grd .xi{padding:8px 4px;text-align:center}.xp.grd .xn{height:64px;font-size:46px}
+.xp.grd .xe{display:block;word-break:break-word;font-size:12px;max-height:3.8em;overflow:hidden;margin-top:3px}
+.xp.lst .xl{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:2px}.xp.lst .xi{display:flex;align-items:center;gap:8px;padding:4px 8px}.xp.lst .xn{width:28px;height:28px;font-size:24px;flex:none}.xp.lst .xe{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.xp.det .xi{display:grid;grid-template-columns:30px minmax(90px,1fr) 128px 84px 72px;gap:8px;align-items:center;padding:3px 6px}.xp.det .xn{width:28px;height:28px;font-size:22px}.xp.det .xe{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.xp.det .xd2,.xp.det .xt2,.xp.det .xz{display:block}.xp.det .xz{text-align:right}
+.xem{grid-column:1/-1;text-align:center;color:var(--mu);padding:40px 16px}.xmore{grid-column:1/-1;margin:8px auto;padding:6px 16px;border:1px solid var(--ln);border-radius:6px;background:none;color:inherit;cursor:pointer}
+.xv{width:250px;border-left:1px solid var(--ln);overflow:auto;background:var(--bg);flex:none;display:flex;flex-direction:column}.xp.hpv .xv,.xp.nopv .xv{display:none}
+.xpc{padding:18px;text-align:center;color:var(--mu);display:flex;flex-direction:column;gap:6px;align-items:center;word-break:break-word}.xpc b{color:var(--tx)}.xbig{font-size:64px;line-height:1}.xbig svg{width:64px;height:64px}
+.xim{max-width:100%;max-height:100%;width:100%;border:0;flex:1;min-height:120px;object-fit:contain}.xtx{margin:0;padding:10px;font:12px Consolas,monospace;white-space:pre-wrap;word-break:break-word;user-select:text}
+textarea.xta{flex:1;width:100%;border:0;padding:10px;font:13px Consolas,monospace;resize:none;outline:0;background:var(--pn);color:var(--tx);user-select:text;white-space:pre}
+.xvb{display:flex;gap:4px;padding:4px 6px;border-bottom:1px solid var(--ln)}.xvh{flex:1;min-height:0;display:flex;flex-direction:column;overflow:auto;background:var(--pn)}
+.xf{display:flex;gap:12px;justify-content:space-between;padding:4px 12px;border-top:1px solid var(--ln);color:var(--mu);font-size:12px;flex-wrap:wrap}
+.xp.nar .xs{position:absolute;z-index:7;top:0;bottom:0;left:0;transform:translateX(-101%);box-shadow:4px 0 18px #0004;width:78%;max-width:260px}.xp.nar.so .xs{transform:none}
+.xp.nar .xl2{display:none}.xp.nar .xq{width:96px}.xp.cmp.det .xh,.xp.cmp.det .xi{grid-template-columns:30px 1fr 74px}.xp.cmp.det .xd2,.xp.cmp.det .xt2,.xp.cmp.det .xh span:nth-child(3),.xp.cmp.det .xh span:nth-child(4){display:none}
+.xo{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500000;display:flex;align-items:center;justify-content:center;animation:xfade .15s}@keyframes xfade{from{opacity:0}}
+.xd{background:#fff;color:#1a1a1a;border-radius:10px;min-width:280px;max-width:min(92vw,470px);box-shadow:0 20px 60px #0007;overflow:hidden;animation:pop .18s;font:13px "Segoe UI",system-ui,sans-serif}body.dark .xd{background:#2b2b2b;color:#f2f2f2}
+.xd h3{margin:0;padding:16px 20px 8px;font-size:16px;font-weight:600}.xdb{padding:4px 20px 14px;max-height:60vh;overflow:auto;user-select:text}.xdb p{margin:0 0 8px;line-height:1.5}
+.xdb input[type=text],.xdb input:not([type]){width:100%;padding:7px 9px;border:1px solid rgba(127,127,127,.5);border-radius:5px;background:transparent;color:inherit;font:inherit}
+.xdf{display:flex;gap:8px;justify-content:flex-end;padding:12px 16px;background:rgba(127,127,127,.12);flex-wrap:wrap}.xdf button{padding:6px 16px;border-radius:5px;border:1px solid rgba(127,127,127,.4);background:transparent;color:inherit;font:inherit;cursor:pointer}.xdf button:hover{background:rgba(127,127,127,.2)}.xdf .pri{background:var(--ac,#0067c0);color:#fff;border-color:var(--ac,#0067c0)}
+.xer{color:#c42b1c;font-size:12px;min-height:16px;margin-top:4px}.xpt td{padding:3px 10px 3px 0;vertical-align:top;word-break:break-word}.xpt td:first-child{color:#888;white-space:nowrap}.xdl{font-size:12px;line-height:1.5}.xdl>div{margin-bottom:8px}
+#xtw{position:fixed;left:50%;bottom:62px;transform:translateX(-50%);z-index:600000;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none}
+.xtoast{background:#1f2a44;color:#fff;padding:9px 16px;border-radius:20px;box-shadow:0 4px 16px #0006;max-width:90vw;font:13px system-ui,sans-serif;text-align:center;animation:pop .2s;transition:opacity .3s}.xtoast.e{background:#c42b1c}.xtoast.w{background:#8a6100}.xtoast.out{opacity:0}
+@media(prefers-reduced-motion:reduce){.xo,.xd,.xtoast,.xld,.xb{animation:none!important;transition:none!important}}
+</style>
+<script>
+/* ===== EXPLORER PRO + FILE SYSTEM v2 (IndexedDB blobs + metadata, folda ndani ya folda, Recycle Bin, duplicates) ===== */
+(()=>{
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+const K=(fo,n)=>fo+'|'+n,pk=(p,n)=>p+'/'+n,eid=e=>e.id||(e.id=uid());
+const sub=k=>Object.keys(V.F).filter(x=>x===k||x.startsWith(k+'/'));
+const rekey=(a,b)=>{if(a===b)return;sub(a).forEach(x=>{V.F[b+x.slice(a.length)]=V.F[x];delete V.F[x]})};
+const cloneTree=(a,b)=>sub(a).forEach(x=>{V.F[b+x.slice(a.length)]=V.F[x].map(e=>({...e,id:uid()}))});
+const owner=e=>Object.keys(V.F).find(k=>V.F[k].includes(e));
+const SZ=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':n<1073741824?(n/1048576).toFixed(1)+' MB':(n/1073741824).toFixed(2)+' GB';
+const DT=t=>t?new Date(t).toLocaleString([],{dateStyle:'medium',timeStyle:'short'}):'—';
+const xe=n=>n.includes('.')?ext(n):'',attr=s=>esc(s).replace(/"/g,'&quot;');
+const EX={img:'jpg,jpeg,png,gif,webp,svg,bmp,ico,avif',vid:'mp4,webm,mkv,mov,3gp,ogv',aud:'mp3,wav,ogg,m4a,aac,flac,opus',txt:'txt,md,csv,json,js,css,xml,log,ini,yml,yaml,html,htm,tsv,sql',doc:'pdf,doc,docx,xls,xlsx,ppt,pptx,odt,rtf',app:'exe,apk,msi'};
+const kind=e=>{if(e.dir)return'dir';const x=xe(e.n);for(const k in EX)if(EX[k].split(',').includes(x))return k;return e.bk?'oth':'app'};
+const TY=e=>e.dir?'Folda':(xe(e.n)?xe(e.n).toUpperCase()+' faili':'Faili')+(e.bk?'':' · Mfumo');
+const MT={txt:'text/plain',csv:'text/csv',json:'application/json',md:'text/plain',html:'text/html',pdf:'application/pdf',svg:'image/svg+xml'};
+const lab=k=>k===BIN?'Recycle Bin':V.U.includes(k)?k:k.split(' ')[0];
+const save=()=>{try{localStorage.setItem(VK,JSON.stringify(V))}catch(_){}window.saveV&&saveV()};
+/* ---- arifa (toast) + loading ---- */
+const tw=E('div');tw.id='xtw';tw.setAttribute('role','status');tw.setAttribute('aria-live','polite');document.body.append(tw);
+window.toast=(m,t)=>{const d=E('div','xtoast '+(t||''),esc(m));tw.append(d);setTimeout(()=>{d.classList.add('out');setTimeout(()=>d.remove(),300)},t==='e'?5500:2800);return d};
+let bz=0;const busy=on=>{bz=Math.max(0,bz+(on?1:-1));document.body.classList.toggle('xbusy',bz>0)};
+/* ---- dialogs (hakuna alert/confirm/prompt) ---- */
+function dlg(title,body,btns){return new Promise(res=>{const ov=E('div','xo'),d=E('div','xd'),b=E('div','xdb'),f=E('div','xdf');d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label',title);
+ if(typeof body==='string')b.innerHTML=body;else b.append(body);
+ const kd=e=>{if(e.key==='Escape'){e.stopPropagation();close(null)}},close=v=>{ov.remove();removeEventListener('keydown',kd,true);res(v)};
+ btns.forEach(([t,v,p])=>{const x=E('button',p?'pri':'',esc(t));x.onclick=()=>close(typeof v==='function'?v():v);f.append(x)});
+ addEventListener('keydown',kd,true);d.append(E('h3','',esc(title)),b,f);ov.append(d);ov.onpointerdown=e=>{if(e.target===ov)close(null)};document.body.append(ov);(d.querySelector('input')||f.firstChild).focus()})}
+const ask=(t,m,ok)=>dlg(t,'<p>'+esc(m)+'</p>',[['Ghairi',false],[ok,true,1]]).then(Boolean);
+const BAD=/[\\/:*?"<>|\x00-\x1f]/;
+const vbase=v=>!v?'Jina haliwezi kuwa tupu.':v.length>200?'Jina ni refu mno (herufi 200 juu).':BAD.test(v)?'Jina haliruhusu herufi: \\ / : * ? " < > |':/^\.+$/.test(v)?'Jina si sahihi.':'';
+const vdup=(fo,self)=>v=>vbase(v)||((V.F[fo]||[]).some(x=>x.n.toLowerCase()===v.toLowerCase()&&x.n!==self)?'Jina hilo lipo tayari kwenye folda hii.':'');
+async function askName(title,def,chk){let v=def,err='';for(;;){const i=E('input'),m=E('div','xer',esc(err)),b=E('div');i.value=v;i.setAttribute('aria-label',title);b.append(i,m);const p=dlg(title,b,[['Ghairi',null],['Sawa',()=>i.value.trim(),1]]);
+ setTimeout(()=>{i.focus();const d=i.value.lastIndexOf('.');i.setSelectionRange(0,d>0?d:i.value.length)},30);i.onkeydown=e=>{if(e.key==='Enter'){const o=b.closest('.xd');o&&o.querySelector('.pri').click()}};
+ const r=await p;if(r==null)return null;err=chk(r);if(!err)return r;v=r}}
+/* ---- Hifadhi ya mafaili: IndexedDB (kifaa, offline) + akaunti (Firestore) + kumbukumbu ya kikao ---- */
+const BS=window.BS=window.BS||{mem:new Map(),cloud:null,known:new Set()};
+const bput=async(k,b)=>{BS.mem.set(k,b);try{await IDX.blobs.put(k,b)}catch(e){try{toast('Kifaa kimeshindwa kuhifadhi faili offline: '+(e&&e.message||e),'w')}catch(_){}}
+ if(BS.cloud){await BS.cloud.put(k,b)}else if(!BS.warned&&!await IDX.ok()){BS.warned=1;try{toast('IndexedDB haipatikani kwenye kivinjari hiki: faili halitabaki ukifunga ukurasa. Bonyeza Log in ili lihifadhiwe kwenye akaunti yako.','w')}catch(_){}}};
+const bget=async k=>{if(BS.mem.has(k))return BS.mem.get(k);let b;try{b=await IDX.blobs.get(k)}catch(_){}if(b){BS.mem.set(k,b);return b}
+ if(BS.cloud){b=await BS.cloud.get(k);if(b){BS.mem.set(k,b);try{await IDX.blobs.put(k,b)}catch(_){}return b}}return undefined};
+const bdel=async k=>{BS.mem.delete(k);try{await IDX.blobs.del(k)}catch(_){}if(BS.cloud)await BS.cloud.del(k)};
+async function sha(b){try{if(b.size>2e8||!crypto.subtle)return'';return[...new Uint8Array(await crypto.subtle.digest('SHA-256',await b.arrayBuffer()))].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(_){return''}}
+window.saveV=()=>{};
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(_){}
+/* ---- operesheni za mfumo wa mafaili ---- */
+const mkdirp=(p,n)=>{let d=V.F[p].find(x=>x.dir&&x.n===n);if(!d){const t=Date.now();d={n,dir:1,o:['Folda',n],id:uid(),ct:t,mt:t};V.F[p].push(d);V.F[pk(p,n)]=V.F[pk(p,n)]||[]}return pk(p,n)};
+const stat=(fo,e)=>{if(!e.dir)return{f:1,d:0,s:e.sz||0};const k=e.top?e.n:fo===BIN?BIN+'/'+eid(e):pk(fo,e.n),r={f:0,d:0,s:0};sub(k).forEach(x=>V.F[x].forEach(c=>{if(c.dir)r.d++;else{r.f++;r.s+=c.sz||0}}));return r};
+async function purge(fo,e){V.F[fo]=V.F[fo].filter(x=>x!==e);const gone=[e];if(e.dir){const k=fo===BIN?BIN+'/'+eid(e):pk(fo,e.n);sub(k).forEach(x=>{gone.push(...V.F[x]);delete V.F[x]})}
+ for(const b of new Set(gone.filter(x=>x.bk).map(x=>x.bk)))if(!Object.values(V.F).some(L=>L.some(x=>x.bk===b)))await bdel(b)}
+window.xfer=function(items,dest,cut){if(!V.F[dest])return;let n=0;items.forEach(([fo,nm])=>{const e=get(fo,nm);if(!e)return;if(fo===BIN&&!cut)return;if(cut&&fo===dest)return;
+ if(e.dir&&fo!==BIN){const s=pk(fo,nm);if(dest===s||dest.startsWith(s+'/')){toast('Huwezi kuhamisha folda ndani yake yenyewe','w');return}}
+ const name=uniq(dest,fo===BIN?(e.on||e.n):nm);
+ if(cut){V.F[fo]=V.F[fo].filter(x=>x!==e);if(e.dir)rekey(fo===BIN?BIN+'/'+eid(e):pk(fo,nm),pk(dest,name));e.n=name;delete e.on;delete e.d;delete e.dt;e.mt=Date.now();V.F[dest].push(e)}
+ else{const c={...e,n:name,id:uid(),ct:Date.now()};V.F[dest].push(c);if(e.dir)cloneTree(pk(fo,nm),pk(dest,name))}n++});n&&toast((cut?'Vimehamishwa: ':'Vimenakiliwa: ')+n)};
+window.del=async function(items){items=items.filter(a=>get(a[0],a[1]));if(!items.length)return;
+ try{if(items.every(a=>a[0]===BIN)){if(!await ask('Futa kabisa','Vitu '+items.length+' vitafutwa kabisa na haviwezi kurejeshwa. Endelea?','Futa kabisa'))return;for(const[fo,n]of items)await purge(fo,get(fo,n));toast('Vimefutwa kabisa: '+items.length)}
+ else{const R=items.filter(a=>a[0]!==BIN);if(!await ask('Futa vitu','Hamisha '+R.length+' kwenye Recycle Bin? Unaweza kuvirejesha baadaye.','Futa'))return;
+  R.forEach(([fo,n])=>{const e=get(fo,n);if(!e)return;V.F[fo]=V.F[fo].filter(x=>x!==e);if(e.dir)rekey(pk(fo,n),BIN+'/'+eid(e));e.on=e.n;e.d=fo;e.dt=Date.now();e.n=uniq(BIN,e.n);V.F[BIN].push(e)});toast('Vimehamishiwa Recycle Bin: '+R.length)}
+ persist()}catch(x){toast('Imeshindwa kufuta: '+(x&&x.message||x),'e')}};
+window.restore=function(items){let n=0;items.forEach(([fo,nm])=>{const e=get(BIN,nm);if(!e)return;const d=V.F[e.d]?e.d:'Desktop',name=uniq(d,e.on||e.n);V.F[BIN]=V.F[BIN].filter(x=>x!==e);if(e.dir)rekey(BIN+'/'+eid(e),pk(d,name));e.n=name;delete e.on;delete e.d;delete e.dt;V.F[d].push(e);n++});persist();n&&toast('Vimerejeshwa: '+n)};
+window.ren=async function(fo,n){const e=get(fo,n);if(!e||fo===BIN)return;const v=await askName('Badili jina',n,vdup(fo,n));if(v==null||v===n)return;if(e.dir)rekey(pk(fo,n),pk(fo,v));e.n=v;e.mt=Date.now();persist();toast('Jina limebadilishwa')};
+window.newF=async function(parent){const fo=parent&&V.F[parent]&&parent!==BIN?parent:null;
+ const v=await askName('Folda mpya','Folda mpya',fo?vdup(fo,null):s=>vbase(s)||(V.F[s]?'Jina hilo lipo tayari.':''));if(v==null)return;
+ if(fo){mkdirp(fo,v)}else{V.F[v]=[];V.U.push(v)}persist();toast('Folda imetengenezwa')};
+async function mkFile(fo){if(!fo||!V.F[fo]||fo===BIN)return;const v=await askName('Faili jipya','Hati mpya.txt',vdup(fo,null));if(v==null)return;const t=Date.now(),b=new Blob([''],{type:'text/plain'}),bk=uid();
+ try{await bput(bk,b);V.F[fo].push({n:v,o:['Upload',v],id:uid(),bk,sz:0,ct:t,mt:t,h:await sha(b)});persist()}catch(x){toast('Imeshindwa kuunda faili: '+(x&&x.message||x),'e')}}
+function dupl(items){items.forEach(a=>{if(a[0]!==BIN)xfer([a],a[0],0)});persist()}
+/* ---- upload / download ---- */
+async function addFiles(files,dest){if(!dest||!V.F[dest]||dest===BIN){toast('Fungua folda kwanza kisha pakia faili','w');return}
+ busy(1);const pt=toast('Inapakia…'),ok={n:0,s:0,f:0};let pol=null,i=0;
+ try{for(const f of files){pt.textContent='Inapakia '+(++i)+'/'+files.length+' · '+f.name;
+  try{let d=dest;const rp=f.webkitRelativePath;if(rp&&rp.includes('/'))for(const p of rp.split('/').slice(0,-1))d=mkdirp(d,p);
+   let name=(f.name||'faili').replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').trim().slice(0,200)||'faili';const h=await sha(f);
+   const dup=V.F[d].find(x=>!x.dir&&x.bk&&(h?x.h===h:x.sz===f.size&&x.n===name));let bk=null;
+   if(dup){let r=pol;if(!r){const cb=E('input');cb.type='checkbox';const b=E('div');b.innerHTML='<p><b>'+esc(name)+'</b> lina maudhui sawa na <b>'+esc(dup.n)+'</b> kwenye folda hii.</p>';const l=E('label','','');l.append(cb,' Fanya hivi kwa yote yanayofuata');b.append(l);
+    const x=await dlg('Faili nakala limegunduliwa',b,[['Ruka',()=>({v:'skip',a:cb.checked})],['Weka nakala',()=>({v:'both',a:cb.checked}),1]]);r=x?x.v:'skip';if(x&&x.a)pol=r}
+    if(r==='skip'){ok.s++;continue}bk=dup.bk}
+   if(!bk){bk=uid();await bput(bk,f)}
+   const t=Date.now();V.F[d].push({n:uniq(d,name),o:['Upload',name],id:uid(),bk,sz:f.size,ct:t,mt:f.lastModified||t,h,ty:f.type||MT[xe(name)]||''});ok.n++}
+  catch(x){ok.f++;if(x&&x.name==='QuotaExceededError'){toast('Hifadhi imejaa — futa vitu au toa nafasi','e');break}console.warn(x)}}
+ }finally{busy(0);pt.remove();persist()}
+ toast('Yamepakiwa: '+ok.n+(ok.s?' · yamerukwa: '+ok.s:'')+(ok.f?' · yameshindwa: '+ok.f:''),ok.f?'w':'')}
+window.pickUpload=(dest,dir)=>{const i=E('input');i.type='file';i.multiple=true;if(dir)i.webkitdirectory=true;i.style.display='none';document.body.append(i);i.onchange=()=>{addFiles([...i.files],dest&&V.F[dest]?dest:'Desktop');i.remove()};i.click()};
+const dl=(b,name)=>{const u=URL.createObjectURL(b),a=E('a');a.href=u;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5e3)};
+async function sysBlob(e){const s=e.o[0].split(' ')[0],k=s+'/'+e.o[1];let c=await DB.get(k),t=c&&c.html;if(t==null){const r=await fetchF(s,e.o[1]);t=r&&r.txt}return t!=null?new Blob([t],{type:'text/html'}):null}
+window.saveOut=async function(items){let n=0;busy(1);try{for(const[fo,nm]of items){const e=get(fo,nm);if(!e)continue;if(e.dir){toast('Folda "'+e.n+'" haiwezi kupakuliwa moja kwa moja — chagua faili ndani yake','w');continue}
+ try{const b=e.bk?await bget(e.bk):await sysBlob(e);if(!b){toast('"'+e.n+'" halipatikani kupakuliwa (jaribu ukiwa online)','w');continue}dl(b,e.bk?e.n:e.o[1]+'.html');n++}catch(x){toast('Imeshindwa kupakua '+e.n,'e')}}}finally{busy(0)}n&&toast('Imepakuliwa: '+n)};
+/* ---- recent + fungua ---- */
+const rcAdd=e=>{const o=owner(e);if(!o||o===BIN)return;V.rc=(V.rc||[]).filter(r=>!(r.fo===o&&r.n===e.n));V.rc.unshift({fo:o,n:e.n,t:Date.now()});V.rc.length=Math.min(V.rc.length,30);save()};
+const _oe=window.openE;
+window.openE=function(e){if(!e)return;try{if(!e.bk&&e.o&&e.o[0]==='Upload'){const r=Object.values(V.F).flat().find(x=>x.bk&&x.n===e.n);if(r)e=r}
+ if(e.dir){const o=owner(e);if(o&&o!==BIN)explorer(pk(o,e.n));return}rcAdd(e);if(e.bk)return viewer(e)}catch(x){toast('Imeshindwa kufungua: '+(x&&x.message||x),'e');return}_oe(e)};
+/* ---- preview / viewer ---- */
+const info=(e,fo)=>{const s=stat(fo,e);return'<div class="xpc"><div class="xbig">'+(e.dir?FD(e.n):fi(e.o?e.o[1]:e.n))+'</div><b>'+esc(e.n)+'</b><small>'+(e.dir?s.f+' faili · '+s.d+' folda':TY(e)+(e.bk?' · '+SZ(e.sz||0):''))+'</small></div>'};
+async function renderPrev(e,fo,host,edit){(host._u||[]).forEach(u=>URL.revokeObjectURL(u));host._u=[];host._ta=null;
+ if(e.dir||!e.bk){host.innerHTML=info(e,fo)+(e.bk||e.dir?'':'<div class="xpc"><small>Faili la mfumo — bonyeza mara mbili kulifungua</small></div>');return}
+ host.innerHTML='<div class="xpc">Inapakia…</div>';let b;try{b=await bget(e.bk)}catch(x){host.innerHTML='<div class="xpc">Imeshindwa kusoma hifadhi: '+esc(x.message||x)+'</div>';return}
+ if(!b){host.innerHTML='<div class="xpc">⚠ Data ya faili haipatikani kwenye hifadhi</div>';return}
+ const k=kind(e),u=()=>{const x=URL.createObjectURL(b);host._u.push(x);return x};host.innerHTML='';
+ if(k==='img'){const i=E('img','xim');i.src=u();i.alt=e.n;host.append(i)}
+ else if(k==='vid'||k==='aud'){const m=E(k==='vid'?'video':'audio','xim');m.controls=true;m.src=u();host.append(m)}
+ else if(xe(e.n)==='pdf'){const f=E('iframe','xim');f.src=u();host.append(f)}
+ else if(k==='txt'||(b.size<2e5&&/^text\//.test(b.type))){const t=await b.slice(0,edit?5e6:2e5).text();if(edit){const a=E('textarea','xta');a.value=t;host._ta0=t;a.spellcheck=false;a.setAttribute('aria-label','Hariri '+e.n);host.append(a);host._ta=a}else{const p=E('pre','xtx');p.textContent=t;host.append(p)}}
+ else host.innerHTML=info(e,fo)}
+function viewer(e){const fo=owner(e)||'Desktop',box=E('div','xp'),tb=E('div','xvb'),host=E('div','xvh');box.append(tb,host);
+ const B=(t,f)=>{const b=E('button','xb',t);b.onclick=f;tb.append(b);return b};
+ B('⬇️ Pakua',()=>saveOut([[fo,e.n]]));
+ let sv2=null;if(kind(e)==='txt'){sv2=async(auto)=>{if(!host._ta)return;try{const v=host._ta.value,b=new Blob([v],{type:'text/plain'});if(Object.values(V.F).some(L=>L.some(x=>x!==e&&x.bk===e.bk)))e.bk=uid();await bput(e.bk,b);e.sz=b.size;e.mt=Date.now();e.h=await sha(b);host._ta0=v;persist();toast(auto===1?'Mabadiliko yamehifadhiwa: '+e.n:'Imehifadhiwa')}catch(x){toast('Imeshindwa kuhifadhi: '+(x&&x.message||x),'e')}};B('💾 Hifadhi (Ctrl+S)',sv2);box.addEventListener('keydown',ev=>{if((ev.ctrlKey||ev.metaKey)&&ev.key.toLowerCase()==='s'){ev.preventDefault();sv2()}})}
+ renderPrev(e,fo,host,true);const wv=win(e.n,fi(e.o[1]),680,460,box,()=>(host._u||[]).forEach(u=>URL.revokeObjectURL(u)));
+ hookClose(wv,async()=>{if(!(sv2&&host._ta&&host._ta.value!==host._ta0&&owner(e)&&owner(e)!==BIN))return true;
+  const r=await dlg('Hifadhi mabadiliko?','<p>Umebadilisha <b>'+esc(e.n)+'</b>. Yahifadhiwe kwenye <b>'+esc(fpath(owner(e)))+'</b>?</p>',[['Ghairi',null],['Usihifadhi',()=>'no'],['Hifadhi',()=>'yes',1]]);
+  if(!r)return false;if(r==='yes'){await sv2(1);return host._ta.value===host._ta0}return true})}
+async function props(recs){recs=recs.filter(Boolean);if(!recs.length)return;const row=(a,b)=>'<tr><td>'+a+'</td><td>'+esc(b)+'</td></tr>';let h;
+ if(recs.length===1){const{fo,e}=recs[0],s=stat(fo,e);h='<table class="xpt">'+row('Jina',e.n)+row('Aina',TY(e))+row('Mahali','Diski (C:)\\'+(fo||'').replace(/\//g,'\\'))+row('Ukubwa',e.dir?SZ(s.s)+' ('+s.f+' faili, '+s.d+' folda)':e.bk?SZ(e.sz||0):'Faili la mfumo')+row('Imetengenezwa',DT(e.ct))+row('Imebadilishwa',DT(e.mt))+(e.h?row('SHA-256',e.h.slice(0,20)+'…'):'')+(e.id?row('ID',e.id):'')+'</table>'}
+ else{const t=recs.reduce((a,{fo,e})=>{const s=stat(fo,e);a.f+=s.f;a.d+=s.d+(e.dir?1:0);a.s+=s.s;return a},{f:0,d:0,s:0});h='<table class="xpt">'+row('Vitu',recs.length+' vimechaguliwa')+row('Faili',t.f)+row('Folda',t.d)+row('Ukubwa wote',SZ(t.s))+'</table>'}
+ await dlg('Properties',h,[['Funga',null,1]])}
+async function findDup(){const m={};Object.keys(V.F).filter(k=>k!==BIN&&!k.startsWith(BIN+'/')).forEach(k=>V.F[k].forEach(e=>{if(e.bk&&e.h)(m[e.h]=m[e.h]||[]).push([k,e])}));const g=Object.values(m).filter(a=>a.length>1);
+ if(!g.length){toast('Hakuna faili nakala zilizopatikana');return}const ex=g.reduce((a,x)=>a+x.length-1,0);
+ const r=await dlg('Nakala zilizopatikana: makundi '+g.length,'<div class="xdl">'+g.map(a=>'<div><b>'+esc(a[0][1].n)+'</b> · '+SZ(a[0][1].sz||0)+a.map(([k,e])=>'<br>• '+esc(k.replace(/\//g,' › '))+' / '+esc(e.n)).join('')+'</div>').join('')+'</div>',[['Funga',null],['Futa nakala '+ex+' (acha moja kila kundi)',true,1]]);
+ if(r)await del(g.flatMap(a=>a.slice(1).map(([k,e])=>[k,e.n])))}
+/* OS drag-drop kwenye Desktop */
+{const D2=$('#desk');D2.addEventListener('dragover',e=>{if(e.dataTransfer&&[...e.dataTransfer.types].includes('Files'))e.preventDefault()});D2.addEventListener('drop',e=>{if(e.target.closest('.w')||!e.dataTransfer||!e.dataTransfer.files.length)return;e.preventDefault();addFiles([...e.dataTransfer.files],'Desktop')})}
+/* ================= EXPLORER PRO ================= */
+window.explorer=function(f){
+ let cur=(f===BIN||(f&&V.F[f]))?f:null,H=[cur],hi=0,last=null,arr=[],multi=0,lim=400,pt=0,est=0;const sel=new Set(),byK=new Map(),ex=new Set(),thc=new Map(),X=V.xs=Object.assign({by:'name',dir:'a',view:'det',pv:1,flt:'all'},V.xs||{});
+ const root=E('div','xp');root.tabIndex=0;root.setAttribute('aria-label','File Explorer');
+ root.innerHTML='<div class="xld"></div><div class="xt" role="toolbar" aria-label="Amri za faili"></div><div class="xa"><button class="xb xhb" aria-label="Folda">☰</button><button class="xb" title="Nyuma (Alt+←)" aria-label="Nyuma">←</button><button class="xb" title="Mbele (Alt+→)" aria-label="Mbele">→</button><button class="xb" title="Juu (Alt+↑)" aria-label="Juu">↑</button><button class="xb" title="Onyesha upya (F5)" aria-label="Onyesha upya">⟳</button><nav class="xc" aria-label="Anwani"></nav><input class="xq" type="search" placeholder="Tafuta (Ctrl+F)" aria-label="Tafuta"></div><div class="xm"><div class="xs" role="tree" aria-label="Folda"></div><div class="xg"><div class="xh"><span></span><span>Jina</span><span>Tarehe</span><span>Aina</span><span>Ukubwa</span></div><div class="xl" role="listbox" aria-multiselectable="true" aria-label="Faili"></div></div><div class="xv" aria-label="Preview"></div></div><div class="xf"><span class="x1"></span><span class="x2"></span></div>';
+ const Q=s=>root.querySelector(s),tb=Q('.xt'),[hb,bkb,fwb,upb,rfb]=root.querySelectorAll('.xa>button'),cr=Q('.xc'),qi=Q('.xq'),side=Q('.xs'),lg=Q('.xl'),hd=Q('.xh'),pv=Q('.xv'),s1=Q('.x1'),s2=Q('.x2');
+ const real=()=>cur&&cur!=='@recent'&&cur!==BIN&&V.F[cur]?cur:null,R=()=>[...sel].map(k=>byK.get(k)).filter(Boolean),S=()=>R().filter(r=>r.fo).map(r=>[r.fo,r.e.n]);
+ const ctx={folder:real,S,all:()=>{arr.forEach(r=>sel.add(K(r.fo,r.e.n)));paint()}};
+ const sv2=()=>{save();draw()},go=(c,p)=>{if(c&&c!=='@recent'&&!V.F[c])c=null;cur=c;sel.clear();last=null;lim=400;qi.value='';root.classList.remove('so');if(!p){H=H.slice(0,hi+1);H.push(c);hi++}draw()};
+ const bk=()=>{if(hi>0){hi--;go(H[hi],1)}},fw=()=>{if(hi<H.length-1){hi++;go(H[hi],1)}},up=()=>go(cur&&cur!=='@recent'&&cur.includes('/')?cur.slice(0,cur.lastIndexOf('/')):null);
+ bkb.onclick=bk;fwb.onclick=fw;upb.onclick=up;rfb.onclick=()=>{draw();toast('Imeonyeshwa upya')};hb.onclick=()=>root.classList.toggle('so');
+ const mkDir=()=>cur===null?newF():real()?newF(real()):toast('Fungua folda kwanza','w');
+ const dd=(r,it)=>menu(r.left,r.bottom+2,it),mark=(c,t)=>(c?'● ':'○ ')+t;
+ const B=(ic,lb,tt,fn)=>{const b=E('button','xb','<span aria-hidden="true">'+ic+'</span><span class="xl2">'+lb+'</span>');b.title=tt||lb;b.setAttribute('aria-label',tt||lb);b.onclick=()=>{ACT=ctx;fn(b.getBoundingClientRect())};tb.append(b);return b};
+ const one=fn=>{const s=S();if(s.length!==1){toast('Chagua kitu kimoja','w');return}fn(s[0])};
+ B('➕','Mpya','Mpya',r=>dd(r,[['📁 Folda mpya (Ctrl+Shift+N)',mkDir,cur!==null&&!real()],['📄 Faili la maandishi',()=>mkFile(real()),!real()]]));
+ tb.append(E('span','xsep'));
+ B('✂️','Kata','Kata (Ctrl+X)',()=>cp(S(),1));B('⧉','Nakili','Nakili (Ctrl+C)',()=>cp(S(),0));B('📋','Bandika','Bandika (Ctrl+V)',()=>real()?paste(real()):toast('Fungua folda kubandika','w'));B('✏️','Jina','Badili jina (F2)',()=>one(a=>ren(...a)));B('🗑️','Futa','Futa (Del)',()=>S().length?del(S()):toast('Chagua kitu kwanza','w'));
+ const rsb=B('↩️','Rejesha','Rejesha',()=>restore(S().length?S():V.F[BIN].map(e=>[BIN,e.n])));tb.append(E('span','xsep'));
+ B('↕️','Panga','Panga',r=>dd(r,[['Jina',()=>{X.by='name';sv2()}],['Tarehe',()=>{X.by='date';sv2()}],['Aina',()=>{X.by='type';sv2()}],['Ukubwa',()=>{X.by='size';sv2()}],null,['⬆ Kupanda (A→Z)',()=>{X.dir='a';sv2()}],['⬇ Kushuka (Z→A)',()=>{X.dir='d';sv2()}]].map((a,i)=>a&&i<4?[mark(X.by===['name','date','type','size'][i],a[0]),a[1]]:a)));
+ B('👁','Tazama','Mwonekano',r=>dd(r,[[mark(X.view==='grd','Gridi (icons kubwa)'),()=>{X.view='grd';sv2()}],[mark(X.view==='lst','Orodha'),()=>{X.view='lst';sv2()}],[mark(X.view==='det','Maelezo (Details)'),()=>{X.view='det';sv2()}],null,[(X.pv?'☑':'☐')+' Preview pane (Alt+P)',togPv],['🌓 Badili mada (Giza/Mwanga)',()=>{Sx.dark=Sx.dark?0:1;document.body.classList.toggle('dark',!!Sx.dark);sv()}]]));
+ B('⏷','Chuja','Chuja kwa aina',r=>dd(r,[['all','Zote'],['dir','Folda'],['img','Picha'],['vid','Video'],['aud','Sauti'],['txt','Maandishi'],['doc','Hati'],['app','Programu']].map(([k,t])=>[mark(X.flt===k,t),()=>{X.flt=k;sv2()}])));
+ B('⬆️','Pakia','Pakia kutoka Kompyuta',r=>dd(r,[['📤 Pakia faili',()=>pickUpload(real()),!real()],['📂 Pakia folda nzima',()=>pickUpload(real(),1),!real()]]));B('⬇️','Pakua','Pakua (Download)',()=>S().length?saveOut(S()):toast('Chagua faili kwanza','w'));
+ const mb=B('☑','Chagua','Chagua vingi (multi-select)',()=>{multi=!multi;mb.classList.toggle('on',!!multi)});
+ B('⋯','','Zaidi',r=>dd(r,[['Chagua zote (Ctrl+A)',ctx.all],['ℹ️ Properties (Alt+Enter)',()=>props(R().length?R():[curRec()])],['🔍 Tafuta faili nakala (duplicates)',findDup],['🖥️ Tuma Desktop',()=>{xfer(S(),'Desktop',0);persist()},!S().length],cur===BIN?['🧹 Mwaga Recycle Bin',()=>del(V.F[BIN].map(e=>[BIN,e.n])),!V.F[BIN].length]:null].filter(Boolean)));
+ const curRec=()=>{if(!real())return null;if(!cur.includes('/'))return{fo:'',e:{n:cur,dir:1,top:1}};const p=cur.slice(0,cur.lastIndexOf('/')),n=cur.slice(cur.lastIndexOf('/')+1);const e=get(p,n);return e&&{fo:p,e}};
+ const togPv=()=>{X.pv=X.pv?0:1;save();layout()};
+ const layout=()=>{const w=root.clientWidth;root.classList.toggle('nar',w<600);root.classList.toggle('nopv',w<980);root.classList.toggle('cmp',(lg.clientWidth||w)<560);root.classList.toggle('hpv',!X.pv);['grd','lst','det'].forEach(v=>root.classList.toggle(v,X.view===v))};
+ const ro=window.ResizeObserver?new ResizeObserver(layout):null;
+ /* --- orodha, utafutaji, kupanga --- */
+ const cmp=(a,b)=>{if(!!a.e.dir!==!!b.e.dir)return a.e.dir?-1:1;const p=isFr(FK(a.fo,a.e.n)),q=isFr(FK(b.fo,b.e.n));if(p!==q)return p?-1:1;let r=0;if(X.by==='date')r=(a.e.mt||0)-(b.e.mt||0);else if(X.by==='size')r=(a.e.sz||0)-(b.e.sz||0);else if(X.by==='type')r=xe(a.e.n).localeCompare(xe(b.e.n));
+  if(!r)r=a.e.n.localeCompare(b.e.n,undefined,{sensitivity:'base',numeric:true});return r*(X.dir==='d'?-1:1)};
+ const items=()=>{const q=qi.value.trim().toLowerCase();let L=[];
+  if(q){const ks=cur&&cur!=='@recent'?sub(cur):Object.keys(V.F).filter(k=>k!==BIN&&!k.startsWith(BIN+'/'));ks.forEach(k=>V.F[k].forEach(e=>{if(e.n.toLowerCase().includes(q))L.push({e,fo:k,p:1})}))}
+  else if(cur==='@recent')L=(V.rc||[]).map(r=>{const e=get(r.fo,r.n);return e&&{e,fo:r.fo}}).filter(Boolean);
+  else if(cur)L=V.F[cur].map(e=>({e,fo:cur}));else L=keys().map(k=>({e:{n:k,dir:1,top:1,o:['Folda',k],id:'t'+k},fo:''}));
+  if(X.flt!=='all')L=L.filter(r=>kind(r.e)===X.flt);if(cur!==null&&!(cur==='@recent'&&!q))L.sort(cmp);return L};
+ const paint=()=>{lg.querySelectorAll('.xi').forEach(i=>{const r=arr[+i.dataset.i],on=r&&sel.has(K(r.fo,r.e.n));i.classList.toggle('sel',!!on);i.setAttribute('aria-selected',!!on)});stat2();pvUp()};
+ const stat2=()=>{const r=R();s1.textContent=arr.length+' vitu'+(r.length?'  ·  '+r.length+' vimechaguliwa'+(r.some(x=>!x.e.dir)?' ('+SZ(r.reduce((a,x)=>a+(x.e.dir?0:x.e.sz||0),0))+')':''):'')+(CB?'  ·  📋 '+CB.items.length+(CB.cut?' vimekatwa':' vimenakiliwa'):'')};
+ const pvUp=()=>{clearTimeout(pt);pt=setTimeout(()=>{if(!X.pv||root.classList.contains('nopv')||!root.isConnected)return;const r=R();if(r.length===1)renderPrev(r[0].e,r[0].fo,pv,false);else{(pv._u||[]).forEach(u=>URL.revokeObjectURL(u));pv._u=[];pv.innerHTML='<div class="xpc"><small>'+(r.length?r.length+' vimechaguliwa':'Chagua faili kuona preview')+'</small></div>'}},130)};
+ const pick=(k,e)=>{const ks=arr.map(r=>K(r.fo,r.e.n));if(multi||e.ctrlKey||e.metaKey){sel.has(k)?sel.delete(k):sel.add(k)}else if(e.shiftKey&&last!=null){const a=ks.indexOf(last),b=ks.indexOf(k);if(a>=0&&b>=0){if(!e.ctrlKey)sel.clear();ks.slice(Math.min(a,b),Math.max(a,b)+1).forEach(x=>sel.add(x))}}else{sel.clear();sel.add(k)}last=k;paint()};
+ const open=r=>{const e=r.e;if(e.top)return go(e.n);if(r.fo===BIN){toast('Rejesha kwanza ili kufungua "'+e.n+'"','w');return}if(e.dir)return go(pk(r.fo,e.n));openE(e)};
+ const crumb=()=>{cr.innerHTML='';const P=[['💻 Kompyuta Hii',null],['Diski (C:)',null]];if(cur==='@recent')P.push(['Hivi karibuni','@recent']);else if(cur){let p='';cur.split('/').forEach((s,i)=>{p=i?p+'/'+s:s;P.push([i?s:lab(s),p])})}
+  P.forEach(([t,p],i)=>{if(i)cr.append(E('i','','›'));const b=E('button','',esc(t));b.onclick=()=>go(p);if(i===P.length-1)b.setAttribute('aria-current','page');cr.append(b)});cr.scrollLeft=1e5};
+ const drawSide=()=>{side.innerHTML='';if(cur&&cur.includes('/')){let p='';cur.split('/').slice(0,-1).forEach((s,i)=>{p=i?p+'/'+s:s;ex.add(p)})}
+  const add=(k,label,ic,dep)=>{const kids=k&&k!=='@recent'&&k!==BIN&&V.F[k]?V.F[k].filter(e=>e.dir):[],open=ex.has(k),d=E('div','xs1'+(k===cur?' on':''));d.setAttribute('role','treeitem');d.style.paddingLeft=6+dep*14+'px';if(k&&k!=='@recent')d.dataset.fold=k;
+   d.innerHTML='<i class="xch">'+(kids.length?(open?'▾':'▸'):'')+'</i><span>'+ic+'</span><span class="xsn">'+esc(label)+'</span>';d.querySelector('.xch').onclick=ev=>{ev.stopPropagation();open?ex.delete(k):ex.add(k);drawSide()};d.onclick=()=>go(k);
+   lp(d,(x,y)=>menu(x,y,[['Fungua',()=>go(k)]]));side.append(d);if(kids.length&&open)kids.sort((a,b)=>a.n.localeCompare(b.n)).forEach(e=>add(pk(k,e.n),e.n,FD(e.n),dep+1))};
+  add('@recent','Hivi karibuni','🕘',0);add(null,'Kompyuta Hii',IA('pc'),0);keys().forEach(k=>add(k,lab(k),FD(k),1));side.append(E('div','xsp'));const m=E('div','xsm');side.append(m);
+  if(navigator.storage&&navigator.storage.estimate&&Date.now()-est>3000){est=Date.now();navigator.storage.estimate().then(s=>{m.textContent='💾 '+SZ(s.usage||0)+' / '+SZ(s.quota||0);s2.textContent=m.textContent}).catch(()=>{})}};
+ function draw(){while(cur&&cur!=='@recent'&&!V.F[cur])cur=cur.includes('/')?cur.slice(0,cur.lastIndexOf('/')):null;layout();rsb.style.display=cur===BIN?'':'none';
+  const q=qi.value.trim();arr=items();byK.clear();arr.forEach(r=>byK.set(K(r.fo,r.e.n),r));[...sel].forEach(k=>{if(!byK.has(k))sel.delete(k)});
+  hd.querySelectorAll('span').forEach((s,i)=>{const b=['','name','date','type','size'][i];if(b)s.textContent=['','Jina','Tarehe','Aina','Ukubwa'][i]+(X.by===b?(X.dir==='a'?' ▲':' ▼'):'')});
+  let h='';arr.slice(0,lim).forEach((r,i)=>{const e=r.e,k=K(r.fo,e.n),cut=CB&&CB.cut&&CB.items.some(x=>x[0]===r.fo&&x[1]===e.n),ic=e.dir?FD(e.n):fi(e.o?e.o[1]:e.n),fd=e.dir&&r.fo!==BIN?e.top?e.n:pk(r.fo,e.n):'';
+   h+='<div class="xi'+(sel.has(k)?' sel':'')+(cut?' cut':'')+'" role="option" aria-selected="'+sel.has(k)+'" data-i="'+i+'"'+(fd?' data-fold="'+attr(fd)+'"':'')+'><span class="xn" aria-hidden="true">'+ic+'</span><span class="xe" title="'+attr(e.n)+'">'+(isFr(FK(r.fo,e.n))?'📌 ':'')+esc(e.n)+(r.p||cur==='@recent'?'<small>'+esc(r.fo.replace(/\//g,' › '))+'</small>':'')+'</span><span class="xd2">'+DT(e.mt)+'</span><span class="xt2">'+esc(TY(e))+'</span><span class="xz">'+(e.dir?(e.top?V.F[e.n].length+' vitu':''):e.bk?SZ(e.sz||0):'')+'</span></div>'});
+  if(!arr.length)h='<div class="xem">'+(q?'Hakuna matokeo ya "'+esc(q)+'"':cur===BIN?'Recycle Bin ni tupu':cur==='@recent'?'Hakuna faili ulizofungua hivi karibuni':'Folda hii ni tupu — buruta faili hapa, au bonyeza "Pakia"')+'</div>';
+  if(arr.length>lim)h+='<button class="xmore">Onyesha zaidi ('+(arr.length-lim)+' zimebaki)</button>';lg.innerHTML=h;lg.dataset.fold=real()||(cur===BIN?BIN:'');
+  crumb();drawSide();stat2();pvUp();
+  lg.querySelectorAll('.xi').forEach(el=>{const r=arr[+el.dataset.i],e=r.e;if(!e.bk||kind(e)!=='img'||(e.sz||0)>8e6||thc.size>150&&!thc.has(e.bk))return;const n=el.querySelector('.xn'),use=u=>{n.style.backgroundImage='url("'+u+'")';n.classList.add('th')};
+   if(thc.has(e.bk))return use(thc.get(e.bk));bget(e.bk).then(b=>{if(!b||!root.isConnected)return;const u=URL.createObjectURL(b);thc.set(e.bk,u);use(u)}).catch(()=>{})})}
+ /* --- matukio --- */
+ const rec=t=>{const i=t.closest&&t.closest('.xi');return i?arr[+i.dataset.i]:null};
+ root.addEventListener('pointerdown',()=>{ACT=ctx});
+ lg.onclick=e=>{ACT=ctx;if(e.target.closest('.xmore')){lim+=400;draw();return}const r=rec(e.target);if(!r){if(!e.ctrlKey&&!e.shiftKey){sel.clear();paint()}return}
+  if(TAP&&!multi&&!e.ctrlKey&&!e.shiftKey){if(Date.now()-lpT>700)open(r);return}pick(K(r.fo,r.e.n),e)};
+ lg.ondblclick=e=>{if(TAP)return;const r=rec(e.target);r&&Date.now()-lpT>700&&open(r)};
+ lg.onpointerdown=e=>{ACT=ctx;if(e.pointerType!=='mouse'||e.button)return;const r=rec(e.target);if(!r||!r.fo)return;const k=K(r.fo,r.e.n);if(!sel.has(k)&&!e.ctrlKey){sel.clear();sel.add(k);paint()}drag(e,S)};
+ hd.onclick=e=>{const i=[...hd.children].indexOf(e.target.closest('span')),b=['','name','date','type','size'][i];if(!b)return;if(X.by===b)X.dir=X.dir==='a'?'d':'a';else{X.by=b;X.dir='a'}sv2()};
+ side.addEventListener('pointerdown',e=>e.stopPropagation(),false);
+ lg.ondragover=e=>{if(e.dataTransfer&&[...e.dataTransfer.types].includes('Files')){e.preventDefault();lg.classList.add('dz')}};lg.ondragleave=()=>lg.classList.remove('dz');
+ lg.ondrop=e=>{lg.classList.remove('dz');if(!e.dataTransfer||!e.dataTransfer.files.length)return;e.preventDefault();addFiles([...e.dataTransfer.files],real())};
+ const itemMenu=(x,y)=>{const rs=R(),bin=cur===BIN,it=S(),single=rs.length===1,anyDir=rs.some(r=>r.e.dir);
+  if(rs.some(r=>!r.fo)){const k=rs[0].e.n;return menu(x,y,[['Fungua',()=>go(k)],['ℹ️ Properties',()=>props(rs)],V.U.includes(k)?['🗑️ Futa folda',()=>delF(k)]:null].filter(Boolean))}
+  menu(x,y,bin?[['↩️ Rejesha (Restore)',()=>restore(it)],['🗑️ Futa kabisa',()=>del(it)],null,['ℹ️ Properties',()=>props(rs)]]:
+   [['Fungua (Enter)',()=>rs.forEach(open)],null,['✂️ Kata',()=>cp(it,1)],['⧉ Nakili',()=>cp(it,0)],['⧉ Tengeneza nakala (Ctrl+D)',()=>dupl(it)],['✏️ Badili jina (F2)',()=>ren(...it[0]),!single],['🗑️ Futa (Del)',()=>del(it)],null,['⬇️ Pakua',()=>saveOut(it)],['🖥️ Tuma Desktop',()=>{xfer(it,'Desktop',0);persist()},cur==='Desktop'],['📌 Pin Taskbar',()=>{it.forEach(a=>pinFile(...a));persist()},anyDir],['🔲 Pin Start',()=>{it.forEach(a=>startFile(...a));persist()},anyDir],null,['ℹ️ Properties (Alt+Enter)',()=>props(rs)]])};
+ const bgMenu=(x,y)=>menu(x,y,[['📁 Folda mpya',mkDir,cur!==null&&!real()],['📄 Faili jipya la maandishi',()=>mkFile(real()),!real()],null,['📋 Bandika',()=>paste(real()),!CB||!real()],['📤 Pakia faili',()=>pickUpload(real()),!real()],['☑ Chagua zote',ctx.all],null,
+  [X.view==='det'?'▦ Onyesha kama Gridi':'☰ Onyesha kama Maelezo',()=>{X.view=X.view==='det'?'grd':'det';sv2()}],['🔄 Onyesha upya',draw],cur===BIN?['🧹 Mwaga Recycle Bin',()=>del(V.F[BIN].map(e=>[BIN,e.n])),!V.F[BIN].length]:undefined,['ℹ️ Properties ya folda',()=>props([curRec()]),!curRec()]].filter(a=>a!==undefined));
+ lp(lg,(x,y,e)=>{ACT=ctx;const r=rec(e.target);if(r){const k=K(r.fo,r.e.n);if(!sel.has(k)){sel.clear();sel.add(k);paint()}itemMenu(x,y)}else bgMenu(x,y)});
+ qi.oninput=()=>{lim=400;draw()};
+ root.onkeydown=e=>{if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)){if(e.key==='Escape'&&e.target===qi){qi.value='';draw();root.focus()}return}const c=e.ctrlKey||e.metaKey,k=e.key,kl=k.toLowerCase();
+  if(k==='Enter'&&e.altKey){e.preventDefault();props(R());return}if(k==='Enter'){R().forEach(open);return}
+  if(k==='Backspace'||(e.altKey&&k==='ArrowLeft')){e.preventDefault();bk();return}if(e.altKey&&k==='ArrowRight'){fw();return}if(e.altKey&&k==='ArrowUp'){up();return}
+  if(k==='F5'){e.preventDefault();draw();return}if(c&&kl==='f'){e.preventDefault();qi.focus();return}if(c&&e.shiftKey&&kl==='n'){e.preventDefault();mkDir();return}if(c&&kl==='d'){e.preventDefault();dupl(S());return}if(e.altKey&&kl==='p'){togPv();return}
+  if(k==='Escape'){sel.clear();paint();return}
+  if(k.startsWith('Arrow')&&arr.length){e.preventDefault();const cols=X.view==='grd'?Math.max(1,Math.floor(lg.clientWidth/108)):1,d=k==='ArrowRight'?1:k==='ArrowLeft'?-1:k==='ArrowDown'?cols:-cols,ks=arr.map(r=>K(r.fo,r.e.n));let i=last?ks.indexOf(last):-1;i=Math.max(0,Math.min(ks.length-1,i<0?0:i+d));
+   if(i>=lim){lim=i+60;draw()}if(!e.shiftKey)sel.clear();sel.add(ks[i]);last=ks[i];paint();const el=lg.querySelector('[data-i="'+i+'"]');el&&el.scrollIntoView({block:'nearest'})}};
+ EXP.add(draw);ro&&ro.observe(root);
+ const w=win('Explorer',FD('Nyaraka'),880,540,root,()=>{EXP.delete(draw);ro&&ro.disconnect();clearTimeout(pt);thc.forEach(u=>URL.revokeObjectURL(u));(pv._u||[]).forEach(u=>URL.revokeObjectURL(u));if(ACT===ctx)ACT=dctx});
+ draw();setTimeout(()=>{layout();root.focus()},0);return w};
+
+/* ===== AUTO-SAVE: kazi ya programu inahifadhiwa kwenye Explorer unapofunga dirisha (✕) ===== */
+const SESS=new Set();
+const AS_SKIP=/passwords|vault|calc|weather|clock|maps|navigator|news|taskmanager|process|network|msinfo|system-info|charmap|character|crypto|money|currency|converter|qr-?code|games|game-center|mediaplayer|media-player|youtube|facebook|instagram|tiktok|edge|chrome|firefox|browser|store|camera|photos|gallery|devicemanager|hardware|accessibility|text-?to-?speech|diskcleanup|disk-cleaner|clipboard|backup|screen-?recorder|voice-?recorder|regedit|registry/i;
+const AS_RULES=[
+ [/paint|draw|circuit|color-?picker/i,{m:'canvas',fo:'Picha (Pictures)',ext:'png'}],
+ [/excel|spreadsheet/i,{m:'csv',fo:'Nyaraka (Documents)',ext:'csv'}],
+ [/word|writer|wordpad|rich-text/i,{m:'html',fo:'Nyaraka (Documents)',ext:'html'}],
+ [/python|script-ide/i,{m:'text',fo:'Code (Dev)',ext:'py'}],
+ [/html-css-js|visual-studio|code-editor|dev-toolbox/i,{m:'text',fo:'Code (Dev)',ext:'auto'}],
+ [/notepad|text-?pad|onenote|notebook|stickynotes|quick-notes|todo|task-list|powerpoint|presenter|contacts|dictionary|encyclopedia|knowledge|translator/i,{m:'text',fo:'Nyaraka (Documents)',ext:'txt',min:1}]
+];
+const asRule=n=>{const k=n+' '+(AL[n]||'');if(AS_SKIP.test(k))return null;for(const[r,v]of AS_RULES)if(r.test(k))return v;return{m:'text',fo:'Nyaraka (Documents)',ext:'txt',min:10}};
+const dataBlob=u=>{const i=u.indexOf(','),m=/:(.*?);/.exec(u.slice(0,i)),bin=atob(u.slice(i+1)),a=new Uint8Array(bin.length);for(let j=0;j<bin.length;j++)a[j]=bin.charCodeAt(j);return new Blob([a],{type:m?m[1]:'application/octet-stream'})};
+const guessExt=t=>/^\s*<(!doctype|html)/i.test(t)?'html':/^\s*(def |import |from \w+ import|print\()/m.test(t)?'py':/#include\s*</.test(t)?'cpp':/\bSELECT\b[\s\S]*\bFROM\b/i.test(t)?'sql':/\b(function|const|let|var)\b|=>/.test(t)?'js':'txt';
+const docOf=fr=>{try{return fr.contentDocument}catch(_){return null}};
+function asSnap(S){
+ const d=docOf(S.fr);if(!d||!d.body)return null;const R=S.rule;
+ if(R.m==='canvas'){let best=null,ba=0;d.querySelectorAll('canvas').forEach(c=>{const a=c.width*c.height;if(a>ba){ba=a;best=c}});if(!best||ba<2500)return null;
+  try{const u=best.toDataURL('image/png'),z=document.createElement('canvas');z.width=best.width;z.height=best.height;if(u===z.toDataURL('image/png'))return null;return{sig:'c'+u,blob:dataBlob(u),ext:'png',fo:R.fo}}catch(_){return null}}
+ if(R.m==='csv'){let best=null,bc=0;d.querySelectorAll('table').forEach(t=>{const c=t.querySelectorAll('td,th').length;if(c>bc){bc=c;best=t}});
+  if(best){const rows=[...best.rows].map(r=>[...r.cells].map(c=>{const i=c.querySelector('input,textarea');return String(i?i.value:c.innerText).trim()}));
+   while(rows.length&&rows[rows.length-1].every(v=>!v))rows.pop();if(rows.some(r=>r.some(v=>v))){const csv=rows.map(r=>r.map(v=>/[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v).join(',')).join('\n');return{sig:'v'+csv,blob:new Blob([csv],{type:'text/csv'}),ext:'csv',fo:R.fo}}}}
+ const html=R.m==='html',parts=[];
+ d.querySelectorAll('textarea').forEach(a=>{if(a.value&&a.value.trim())parts.push(a.value)});
+ d.querySelectorAll('[contenteditable]:not([contenteditable="false"])').forEach(el=>{if(el.parentElement&&el.parentElement.closest('[contenteditable]'))return;const v=html?el.innerHTML:el.innerText;if(v&&v.replace(/<br\s*\/?>|&nbsp;|\s/g,'').length)parts.push(v)});
+ if(!parts.length&&d.designMode==='on'){const v=html?d.body.innerHTML:d.body.innerText;if(v&&v.trim())parts.push(v)}
+ if(!parts.length)return null;let txt=html?parts.join('<hr>'):parts.join('\n\n');
+ if(!html&&txt.trim().length<(R.min||1))return null;
+ let ext=R.ext==='auto'?guessExt(txt):R.ext,type='text/plain';
+ if(html){txt='<!doctype html><meta charset="utf-8"><title>'+esc(S.title)+'</title>\n'+txt;type='text/html'}
+ return{sig:'t'+ext+txt,blob:new Blob([txt],{type}),ext,fo:R.fo}}
+const asFind=id=>{for(const k of Object.keys(V.F)){const e=V.F[k].find(x=>x.id===id);if(e)return{fo:k,e}}return null};
+const asStamp=()=>{const d=new Date(),p=x=>String(x).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+'.'+p(d.getMinutes())};
+const fpath=k=>{const p=k.split('/');return [lab(p[0]),...p.slice(1)].join(' › ')};
+const asFolders=()=>{const L=[];keys().filter(k=>k!==BIN).forEach(k=>sub(k).sort().forEach(x=>{if(V.F[x]&&x!==BIN&&!x.startsWith(BIN+'/'))L.push(x)}));return L};
+/* hifadhi: pick={fo,name}; inarudisha true/false */
+async function asSave(S,s,final,pick){
+ if(!s)return false;
+ try{
+  let fo=pick&&V.F[pick.fo]&&pick.fo!==BIN?pick.fo:(s.fo&&V.F[s.fo]?s.fo:'Nyaraka (Documents)'),e=null,created=false;
+  if(S.id){const f=asFind(S.id);if(f&&f.fo!==BIN&&!f.fo.startsWith(BIN+'/')){e=f.e;fo=f.fo}}
+  if(e&&Object.values(V.F).some(L=>L.some(x=>x!==e&&x.bk===e.bk)))e.bk=uid();
+  const bk=e?e.bk:uid();await bput(bk,s.blob);const t=Date.now(),h=await sha(s.blob);
+  if(!e){let nm=((pick&&pick.name)||s.name||(S.title+' '+asStamp())).trim().replace(/[\\/:*?"<>|]/g,'_');if(!/\.[A-Za-z0-9]{1,8}$/.test(nm))nm+='.'+s.ext;nm=uniq(fo,nm);
+   e={n:nm,o:['Upload',nm],id:uid(),bk,sz:s.blob.size,ct:t,mt:t,h,ty:s.blob.type||''};V.F[fo].push(e);S.id=e.id;created=true}
+  else{e.sz=s.blob.size;e.mt=t;e.h=h}
+  S.last=s.sig;persist();if(created)try{rcAdd(e)}catch(_){}
+  if(final)toast('Kazi yako imehifadhiwa: '+fpath(fo)+' › '+e.n);
+  return true
+ }catch(x){toast('Imeshindwa kuhifadhi kazi: '+(x&&x.message||x),'e');return false}}
+/* Dirisha la kuuliza: jina la faili + chagua folda. Inarudisha 'saved' | 'no' | 'cancel' */
+async function asAsk(S,x){
+ let name=S.title+' '+asStamp()+'.'+x.ext,sel=x.fo&&V.F[x.fo]?x.fo:'Nyaraka (Documents)',err='';
+ for(;;){
+  const box=E('div'),msg=E('p','',''),lb1=E('div'),inp=E('input'),er=E('div','xer',esc(err)),lb2=E('div'),list=E('div');
+  msg.innerHTML='Umefanya kazi kwenye <b>'+esc(S.title)+'</b>. Unataka kuihifadhi? Andika jina la faili, kisha chagua folda ya kuihifadhia — utaipata baadaye kupitia Explorer.';
+  lb1.innerHTML='<b>Jina la faili</b>';lb1.style.cssText='margin:8px 0 4px';inp.value=name;inp.setAttribute('aria-label','Jina la faili');inp.style.cssText='width:100%;box-sizing:border-box';
+  lb2.innerHTML='<b>Hifadhi kwenye folda</b>';lb2.style.cssText='margin:10px 0 4px';
+  list.style.cssText='max-height:220px;overflow:auto;border:1px solid rgba(128,128,128,.35);border-radius:8px;padding:4px';list.setAttribute('role','listbox');
+  const paint=()=>{[...list.children].forEach(r=>{const on=r.dataset.k===sel;r.style.background=on?'rgba(30,136,229,.22)':'transparent';r.style.fontWeight=on?'700':'400';r.setAttribute('aria-selected',on)})};
+  asFolders().forEach(k=>{const dep=k.split('/').length-1,top=k.split('/')[0],r=E('div','','<span style="width:26px;height:26px;display:inline-flex">'+FD(top)+'</span><span>'+esc(dep?k.split('/').pop():lab(k))+(dep?'':'')+'</span>');
+   r.dataset.k=k;r.setAttribute('role','option');r.style.cssText='display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;margin-left:'+dep*18+'px';r.title=fpath(k);r.onclick=()=>{sel=k;paint()};r.ondblclick=()=>{sel=k;paint();const o=box.closest('.xd');o&&o.querySelector('.pri').click()};list.append(r)});
+  inp.onkeydown=ev=>{if(ev.key==='Enter'){const o=box.closest('.xd');o&&o.querySelector('.pri').click()}};
+  box.append(msg,lb1,inp,er,lb2,list);paint();
+  const r=await dlg('Hifadhi kazi yako?',box,[['Ghairi',null],['Usihifadhi',()=>({a:'no'})],['Hifadhi',()=>({a:'save',name:inp.value.trim(),fo:sel}),1]]);
+  if(!r)return 'cancel';if(r.a==='no')return 'no';
+  name=r.name;sel=r.fo;err=vbase(name);if(err)continue;
+  return (await asSave(S,x,true,{fo:sel,name}))?'saved':'cancel'}}
+/* kamata kitufe cha ✕: guard() inaamua kama dirisha lifungwe */
+function hookClose(w,guard){const oc=w.close;let bz=false;
+ w.close=function(){if(bz||!w.el.isConnected)return;bz=true;Promise.resolve().then(guard).then(ok=>{bz=false;if(ok!==false)oc.call(w)}).catch(()=>{bz=false;oc.call(w)})};
+ const xb=w.el.querySelector('.h .x');if(xb)xb.onclick=()=>w.close()}
+function asTrack(w,n){
+ const fr=w.el.querySelector('iframe');if(!fr)return;const rule=asRule(n);if(!rule)return;
+ const S={fr,rule,title:TT(n),id:null,last:null,init:null,pushed:false};SESS.add(S);
+ fr.addEventListener('load',()=>setTimeout(()=>{try{const x=asSnap(S);S.init=x?x.sig:null}catch(_){}},1500));
+ hookClose(w,async()=>{
+  if(S.pushed){SESS.delete(S);return true}
+  const x=asSnap(S);if(!x||(!S.id&&x.sig===S.init)||x.sig===S.last){SESS.delete(S);return true}
+  const r=await asAsk(S,x);if(r==='cancel')return false;SESS.delete(S);return true})
+}
+/* Programu inaweza kutuma kazi yake moja kwa moja: parent.postMessage({sadeSave:{name,text|dataUrl,mime,ext,folder}},'*') */
+addEventListener('message',e=>{const m=e.data&&e.data.sadeSave;if(!m)return;let S=null;SESS.forEach(x=>{try{if(x.fr.contentWindow===e.source)S=x}catch(_){}});if(!S)return;
+ try{let ext=String(m.ext||(m.name&&m.name.includes('.')?m.name.split('.').pop():'')||(m.dataUrl?'png':'txt')).toLowerCase().replace(/[^a-z0-9]/g,''),blob=m.dataUrl?dataBlob(m.dataUrl):new Blob([String(m.text||'')],{type:m.mime||'text/plain'}),
+  fo=m.folder&&V.F[m.folder]&&m.folder!==BIN?m.folder:EX.img.split(',').includes(ext)?'Picha (Pictures)':EX.vid.split(',').includes(ext)?'Video (Videos)':EX.aud.split(',').includes(ext)?'Muziki (Music)':/^(py|js|ts|java|cpp|php|sql|css|json|xml|html)$/.test(ext)?'Code (Dev)':'Nyaraka (Documents)',
+  nm=m.name?String(m.name).replace(/\.[^.]*$/,''):null;S.pushed=true;asSave(S,{sig:'p'+(m.dataUrl||m.text)+ext,blob,ext,fo,name:nm},!!m.final)}catch(_){}});
+{const _of=openF;openF=function(f,n){const n0=wins.length,r=_of.apply(this,arguments);try{if(wins.length>n0)asTrack(wins[wins.length-1],n)}catch(_){}return r}}
+})();
+</script>
+<script>
+/* ===== AKAUNTI (Firebase Auth + Firestore) ===== */
+(()=>{
+const CFG={apiKey:"AIzaSyDCKHDp1VpDTRr4-HGqgE1OFkEwWIDZyqI",authDomain:"sadegpt-f79d7.firebaseapp.com",projectId:"sadegpt-f79d7",storageBucket:"sadegpt-f79d7.firebasestorage.app",messagingSenderId:"474328809093",appId:"1:474328809093:web:e3f1199223bf80369fb3ec",measurementId:"G-7FVTDRC5Y2"};
+const SDK='https://www.gstatic.com/firebasejs/10.12.2/',LS=localStorage,CH=250000;
+let auth,db,user=null,ready=false,busy=false,pending=false,last='',upT,unsub=null;
+const load=u=>new Promise((res,rej)=>{const s=document.createElement('script');s.src=u;s.onload=res;s.onerror=()=>rej(new Error('sdk'));document.head.append(s)});
+const nm=u=>u.displayName||(u.email||'').split('@')[0];
+const ref=()=>db.collection('users').doc(user.uid);
+const say=(m,t)=>{try{toast(m,t)}catch(_){}};
+const ERR={'auth/invalid-email':'Email si sahihi','auth/email-already-in-use':'Email hii tayari imesajiliwa. Tumia "Ingia"','auth/weak-password':'Nenosiri liwe na angalau herufi 6','auth/invalid-credential':'Email au nenosiri si sahihi. Kama ulijisajili kwa Google, tumia "Endelea na Google"','auth/user-not-found':'Email au nenosiri si sahihi','auth/wrong-password':'Email au nenosiri si sahihi','auth/network-request-failed':'Hakuna mtandao','auth/operation-not-allowed':'Email/Password haijawashwa kwenye Firebase Console','auth/too-many-requests':'Umejaribu mara nyingi, subiri kidogo','auth/missing-password':'Weka nenosiri','auth/unauthorized-domain':'Domain hii haijaruhusiwa kwenye Firebase (Authentication → Settings → Authorized domains)','auth/account-exists-with-different-credential':'Email hii imesajiliwa kwa njia nyingine ya kuingia','auth/popup-blocked':'Kivinjari kimezuia dirisha la Google'};
+const em=e=>ERR[e&&e.code]||('Hitilafu: '+((e&&e.message)||e));
+const why=e=>{const c=(e&&e.code)||'',m=(e&&e.message)||'';
+ if(c==='permission-denied')return 'Firestore Rules hazijaruhusu akaunti hii kuhifadhi data. Weka rules za users/{uid}.';
+ if(c==='not-found'||/does not exist|NOT_FOUND/i.test(m))return 'Firestore Database haijaundwa. Kwenye Firebase Console: Firestore Database → Create database.';
+ if(c==='unavailable'||c==='deadline-exceeded')return 'Mtandao hautoshi, itajaribu tena.';
+ return em(e)};
+const WEB=/^https?:$/.test(location.protocol);
+let syncMsg='',booting=null,lastAD='',lastWs='',wsReady=false,restored=false;
+
+async function pull(){
+ const d=await ref().get();if(!d.exists)return null;const m=d.data();LS.setItem('sadets',m.updated||0);
+ const ps=await Promise.all(Array.from({length:m.n||0},(_,i)=>ref().collection('chunks').doc('c'+i).get()));
+ return ps.map(p=>p.data().t).join('');
+}
+async function push(){
+ if(!user||!ready||busy)return;const s=JSON.stringify(V);
+ if(s===last){LS.removeItem('sadedirty');return}
+ busy=true;pending=false;let ok=false;
+ try{
+  const parts=[];for(let i=0;i<s.length;){let j=Math.min(i+CH,s.length);const c=s.charCodeAt(j-1);if(j<s.length&&c>=0xD800&&c<=0xDBFF)j--;parts.push(s.slice(i,j));i=j}
+  const old=await ref().get(),oldN=old.exists?(old.data().n||0):0,b=db.batch();
+  parts.forEach((t,i)=>b.set(ref().collection('chunks').doc('c'+i),{t}));
+  for(let i=parts.length;i<oldN;i++)b.delete(ref().collection('chunks').doc('c'+i));
+  const ts=Date.now();LS.setItem('sadets',ts);b.set(ref(),{n:parts.length,updated:ts,email:user.email||''},{merge:true});
+  await b.commit();last=s;ok=true;syncMsg='';LS.setItem('sadesync',Date.now());LS.removeItem('sadedirty');LS.setItem('sadeuid',user.uid);
+ }catch(e){console.warn('sync',e);LS.setItem('sadedirty','1');syncMsg=why(e);say('Imeshindwa kuhifadhi mtandaoni: '+syncMsg,'w')}
+ finally{busy=false}
+ if(ok&&JSON.stringify(V)!==last){clearTimeout(upT);pending=true;upT=setTimeout(push,2500)}
+}
+function apply(json){
+ const o=JSON.parse(json);
+ Object.keys(V).forEach(k=>{if(k!=='set')delete V[k]});
+ Object.keys(o).forEach(k=>{if(k==='set')Object.assign(V.set,o.set);else V[k]=o[k]});
+ if(V.appdata){Object.keys(V.appdata).forEach(k=>{try{LS.setItem(k,V.appdata[k])}catch(_){}});lastAD=JSON.stringify(V.appdata);mirrorFile(V.appdata)}
+ try{purgeSeed()}catch(_){}
+ LS.setItem(VK,JSON.stringify(V));window.saveV&&window.saveV();
+ try{refresh()}catch(_){}try{applyS()}catch(_){}
+}
+const _sv=window.saveV;
+window.saveV=function(){_sv&&_sv.apply(this,arguments);if(user&&ready){LS.setItem('sadedirty','1');clearTimeout(upT);pending=true;upT=setTimeout(push,2500)}else if(!user)LS.setItem('sadeguest','1')};
+
+
+/* ----- Hifadhi ya mafaili kwenye akaunti (Firestore, vipande vya 700KB) ----- */
+const PART=700000,MAXB=40*1024*1024;
+const bref=k=>ref().collection('files').doc(String(k).replace(/[\/\s]/g,'_'));
+const cloud={
+ async put(k,b,o){
+  if(b.size>MAXB)throw new Error('Faili ni kubwa mno (zaidi ya 40MB)');
+  const r=bref(k),old=await r.get();
+  if(o&&o.skipExisting&&old.exists&&old.data().size===b.size){BS.known.add(k);return}
+  const u8=new Uint8Array(await b.arrayBuffer()),n=Math.max(1,Math.ceil(u8.length/PART));
+  for(let i=0;i<n;i+=6){const bt=db.batch();for(let j=i;j<Math.min(n,i+6);j++)bt.set(r.collection('parts').doc(String(j)),{b:firebase.firestore.Blob.fromUint8Array(u8.slice(j*PART,(j+1)*PART))});await bt.commit()}
+  await r.set({n,size:b.size,type:b.type||'',updated:Date.now()});
+  const on=old.exists?(old.data().n||0):0;
+  if(on>n){const bt=db.batch();for(let j=n;j<on;j++)bt.delete(r.collection('parts').doc(String(j)));await bt.commit()}
+  BS.known.add(k);
+ },
+ async get(k){
+  const r=bref(k),m=await r.get();if(!m.exists)return undefined;
+  const d=m.data(),parts=[];
+  for(let i=0;i<d.n;i+=6){const got=await Promise.all(Array.from({length:Math.min(6,d.n-i)},(_,j)=>r.collection('parts').doc(String(i+j)).get()));got.forEach(x=>parts.push(x.data().b.toUint8Array()))}
+  BS.known.add(k);return new Blob(parts,{type:d.type||''});
+ },
+ async del(k){
+  const r=bref(k),m=await r.get();if(!m.exists)return;
+  const bt=db.batch();for(let i=0;i<(m.data().n||0);i++)bt.delete(r.collection('parts').doc(String(i)));bt.delete(r);await bt.commit();BS.known.delete(k);
+ }
+};
+async function flushMem(){
+ if(!BS.cloud)return;
+ const ks=new Set(BS.mem.keys());try{(await IDX.blobs.keys()).forEach(k=>ks.add(k))}catch(_){}
+ for(const k of ks){if(k==='appdata-mirror'||BS.known.has(k))continue;try{const b=BS.mem.get(k)||await IDX.blobs.get(k);if(b)await cloud.put(k,b,{skipExisting:true})}catch(e){console.warn('flush',e)}}
+}
+
+async function logout(){
+ try{saveAppData();saveWs()}catch(_){}
+ clearTimeout(upT);await push();
+ if(LS.getItem('sadedirty')&&!confirm('Mabadiliko ya hivi karibuni hayajahifadhiwa mtandaoni. Bado unataka kutoka?'))return false;
+ try{await auth.signOut()}catch(_){}
+ await new Promise(r=>setTimeout(r,900));
+ try{Object.keys(snapLS()).forEach(k=>LS.removeItem(k))}catch(_){}
+ ['sadevfs2','sadeuser','sadedirty','sadeuid','sadefs_ok','sadeguest','sadesync','sadets'].forEach(k=>LS.removeItem(k));
+ location.reload();return true;
+}
+
+function listen(){
+ if(unsub)unsub();
+ unsub=ref().onSnapshot(async d=>{
+  if(!d.exists||d.metadata.hasPendingWrites||!user||busy||pending)return;
+  const t=d.data().updated;if(!t||t===+LS.getItem('sadets'))return;
+  try{
+   const c=await pull();if(!c||pending||busy)return;
+   ready=false;apply(c);last=JSON.stringify(V);ready=true;
+   LS.setItem('sadesync',Date.now());LS.removeItem('sadedirty');say('Data imesasishwa kutoka kifaa kingine');
+  }catch(e){ready=true;console.warn(e)}
+ },e=>console.warn('listen',e));
+}
+const chip=E('div');chip.style.cssText='position:absolute;top:18px;right:18px;background:rgba(255,255,255,.22);color:#fff;padding:8px 14px;border-radius:20px;font-size:14px;cursor:pointer;backdrop-filter:blur(6px)';
+chip.onclick=e=>{e.stopPropagation();window.loginBox()};$('#lock').append(chip);
+const paintChip=()=>{chip.textContent='🧑‍💻 '+(LS.getItem('sadeuser')||'Log in')};paintChip();
+async function sync(){
+ const u=user;if(!u)return;ready=false;syncMsg='';
+ try{
+  const c=await pull(),mine=LS.getItem('sadeuid')===u.uid;
+  let useCloud=!!c&&!(LS.getItem('sadedirty')&&mine);
+  if(useCloud&&!mine&&LS.getItem('sadeguest')&&c!==JSON.stringify(V))
+   useCloud=confirm('Akaunti hii tayari ina data iliyohifadhiwa.\n\nOK = tumia data ya akaunti\nCancel = hifadhi mipangilio/mafaili ya kifaa hiki kwenye akaunti (data ya awali ya akaunti itabadilishwa)');
+  LS.removeItem('sadeguest');
+  if(useCloud){apply(c);last=JSON.stringify(V);LS.setItem('sadeuid',u.uid);LS.setItem('sadesync',Date.now());LS.removeItem('sadedirty');ready=true;say('Data yako imepakiwa kutoka kwenye akaunti: '+nm(u))}
+  else{ready=true;await push()}
+ }catch(e){ready=false;console.warn(e);syncMsg=why(e);say('Umeingia, lakini kusawazisha kumeshindwa: '+syncMsg,'e')}
+ if(ready&&user===u)listen();
+ if(ready&&!restored){restored=true;restoreSession().catch(()=>{wsReady=true})}
+ try{if(M.style.display==='flex')buildMenu()}catch(_){}
+}
+function init(){
+ if(!firebase.apps.length)firebase.initializeApp(CFG);
+ auth=firebase.auth();db=firebase.firestore();
+ try{db.settings({experimentalAutoDetectLongPolling:true,merge:true})}catch(_){}
+ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(()=>auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{}));
+ auth.getRedirectResult().catch(x=>say(em(x),'e'));
+ auth.onAuthStateChanged(async u=>{
+  user=u;ready=false;BS.cloud=u?cloud:null;
+  if(unsub){unsub();unsub=null}
+  if(!u){LS.removeItem('sadeuser');paintChip();return}
+  LS.setItem('sadeuser',nm(u));paintChip();
+  await sync();
+  flushMem().catch(()=>{});
+ });
+}
+const SDK2='https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/';
+function boot(){
+ if(auth)return Promise.resolve();if(booting)return booting;
+ const seq=(base,sfx)=>load(base+'firebase-app-compat'+sfx).then(()=>Promise.all([load(base+'firebase-auth-compat'+sfx),load(base+'firebase-firestore-compat'+sfx)]));
+ booting=seq(SDK,'.js').catch(()=>seq(SDK2,'.min.js')).then(init).catch(e=>{booting=null;throw e});
+ return booting;
+}
+
+window.loginBox=function(){
+  const o=E('div');o.style.cssText='position:fixed;inset:0;z-index:1000001;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center';
+ const b=E('div');b.style.cssText='background:#fff;color:#111;border-radius:12px;padding:22px;width:min(340px,92vw);font:14px system-ui,sans-serif;box-shadow:0 10px 40px #0007';
+ const inp='width:100%;box-sizing:border-box;padding:10px;border:1px solid #bbb;border-radius:8px;font-size:15px;margin-top:8px';
+ const btn=(t,bg,fg)=>{const x=E('button','',t);x.style.cssText='padding:9px 14px;border:0;border-radius:8px;cursor:pointer;font-size:14px;background:'+bg+';color:'+fg;return x};
+ const close=()=>o.remove();o.onclick=e=>{if(e.target===o)close()};o.onkeydown=e=>e.stopPropagation();
+ const draw=mode=>{
+  b.innerHTML='';
+  if(!auth){
+   b.innerHTML='<b style="font-size:18px">Log in</b><div style="margin:12px 0;color:#555">Inapakia mfumo wa akaunti…</div>';
+   const r=E('div');r.style.cssText='display:flex;gap:8px;justify-content:flex-end';const cl=btn('Funga','#e5e5e5','#111');cl.onclick=close;r.append(cl);b.append(r);
+   boot().then(()=>{if(o.isConnected)draw(mode)}).catch(()=>{if(!o.isConnected)return;b.innerHTML='<b style="font-size:18px">Log in</b><div style="margin:12px 0;color:#b00020">Haikuweza kupakia mfumo wa akaunti. Angalia mtandao wako.</div>';const r2=E('div');r2.style.cssText='display:flex;gap:8px;justify-content:flex-end';const rt=btn('Jaribu tena','#1e88e5','#fff'),c2=btn('Funga','#e5e5e5','#111');rt.onclick=()=>draw(mode);c2.onclick=close;r2.append(c2,rt);b.append(r2)});
+   return;
+  }
+  if(user){
+   b.innerHTML='<b style="font-size:18px">Akaunti</b><div style="margin:10px 0;color:#333">Umeingia kama <b></b><br><small style="color:#666"></small></div><div style="color:#666;font-size:12px">Data yako inahifadhiwa kwenye akaunti yako kiotomatiki na itapatikana kwenye kifaa chochote utakachoingia.'+(+LS.getItem('sadesync')?'<br>Imesawazishwa mwisho: '+new Date(+LS.getItem('sadesync')).toLocaleString():'')+'</div>';
+   b.querySelector('b+div b, div b').textContent=nm(user);b.querySelector('small').textContent=user.email||'';
+   const r=E('div');r.style.cssText='display:flex;gap:8px;margin-top:16px;justify-content:flex-end';
+   const out=btn('Toka','#fde0e0','#b00020'),cl=btn('Funga','#e5e5e5','#111');
+   out.onclick=async()=>{out.disabled=true;out.textContent='Inahifadhi…';const d=await logout();if(!d){out.disabled=false;out.textContent='Toka'}};cl.onclick=close;if(syncMsg){const w=E('div');w.style.cssText='color:#b00020;font-size:12px;margin-top:10px';w.textContent=syncMsg;b.append(w);const rt=btn('Sawazisha tena','#e3f2fd','#0d47a1');rt.style.marginTop='8px';rt.onclick=async()=>{rt.disabled=true;rt.textContent='Subiri…';await sync();draw()};b.append(rt)}
+   r.append(out,cl);b.append(r);return;
+  }
+  const reg=mode==='reg';
+  b.innerHTML='<b style="font-size:18px">'+(reg?'Jisajili':'Log in')+'</b><div style="margin-top:4px;color:#555">'+(reg?'Tengeneza akaunti kwa email yako':'Ingia kwa email na nenosiri')+'</div>';
+  let n;if(reg){n=E('input');n.placeholder='Jina lako';n.maxLength=30;n.autocomplete='name';n.style.cssText=inp;b.append(n)}
+  const e=E('input');e.type='email';e.placeholder='Email';e.autocomplete='email';e.style.cssText=inp;
+  const p=E('input');p.type='password';p.placeholder='Nenosiri (angalau herufi 6)';p.autocomplete=reg?'new-password':'current-password';p.style.cssText=inp;
+  const sp=E('label');sp.style.cssText='display:block;margin-top:8px;font-size:12px;color:#555;cursor:pointer';const cb=E('input');cb.type='checkbox';cb.onchange=()=>{p.type=cb.checked?'text':'password'};sp.append(cb,' Onyesha nenosiri');
+  const er=E('div');er.style.cssText='color:#b00020;font-size:12px;min-height:16px;margin-top:8px';
+  const gb=btn('Endelea na Google','#fff','#111');gb.style.cssText+=';border:1px solid #bbb;width:100%;margin-top:14px';
+  gb.onclick=async()=>{er.textContent='';try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());close()}catch(x){if(x.code==='auth/popup-blocked'||x.code==='auth/operation-not-supported-in-this-environment'){auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())}else if(x.code!=='auth/popup-closed-by-user'&&x.code!=='auth/cancelled-popup-request'){er.textContent=em(x)}}};
+  const go=btn(reg?'Jisajili':'Ingia','#1e88e5','#fff'),cl=btn('Ghairi','#e5e5e5','#111');
+  const r=E('div');r.style.cssText='display:flex;gap:8px;margin-top:6px;justify-content:flex-end';r.append(cl,go);
+  const sw=E('div');sw.style.cssText='margin-top:12px;font-size:13px;color:#1e88e5;cursor:pointer';sw.textContent=reg?'Una akaunti? Ingia':'Huna akaunti? Jisajili';sw.onclick=()=>draw(reg?'in':'reg');
+  b.append(e,p,sp,er,r);if(WEB)b.append(gb);b.append(sw);if(!WEB){const nt=E('div');nt.style.cssText='font-size:12px;color:#8a6d00;margin-top:10px';nt.textContent='Unatumia faili la ndani/APK: kuingia kwa Google hakupatikani hapa. Tumia email na nenosiri.';b.append(nt)}
+  if(!reg){const fp=E('div');fp.style.cssText='margin-top:8px;font-size:13px;color:#1e88e5;cursor:pointer';fp.textContent='Umesahau nenosiri?';fp.onclick=async()=>{const v=e.value.trim();if(!v){er.textContent='Andika email kwanza';return}try{await auth.sendPasswordResetEmail(v);er.style.color='#2e7d32';er.textContent='Link ya kubadili nenosiri imetumwa kwenye email yako'}catch(x){er.style.color='#b00020';er.textContent=em(x)}};b.append(fp)}
+  const submit=async()=>{
+   const ev=e.value.trim(),pv=p.value;er.style.color='#b00020';er.textContent='';
+   if(!ev||!pv){er.textContent='Jaza email na nenosiri';return}
+   go.disabled=true;go.textContent='Subiri…';
+   try{
+    if(reg){const c=await auth.createUserWithEmailAndPassword(ev,pv);const nv=n.value.trim();if(nv){await c.user.updateProfile({displayName:nv});LS.setItem('sadeuser',nv);paintChip()}}
+    else await auth.signInWithEmailAndPassword(ev,pv);
+    close();
+   }catch(x){er.textContent=em(x);go.disabled=false;go.textContent=reg?'Jisajili':'Ingia'}
+  };
+  go.onclick=submit;cl.onclick=close;[e,p].forEach(i=>i.onkeydown=ev=>{if(ev.key==='Enter')submit();if(ev.key==='Escape')close()});
+  setTimeout(()=>(n||e).focus(),50);
+ };
+ draw('in');o.append(b);document.body.append(o);
+};
+
+
+/* ----- Data za programu + hali ya madirisha (kwa waliong'oa login tu) ----- */
+const SKIP=/^(sadevfs2|sadeuser|sadedirty|sadeuid|sadesync|sadets|sadeguest|sadefs_ok|sade_fs)$|^firebase|^__/;
+function snapLS(){const o={};for(let i=0;i<LS.length;i++){const k=LS.key(i);if(SKIP.test(k))continue;const v=LS.getItem(k);if(v!=null&&v.length<1500000)o[k]=v}return o}
+function mirrorFile(o){
+ return; /* hakuna faili la mfumo linaloonekana kwenye AppData */
+ try{
+  const FN='AppData',n='data-za-programu.json';
+  if(!V.F[FN]){V.F[FN]=[];if(!V.U.includes(FN))V.U.push(FN)}
+  const blob=new Blob([JSON.stringify(o,null,1)],{type:'application/json'}),t=Date.now();
+  let e=V.F[FN].find(x=>x.n===n);
+  if(!e){e={n,o:['Upload',n],id:'ad'+t.toString(36),bk:'appdata-mirror',sz:blob.size,ct:t,mt:t,h:''};V.F[FN].push(e)}
+  else{e.sz=blob.size;e.mt=t;e.bk=e.bk||'appdata-mirror'}
+  try{window.BS.mem.set(e.bk,blob)}catch(_){}
+ }catch(_){}
+}
+function saveAppData(){
+ if(!user||!ready)return;
+ const o=snapLS(),j=JSON.stringify(o);if(j===lastAD)return;
+ lastAD=j;V.appdata=o;mirrorFile(o);
+ try{LS.setItem(VK,JSON.stringify(V))}catch(_){}
+ window.saveV&&window.saveV();try{refresh()}catch(_){}
+}
+const tag=(fn,mk)=>function(){const n0=wins.length;const r=fn.apply(this,arguments);try{if(wins.length>n0){const w=wins[wins.length-1];if(!w.rs)w.rs=mk.apply(null,arguments)}}catch(_){}return r};
+try{if(typeof openF==='function')openF=tag(openF,(f,n)=>({t:'f',a:[f,n]}))}catch(_){}
+try{if(typeof window.explorer==='function')window.explorer=tag(window.explorer,f=>({t:'x',a:[f]}))}catch(_){}
+try{if(typeof settings==='function')settings=tag(settings,()=>({t:'s',a:[]}))}catch(_){}
+try{if(typeof window.openE==='function')window.openE=tag(window.openE,e=>({t:'e',a:[e&&e.id||'',e&&e.n||'']}))}catch(_){}
+function cap(w){
+ const el=w.el,it={t:w.rs.t,a:w.rs.a,z:parseInt(el.style.zIndex)||0,min:el.style.display==='none'?1:0,mx:el.classList.contains('mx')?1:0,l:el.offsetLeft,tp:el.offsetTop,w:el.offsetWidth,h:el.offsetHeight};
+ if(w.rs.t==='f'){try{const cw=el.querySelector('iframe').contentWindow;it.hash=cw.location.hash||'';it.sy=Math.round(cw.scrollY||(cw.document.scrollingElement&&cw.document.scrollingElement.scrollTop)||0)}catch(_){}}
+ return it;
+}
+function saveWs(){
+ if(!user||!ready||!wsReady)return;
+ const a=wins.filter(x=>x.rs).map(cap),j=JSON.stringify(a);if(j===lastWs)return;
+ lastWs=j;V.ws={w:a,at:Date.now()};
+ try{LS.setItem(VK,JSON.stringify(V))}catch(_){}
+ window.saveV&&window.saveV();
+}
+async function restoreSession(){
+ const ws=V.ws;
+ if(!ws||!ws.w||!ws.w.length||wins.length){wsReady=true;return}
+ const small=innerWidth<760;let n=0;
+ for(const it of ws.w.slice().sort((a,b)=>(a.z||0)-(b.z||0))){
+  const n0=wins.length;
+  try{
+   if(it.t==='f')openF(...it.a);
+   else if(it.t==='x')window.explorer(it.a[0]);
+   else if(it.t==='s')settings();
+   else if(it.t==='e'){const e=Object.values(V.F).flat().find(x=>x&&((it.a[0]&&x.id===it.a[0])||(!it.a[0]&&x.n===it.a[1])));if(e)window.openE(e)}
+  }catch(_){}
+  await new Promise(r=>setTimeout(r,40));
+  if(wins.length>n0){
+   const w=wins[wins.length-1],el=w.el;n++;
+   if(!small){el.style.left=it.l+'px';el.style.top=Math.max(0,it.tp)+'px';el.style.width=Math.min(it.w,innerWidth-10)+'px';el.style.height=Math.min(it.h,innerHeight-60)+'px';el.classList.toggle('mx',!!it.mx)}
+   if(it.min){el.style.display='none';w.tk.classList.remove('on')}
+   if(it.t==='f'&&(it.hash||it.sy)){const fr=el.querySelector('iframe');let k=0;const iv=setInterval(()=>{try{const cw=fr.contentWindow;if(cw&&cw.location.href!=='about:blank'&&cw.document.readyState==='complete'){clearInterval(iv);if(it.hash)cw.location.hash=it.hash;if(it.sy)cw.scrollTo(0,it.sy)}}catch(_){clearInterval(iv)}if(++k>40)clearInterval(iv)},250)}
+  }
+ }
+ lastWs=JSON.stringify(wins.filter(x=>x.rs).map(cap));wsReady=true;
+ if(n)say('Nimekurudisha ulipoishia: madirisha '+n);
+}
+setInterval(()=>{try{saveAppData();saveWs()}catch(_){}},4000);
+let stT;addEventListener('storage',()=>{clearTimeout(stT);stT=setTimeout(()=>{try{saveAppData()}catch(_){}},1500)});
+const flush=()=>{try{saveAppData();saveWs();if(user&&ready&&LS.getItem('sadedirty')){clearTimeout(upT);push()}}catch(_){}};
+addEventListener('pagehide',flush);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush()});
+
+boot().catch(()=>console.warn('Firebase SDK haikupakia (hakuna mtandao?)'));
+})();
+</script>
+<script>
+/* ===== OFFLINE MANAGER + NAKALA YA DATA (IndexedDB) ===== */
+(()=>{
+const LSK='sadevfs2',WIPE='sade_idb_wipe';let wiping=0;
+/* Mtumiaji akitoka (logout) au akibonyeza Reset, data ya kifaa kwenye IndexedDB nayo ifutwe */
+const _ri=Storage.prototype.removeItem;Storage.prototype.removeItem=function(k){if(this===localStorage&&k===LSK){wiping=1;try{Storage.prototype.setItem.call(this,WIPE,'1')}catch(_){}}return _ri.apply(this,arguments)};
+/* Nakala ya V (folda, metadata, mipangilio) kwenye IndexedDB */
+let mt=0;const put=()=>{if(wiping)return;try{const j=JSON.stringify(V);if(!localStorage.getItem(LSK))localStorage.setItem(LSK,j);IDX.meta.put('V',j).catch(()=>{})}catch(_){}};
+const mirror=()=>{clearTimeout(mt);mt=setTimeout(put,900)};
+const _s=window.saveV;window.saveV=function(){try{return _s&&_s.apply(this,arguments)}finally{mirror()}};
+addEventListener('pagehide',put);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')put()});
+(async()=>{
+ if(localStorage.getItem(WIPE)){localStorage.removeItem(WIPE);wiping=0;try{await IDX.meta.del('V');await IDX.blobs.clear()}catch(_){}return}
+ /* Kama localStorage imefutwa na kivinjari lakini IndexedDB ina data, irejeshe */
+ if(!localStorage.getItem(LSK)&&!sessionStorage.getItem('sade_idb_rs')){let v;try{v=await IDX.meta.get('V')}catch(_){}
+  if(v){try{localStorage.setItem(LSK,v);sessionStorage.setItem('sade_idb_rs','1');location.reload();return}catch(_){}}}
+ setTimeout(put,3000)})();
+/* ---- Dirisha la Offline ---- */
+const fmt=n=>n<1048576?(n/1024).toFixed(0)+' KB':n<1073741824?(n/1048576).toFixed(1)+' MB':(n/1073741824).toFixed(2)+' GB';
+function offMgr(){
+ const box=wrap(),info=E('div');info.style.cssText='padding:14px;line-height:1.9;flex:1;overflow:auto;user-select:text';
+ let w,cf=0;
+ const draw=async()=>{const ks=await DB.keys(),bk=await IDX.blobs.keys().catch(()=>[]);let es={},pe=false;try{es=await navigator.storage.estimate()}catch(_){}try{pe=await navigator.storage.persisted()}catch(_){}
+  let cn=0;try{if(CAC)cn=(await(await caches.open(CN)).keys()).length}catch(_){}
+  const ok=await IDX.ok(),tot=TOTAL(),pc=tot?Math.round(ks.length*100/tot):0;
+  info.innerHTML='<div><b>IndexedDB:</b> '+(ok?'✅ inafanya kazi':'⚠ haipatikani (kumbukumbu ya muda tu)')+'</div>'
+   +'<div><b>Mtandao:</b> '+(navigator.onLine?'🟢 Online':'🔴 Offline')+'</div>'
+   +'<div><b>Programu zilizohifadhiwa:</b> '+ks.length+' / '+tot+' ('+pc+'%)</div>'
+   +'<div style="background:#dde3ee;border-radius:6px;height:10px;overflow:hidden;margin:2px 0 6px"><div style="background:#0067c0;height:100%;width:'+pc+'%"></div></div>'
+   +'<div><b>Cache API:</b> '+(CAC?'✅ kurasa '+cn+' zimehifadhiwa':'⚪ haipatikani (inahitaji http/https)')+'</div>'
+   +'<div><b>Faili zako (Explorer) kwenye kifaa:</b> '+bk.length+'</div>'
+   +'<div><b>Nafasi iliyotumika:</b> '+(es.usage!=null?fmt(es.usage)+(es.quota?' / '+fmt(es.quota):''):'—')+'</div>'
+   +'<div><b>Hifadhi ya kudumu:</b> '+(pe?'✅ ndiyo':'⚪ bado (kivinjari kinaweza kufuta nafasi ikibana)')+'</div>'
+   +(syncing?'<div>⏳ Inapakua programu: '+SYN.d+' / '+SYN.t+'…</div>':'');
+};
+ const bt=bar(['⬇ Pakua zote sasa',()=>{if(!navigator.onLine){toast('Hakuna mtandao sasa. Jaribu ukiwa online.','w');return}toast('Inapakua programu zote…');sync(true).then(()=>{draw();toast('Imekamilika: programu '+OFFN+' zimehifadhiwa')})}],
+  ['🧹 Futa cache ya programu',async function(){const b=this;if(!cf){cf=1;b.textContent='Gusa tena kuthibitisha';setTimeout(()=>{cf=0;b.textContent='🧹 Futa cache ya programu'},4000);return}
+    cf=0;b.textContent='🧹 Futa cache ya programu';await IDX.files.clear();try{await caches.delete(CN)}catch(_){}for(const k of await IDX.meta.keys())if(String(k).startsWith('miss:'))await IDX.meta.del(k);await cnt();draw();toast('Cache ya programu imefutwa. Mafaili yako hayajaguswa.')}],
+  ['↻',draw]);
+
+ box.append(bt,info);w=win('Offline & Hifadhi','💾',460,340,box);draw();
+ const iv=setInterval(()=>{if(!w.el.isConnected)clearInterval(iv);else draw()},1500)}
+window.offMgr=offMgr;const o=$('#off');if(o){o.style.cursor='pointer';o.onclick=offMgr}
+})();
+</script>
+</body></html>
